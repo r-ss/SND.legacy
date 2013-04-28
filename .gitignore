@@ -1,0 +1,10 @@
+[Tt]humbs.db
+*.DS_Store
+*.bak*
+*~.nib
+*.swp
+
+icon.icns
+*.no_git
+*.xcuserstate
+*.xcsettings
