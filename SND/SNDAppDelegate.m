@@ -24,6 +24,9 @@
     self.sndPlaylist.managedObjectContext = self.managedObjectContext;
     [self.sndPlaylist loadPlaylist];
     
+    //NSLog(@"** %@", [[[NSProcessInfo processInfo] environment] allKeys]);
+    
+    
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(traceNotifications:) name:nil object:nil];
     
     //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -51,7 +54,8 @@
         return _persistentStoreCoordinator;
     }
     NSString *homeDir = NSHomeDirectory();
-    NSString *path = [homeDir stringByAppendingString:@"/Music/snd.sqlite"];
+    //NSString *path = [homeDir stringByAppendingString:@"/Music/snd.sqlite"];
+    NSString *path = [homeDir stringByAppendingString:@"/Desktop/snd.sqlite"];
     NSURL *storeURL = [NSURL fileURLWithPath:path];
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];

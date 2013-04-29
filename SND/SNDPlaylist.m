@@ -389,21 +389,55 @@ NSString *const PBType = @"playlistRowDragDropType";
         NSString * zStrFilePath	= [filesURL objectAtIndex:i];
         NSString * aStrPath = [zStrFilePath stringByStandardizingPath];
         
+        NSArray *acceptableFileExtensions = [[NSArray alloc] initWithObjects:@"mp3", @"flac", nil];      
+        
+        
         BOOL isDir;
         if([[NSFileManager defaultManager] fileExistsAtPath: aStrPath isDirectory:&isDir] && isDir){
             //NSLog(@"is a directory");
             NSDirectoryEnumerator *dirEnum = [[NSFileManager defaultManager] enumeratorAtPath:aStrPath];
+            
+            NSMutableArray *unsortedFiles = [[NSMutableArray alloc] init];
+            
             for (NSString *filepath in dirEnum) {
-                if ([[filepath pathExtension] isEqualToString: @"mp3"]) {
+                //if ([[filepath pathExtension] isEqualToString: @"mp3"]) {
+                if ([acceptableFileExtensions containsObject:filepath.pathExtension]) {
                     NSString *path = [NSString stringWithFormat:@"%@/%@", aStrPath, filepath];
                     SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:path]];
-                    if(row != -1){
-                        [self.playlistData insertObject:zDataObj atIndex:row++];
-                    } else {
-                        [self.playlistData addObject:zDataObj];
-                    }
+                    [unsortedFiles addObject:zDataObj];
+                }
+            }            
+
+            NSArray *sortedFiles = [unsortedFiles sortedArrayUsingComparator:^(SNDTrack *a, SNDTrack *b){
+                NSNumber *n1 = a.tracknumber;
+                NSNumber *n2 = b.tracknumber;
+                if (n1.integerValue > n2.integerValue)
+                    return (NSComparisonResult)NSOrderedDescending;
+                
+                if (n1.integerValue < n2.integerValue)
+                    return (NSComparisonResult)NSOrderedAscending;
+                return (NSComparisonResult)NSOrderedSame;
+            }];
+            
+            for (i = 0; i < [sortedFiles count]; i++) {
+                if(row != -1){
+                    [self.playlistData insertObject:[sortedFiles objectAtIndex:i] atIndex:row++];
+                } else {
+                    //[self.playlistData addObject:zDataObj];
+                    [self.playlistData addObject:[sortedFiles objectAtIndex:i]];
                 }
             }
+            
+            
+        /*
+            if(row != -1){
+                [self.playlistData insertObject:zDataObj atIndex:row++];
+            } else {
+                [self.playlistData addObject:zDataObj];
+            }
+        */
+            
+            
         } else {
             //NSLog (@"is a file");
             SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:aStrPath]];
