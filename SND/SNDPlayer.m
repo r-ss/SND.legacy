@@ -11,7 +11,7 @@
 // private part
 @interface SNDPlayer() <ORGMEngineDelegate>
 @property (strong, nonatomic) ORGMEngine *player;
-@property (nonatomic) SNDTrack *preloadedTrack;
+//@property (nonatomic) SNDTrack *nextTrack;
 @property (nonatomic) NSTimer *timer;
 @end
 
@@ -22,7 +22,7 @@
 @synthesize position, duration;
 @synthesize timer = _timer;
 @synthesize player = _player; // private
-@synthesize preloadedTrack = _preloadedTrack; // private
+//@synthesize nextTrack = _nextTrack; // private
 
 /* OGRMEngine methods
 [_player metadata];                         // current metadata
@@ -99,16 +99,7 @@
 
 - (void) playTrack:(SNDTrack *)track {
     //if(![track isEqual:self.preloadedTrack] && [track hash] != [self.preloadedTrack hash]){
-    NSLog(@"obj1: %@", track);
-    NSLog(@"obj2: %@", self.preloadedTrack);
-    
-    
-    if(![track.url isEqualTo: self.preloadedTrack.url] || self.preloadedTrack == nil){
-        NSLog(@"KOKOKO");
-        [self.player playUrl:track.url];
-    } else {        
-        NSLog(@"OLOLO");
-    }
+    [self.player playUrl:track.url];
 }
 
 -(void) playPauseAction {
@@ -121,11 +112,9 @@
 
 #pragma mark - ORGMEngineDelegate
 - (NSURL *)engineExpectsNextUrl:(ORGMEngine *)engine {
-     NSLog(@"> engineExpectsNextUrl");
-    //SNDTrack *nextTrack = [self.sndPlaylist nextTrack];
-    self.preloadedTrack = [self.sndPlaylist nextTrack];
-    //return self.preloadedTrack.url;
-    return self.preloadedTrack.url;
+    SNDTrack *nextTrack = [self.sndPlaylist nextTrack];
+    //NSLog(@"> self.nextTrack = %@", self.nextTrack);
+    return nextTrack.url;
 }
 
 - (void)engine:(ORGMEngine *)engine didChangeState:(ORGMEngineState)state {

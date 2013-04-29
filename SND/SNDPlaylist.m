@@ -158,12 +158,12 @@ NSString *const PBType = @"playlistRowDragDropType";
     self.currentTrackIndex = [NSNumber numberWithInteger:[self.playlistData indexOfObject:currentTrack]];
 }
 
--(void) selectNextOrPreviousTrack:(BOOL)next {
+-(void) selectNextOrPreviousTrack:(BOOL)next andPlay:(BOOL)play {
     //NSLog(@"> currentTrackIndex: %d, total: %d", self.currentTrackIndex.integerValue, [self.playlistData count]);
     if(self.currentTrackIndex.integerValue == -1){
         self.currentTrackIndex = [NSNumber numberWithInt:0];
         [self setCurrentTrackByIndex:self.currentTrackIndex];
-        [self playItemAtRow:self.currentTrackIndex.intValue];
+        [self selectItemAtRow:self.currentTrackIndex.intValue andPlay:YES];
         return;
     }
     NSInteger current = self.currentTrackIndex.intValue;
@@ -179,7 +179,7 @@ NSString *const PBType = @"playlistRowDragDropType";
             }
         }
         if(current != self.currentTrackIndex.intValue)
-            [self playItemAtRow:current];
+            [self selectItemAtRow:current andPlay:play];
     }
 }
 
@@ -427,24 +427,25 @@ NSString *const PBType = @"playlistRowDragDropType";
     NSInteger total = [self.playlistData count] - 1;
     if(current < total){
         SNDTrack *t = [self.playlistData objectAtIndex:current + 1];
-        [self selectNextOrPreviousTrack:YES];
-        NSLog (@"> nextTrack is: %@", t);
+        [self selectNextOrPreviousTrack:YES andPlay:NO];
+        //NSLog (@"> nextTrack is: %@", t);
         return t;
     }
     return nil;
 }
 
 
--(void)playItemAtRow:(NSInteger)rowIndex {
+-(void)selectItemAtRow:(NSInteger)rowIndex andPlay:(BOOL)play {
     SNDTrack *t = [self.playlistData objectAtIndex:rowIndex];
     self.currentTrackIndex = [NSNumber numberWithInt:rowIndex];
     [self setCurrentTrackByIndex:self.currentTrackIndex];
     [playlistTableView reloadData];
-    [self.sndPlayer playTrack:t];
+    if(play)
+        [self.sndPlayer playTrack:t];
 }
 
 - (IBAction) doubleClick:(id)sender {
-    [self playItemAtRow:[playlistTableView clickedRow]];
+    [self selectItemAtRow:[playlistTableView clickedRow] andPlay:YES];
 }
 
 - (IBAction)controlAction:(NSSegmentedControl *)sender {
@@ -452,7 +453,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         // previous button
         case 0:
         {
-            [self selectNextOrPreviousTrack:NO];
+            [self selectNextOrPreviousTrack:NO andPlay:YES];
             break;
         }
         // play/pause button
@@ -463,7 +464,7 @@ NSString *const PBType = @"playlistRowDragDropType";
                 if(self.currentTrackIndex.integerValue == -1){
                     self.currentTrackIndex = [NSNumber numberWithInt:0];
                     [self setCurrentTrackByIndex:self.currentTrackIndex];
-                    [self playItemAtRow:self.currentTrackIndex.intValue];
+                    [self selectItemAtRow:self.currentTrackIndex.intValue andPlay:YES];
                     break;
                 }
                 [self.sndPlayer playPauseAction];
@@ -473,7 +474,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         // next button
         case 2:
         {
-            [self selectNextOrPreviousTrack:YES];
+            [self selectNextOrPreviousTrack:YES andPlay:YES];
             break;
         }
     }
