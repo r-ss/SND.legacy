@@ -52,7 +52,7 @@
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender {
     NSURL* fileURL;
     fileURL=[NSURL URLFromPasteboard: [sender draggingPasteboard]];
-    NSArray *arr = [NSArray arrayWithObject:fileURL];
+    NSArray *arr = [NSArray arrayWithObject:fileURL.path];
     [self.windowDropDelegate filesDroppedIntoWindow:arr];
     return YES;
 }
