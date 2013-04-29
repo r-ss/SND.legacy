@@ -458,6 +458,33 @@
 													<bool key="NSIsEditable">YES</bool>
 													<reference key="NSTableView" ref="653615633"/>
 												</object>
+												<object class="NSTableColumn" id="85786736">
+													<string key="NSIdentifier">tracknumber</string>
+													<double key="NSWidth">34.578125</double>
+													<double key="NSMinWidth">10</double>
+													<double key="NSMaxWidth">3.4028234663852886e+38</double>
+													<object class="NSTableHeaderCell" key="NSHeaderCell">
+														<int key="NSCellFlags">75497536</int>
+														<int key="NSCellFlags2">2048</int>
+														<string key="NSContents">track</string>
+														<reference key="NSSupport" ref="26"/>
+														<reference key="NSBackgroundColor" ref="413838855"/>
+														<reference key="NSTextColor" ref="247085330"/>
+													</object>
+													<object class="NSTextFieldCell" key="NSDataCell" id="869196577">
+														<int key="NSCellFlags">337641536</int>
+														<int key="NSCellFlags2">133120</int>
+														<string key="NSContents">track</string>
+														<reference key="NSSupport" ref="26"/>
+														<reference key="NSControlView" ref="653615633"/>
+														<reference key="NSBackgroundColor" ref="253889759"/>
+														<reference key="NSTextColor" ref="1002613329"/>
+													</object>
+													<int key="NSResizingMask">3</int>
+													<bool key="NSIsResizeable">YES</bool>
+													<bool key="NSIsEditable">YES</bool>
+													<reference key="NSTableView" ref="653615633"/>
+												</object>
 												<object class="NSTableColumn" id="591383381">
 													<string key="NSIdentifier">artist</string>
 													<double key="NSWidth">110.25</double>
@@ -1428,6 +1455,7 @@
 							<reference ref="600646656"/>
 							<reference ref="732592685"/>
 							<reference ref="531740219"/>
+							<reference ref="85786736"/>
 						</array>
 						<reference key="parent" ref="472939342"/>
 					</object>
@@ -1596,11 +1624,6 @@
 						<reference key="parent" ref="834976639"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">853</int>
-						<reference key="object" ref="224002142"/>
-						<reference key="parent" ref="439893737"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1258</int>
 						<reference key="object" ref="265695096"/>
 						<reference key="parent" ref="439893737"/>
@@ -1711,8 +1734,26 @@
 						<reference key="parent" ref="439893737"/>
 					</object>
 					<object class="IBObjectRecord">
+						<int key="objectID">1319</int>
+						<reference key="object" ref="85786736"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="869196577"/>
+						</array>
+						<reference key="parent" ref="653615633"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1320</int>
+						<reference key="object" ref="869196577"/>
+						<reference key="parent" ref="85786736"/>
+					</object>
+					<object class="IBObjectRecord">
 						<int key="objectID">1318</int>
 						<reference key="object" ref="936397903"/>
+						<reference key="parent" ref="439893737"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">853</int>
+						<reference key="object" ref="224002142"/>
 						<reference key="parent" ref="439893737"/>
 					</object>
 				</array>
@@ -1755,6 +1796,8 @@
 				<string key="1315.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1317.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1318.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1319.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1320.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="134.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="136.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="143.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1841,7 +1884,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1318</int>
+			<int key="maxID">1322</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1932,20 +1975,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SNDPlaylist</string>
 					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="controlAction:">NSSegmentedControl</string>
-						<string key="doubleClick:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="controlAction:">
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">controlAction:</string>
+						<string key="NS.object.0">NSSegmentedControl</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">controlAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
 							<string key="name">controlAction:</string>
 							<string key="candidateClassName">NSSegmentedControl</string>
 						</object>
-						<object class="IBActionInfo" key="doubleClick:">
-							<string key="name">doubleClick:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="playlistTableView">NSTableView</string>
 						<string key="sndAppDelegate">SNDAppDelegate</string>

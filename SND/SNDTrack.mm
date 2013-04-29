@@ -31,7 +31,7 @@
 @synthesize album;
 @synthesize comment;
 @synthesize genre;
-@synthesize track;
+@synthesize tracknumber;
 @synthesize year;
 
 
@@ -44,8 +44,8 @@
         [self setPath:self.url.path];
         [self setFilename:[NSString stringWithString:[self.url lastPathComponent]]];
         //[self extractMetadata];
-        [self getTrackDuration];
-        self.formattedDuration = [self hhmmssFromSeconds:self.duration.integerValue];
+        //[self getTrackDuration];
+        
         
         
         
@@ -105,7 +105,7 @@
                 }
                 
                 if (taglib_tag_track(tag) > 0) {
-                    self.track = [NSNumber numberWithUnsignedInt:taglib_tag_track(tag)];
+                    self.tracknumber = [NSNumber numberWithUnsignedInt:taglib_tag_track(tag)];
                 }
             } else {
                 self.validTags = NO;
@@ -118,7 +118,8 @@
                 self.validAudioProperties = YES;
                 
                 if (taglib_audioproperties_length(properties) > 0) {
-                    self.length = [NSNumber numberWithInt:taglib_audioproperties_length(properties)];
+                    //self.length = [NSNumber numberWithInt:taglib_audioproperties_length(properties)];
+                    self.duration = [NSNumber numberWithInt:taglib_audioproperties_length(properties)];
                 }
             } else {
                 self.validAudioProperties = NO;
@@ -128,10 +129,12 @@
             taglib_tag_free_strings();
             taglib_file_free(file);
         };
-
+        
+        
+        self.formattedDuration = [self hhmmssFromSeconds:self.duration.integerValue];
         
     };
-    return self;                            
+    return self;
 }
 
 // overriding synthesized setter for url
@@ -169,7 +172,7 @@
     }
 }
 
--(void)getTrackDuration {
+/*-(void)getTrackDuration {
     NSError *err;
     AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:self.url error:&err];
     if (!err) {
@@ -181,6 +184,7 @@
         //NSLog(@"can't get duration");
     }
 }
+*/
 
 //- (NSString*)description
 //{
