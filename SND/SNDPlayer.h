@@ -16,13 +16,14 @@
     IBOutlet NSSlider *volumeSlider;
 }
 
+@property (readonly) NSArray *acceptableFileExtensions; 
+
 @property (nonatomic, assign) IBOutlet SNDPlaylist *sndPlaylist;
 
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) NSNumber *volume;
 @property (nonatomic) NSNumber *position;
 @property (nonatomic) NSNumber *duration;
-
 
 - (IBAction)volumeSlider:(NSSlider *)sender;
 - (IBAction)positionSlider:(NSSlider *)sender;

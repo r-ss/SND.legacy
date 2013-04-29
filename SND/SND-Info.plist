@@ -44,6 +44,21 @@
 			<key>NSDocumentClass</key>
 			<string></string>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>flac</string>
+				<string>FLAC</string>
+			</array>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>audio/x-flac</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>flac</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>

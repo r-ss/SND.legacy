@@ -514,6 +514,33 @@
 													<bool key="NSIsResizeable">YES</bool>
 													<reference key="NSTableView" ref="653615633"/>
 												</object>
+												<object class="NSTableColumn" id="531740219">
+													<string key="NSIdentifier">album</string>
+													<double key="NSWidth">137.6484375</double>
+													<double key="NSMinWidth">10</double>
+													<double key="NSMaxWidth">3.4028234663852886e+38</double>
+													<object class="NSTableHeaderCell" key="NSHeaderCell">
+														<int key="NSCellFlags">75497536</int>
+														<int key="NSCellFlags2">2048</int>
+														<string key="NSContents">album</string>
+														<reference key="NSSupport" ref="26"/>
+														<reference key="NSBackgroundColor" ref="413838855"/>
+														<reference key="NSTextColor" ref="247085330"/>
+													</object>
+													<object class="NSTextFieldCell" key="NSDataCell" id="523532171">
+														<int key="NSCellFlags">337641536</int>
+														<int key="NSCellFlags2">133120</int>
+														<string key="NSContents">Text Cell</string>
+														<reference key="NSSupport" ref="26"/>
+														<reference key="NSControlView" ref="653615633"/>
+														<reference key="NSBackgroundColor" ref="253889759"/>
+														<reference key="NSTextColor" ref="1002613329"/>
+													</object>
+													<int key="NSResizingMask">3</int>
+													<bool key="NSIsResizeable">YES</bool>
+													<bool key="NSIsEditable">YES</bool>
+													<reference key="NSTableView" ref="653615633"/>
+												</object>
 												<object class="NSTableColumn" id="799208922">
 													<string key="NSIdentifier">title</string>
 													<double key="NSWidth">126.1953125</double>
@@ -564,33 +591,6 @@
 													</object>
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
-													<reference key="NSTableView" ref="653615633"/>
-												</object>
-												<object class="NSTableColumn" id="531740219">
-													<string key="NSIdentifier">filename</string>
-													<double key="NSWidth">61.12109375</double>
-													<double key="NSMinWidth">10</double>
-													<double key="NSMaxWidth">3.4028234663852886e+38</double>
-													<object class="NSTableHeaderCell" key="NSHeaderCell">
-														<int key="NSCellFlags">75497536</int>
-														<int key="NSCellFlags2">2048</int>
-														<string key="NSContents">filename</string>
-														<reference key="NSSupport" ref="26"/>
-														<reference key="NSBackgroundColor" ref="413838855"/>
-														<reference key="NSTextColor" ref="247085330"/>
-													</object>
-													<object class="NSTextFieldCell" key="NSDataCell" id="523532171">
-														<int key="NSCellFlags">337641536</int>
-														<int key="NSCellFlags2">133120</int>
-														<string key="NSContents">Text Cell</string>
-														<reference key="NSSupport" ref="26"/>
-														<reference key="NSControlView" ref="653615633"/>
-														<reference key="NSBackgroundColor" ref="253889759"/>
-														<reference key="NSTextColor" ref="1002613329"/>
-													</object>
-													<int key="NSResizingMask">3</int>
-													<bool key="NSIsResizeable">YES</bool>
-													<bool key="NSIsEditable">YES</bool>
 													<reference key="NSTableView" ref="653615633"/>
 												</object>
 											</array>
@@ -1884,7 +1884,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1322</int>
+			<int key="maxID">1324</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

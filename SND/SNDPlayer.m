@@ -17,11 +17,14 @@
 
 @implementation SNDPlayer
 
+@synthesize acceptableFileExtensions = _acceptableFileExtensions;
 @synthesize isPlaying = _isPlaying;
 @synthesize volume = _volume;
 @synthesize position, duration;
 @synthesize timer = _timer;
 @synthesize player = _player; // private
+
+
 //@synthesize nextTrack = _nextTrack; // private
 
 /* OGRMEngine methods
@@ -35,6 +38,9 @@
 
 - (void)awakeFromNib {
     //self.sndPlaylist.playerDelegate = self;
+    
+    _acceptableFileExtensions = [[NSArray alloc] initWithObjects:@"mp3", @"flac", nil];
+    
     self.volume = [NSNumber numberWithInteger:1];
     self.isPlaying = NO;
     

@@ -54,25 +54,10 @@ NSString *const PBType = @"playlistRowDragDropType";
     //[self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/01 - Foxygen - In The Darkness.mp3"]]];
     //[self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/1 - Joy Orbison - Ellipsis.mp3"]]];
     //[self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/04 - DFRNT - That's Interesting.mp3"]]];
-    /*
-    [self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/4 - Gang Gang Dance - Untitled (Piano).mp3"]]];
-    [self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/4 - Lusine - Excess.mp3"]]];
-    [self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/6 - Mount Kimbie - Carbonated.mp3"]]];
-    [self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/9 - Ducktails - Letter of Intent.mp3"]]];
-    [self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/2 - Burial - Loner.mp3"]]];
-    [self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/2 - Byetone - T-e-l-e-g-r-a-m-m.mp3"]]];
-    [self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/04 - Muse - Can't Take My Eyes Off You.mp3"]]];
-    [self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/06 - Autechre - Fold4,Wrap5.mp3"]]];
-    [self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/6 - Four Tet - Pyramid.mp3"]]];
-    */
+
     
     self.currentTrackIndex = [NSNumber numberWithInt:-1];
-    //[self setCurrentTrackByIndex:self.currentTrackIndex];
-    
-    
-        
-    
-    
+
     [playlistTableView reloadData];
     [playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PBType, NSFilenamesPboardType, @"public.utf8-plain-text", nil]];
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
@@ -88,7 +73,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     
     // delete all data before saving new
     if([tracks count] > 0){
-        NSLog(@"found");
+        //NSLog(@"found");
         NSInteger i;
         for (i = 0; i < [tracks count]; i++) {
             trackMO = [tracks objectAtIndex:i];
@@ -382,16 +367,26 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self addFiles:filesURL atRow:-1];
 }
 
+- (NSArray *) sortSNDTracksByTrackNumber:(NSArray *)tracks {
+    NSArray *sortedTracks = [tracks sortedArrayUsingComparator:^(SNDTrack *a, SNDTrack *b){
+        NSNumber *n1 = a.tracknumber;
+        NSNumber *n2 = b.tracknumber;
+        if (n1.integerValue > n2.integerValue)
+            return (NSComparisonResult)NSOrderedDescending;        
+        if (n1.integerValue < n2.integerValue)
+            return (NSComparisonResult)NSOrderedAscending;
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    return sortedTracks;
+}
+
 - (void) addFiles:(NSArray *)filesURL atRow:(NSInteger)row {
     //NSLog(@"> addFiles at row: %ld", (long)row);
     NSInteger i;
     for (i = 0; i < [filesURL count]; i++) {
         NSString * zStrFilePath	= [filesURL objectAtIndex:i];
         NSString * aStrPath = [zStrFilePath stringByStandardizingPath];
-        
-        NSArray *acceptableFileExtensions = [[NSArray alloc] initWithObjects:@"mp3", @"flac", nil];      
-        
-        
+
         BOOL isDir;
         if([[NSFileManager defaultManager] fileExistsAtPath: aStrPath isDirectory:&isDir] && isDir){
             //NSLog(@"is a directory");
@@ -401,23 +396,14 @@ NSString *const PBType = @"playlistRowDragDropType";
             
             for (NSString *filepath in dirEnum) {
                 //if ([[filepath pathExtension] isEqualToString: @"mp3"]) {
-                if ([acceptableFileExtensions containsObject:filepath.pathExtension]) {
+                if ([self.sndPlayer.acceptableFileExtensions containsObject:filepath.pathExtension]) {
                     NSString *path = [NSString stringWithFormat:@"%@/%@", aStrPath, filepath];
                     SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:path]];
                     [unsortedFiles addObject:zDataObj];
                 }
-            }            
-
-            NSArray *sortedFiles = [unsortedFiles sortedArrayUsingComparator:^(SNDTrack *a, SNDTrack *b){
-                NSNumber *n1 = a.tracknumber;
-                NSNumber *n2 = b.tracknumber;
-                if (n1.integerValue > n2.integerValue)
-                    return (NSComparisonResult)NSOrderedDescending;
-                
-                if (n1.integerValue < n2.integerValue)
-                    return (NSComparisonResult)NSOrderedAscending;
-                return (NSComparisonResult)NSOrderedSame;
-            }];
+            }
+            
+            NSArray *sortedFiles = [self sortSNDTracksByTrackNumber:unsortedFiles];
             
             for (i = 0; i < [sortedFiles count]; i++) {
                 if(row != -1){
@@ -426,25 +412,17 @@ NSString *const PBType = @"playlistRowDragDropType";
                     //[self.playlistData addObject:zDataObj];
                     [self.playlistData addObject:[sortedFiles objectAtIndex:i]];
                 }
-            }
-            
-            
-        /*
-            if(row != -1){
-                [self.playlistData insertObject:zDataObj atIndex:row++];
-            } else {
-                [self.playlistData addObject:zDataObj];
-            }
-        */
-            
+            }          
             
         } else {
-            //NSLog (@"is a file");
-            SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:aStrPath]];
-            if(row != -1){
-                [self.playlistData insertObject:zDataObj atIndex:row++];
-            } else {
-                [self.playlistData addObject:zDataObj];
+            //NSLog (@"is a file, %@", aStrPath);
+            if([self.sndPlayer.acceptableFileExtensions containsObject:aStrPath.pathExtension]){
+                SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:aStrPath]];
+                if(row != -1){
+                    [self.playlistData insertObject:zDataObj atIndex:row++];
+                } else {
+                    [self.playlistData addObject:zDataObj];
+                }
             }
         }
     }
