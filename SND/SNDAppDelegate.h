@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class SNDPlaylist;
+@class SNDBox;
 
 @protocol DockDropDelegate <NSObject>
 - (void) filesDroppedIntoDock:(NSArray *)filesURL;
@@ -18,7 +18,7 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
-@property (assign) IBOutlet SNDPlaylist *sndPlaylist;
+@property (assign) IBOutlet SNDBox *sndBox;
 
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, readonly) NSManagedObjectModel *managedObjectModel;

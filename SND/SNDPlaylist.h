@@ -14,17 +14,11 @@
 #import "SNDPlaylistView.h"
 #import "SNDTrack.h"
 
-
-
 @class SNDPlayer;
 
 @interface SNDPlaylist : NSObject <WindowDropDelegate, DockDropDelegate, NSTableViewDataSource> {
     IBOutlet NSTableView *playlistTableView;
 }
-
-@property (nonatomic, assign) IBOutlet SNDWindow *sndWindow;
-@property (nonatomic, assign) IBOutlet SNDAppDelegate *sndAppDelegate;
-@property (nonatomic, assign) IBOutlet SNDPlayer *sndPlayer;
 
 @property (nonatomic) SNDTrack *currentTrack;
 @property (nonatomic) NSNumber *currentTrackIndex;
