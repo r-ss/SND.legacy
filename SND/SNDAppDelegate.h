@@ -14,11 +14,7 @@
 - (void) filesDroppedIntoDock:(NSArray *)filesURL;
 @end
 
-@interface SNDAppDelegate : NSObject <NSApplicationDelegate> {
-    //NSManagedObjectContext *managedObjectContext;
-    //NSManagedObjectModel *managedObjectModel;
-    //NSPersistentStoreCoordinator *persistentStoreCoordinator;
-}
+@interface SNDAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 

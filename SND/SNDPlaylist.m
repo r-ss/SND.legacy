@@ -104,8 +104,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     NSManagedObject *trackMO = nil;
     
     if([tracks count] > 0){
-        //NSLog(@"found");
-        
+        //NSLog(@"found");        
         NSMutableArray *unsortedRows = [[NSMutableArray alloc] init];
         
         NSInteger i;
@@ -126,7 +125,6 @@ NSString *const PBType = @"playlistRowDragDropType";
                 return (NSComparisonResult)NSOrderedAscending;
             return (NSComparisonResult)NSOrderedSame;            
         }];
-        //NSLog(@"%@", sortedRows);
         for (i = 0; i < [tracks count]; i++) {
             [self.playlistData addObject:[[sortedRows objectAtIndex:i] objectAtIndex:1]];
         }
@@ -144,7 +142,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 -(void) selectNextOrPreviousTrack:(BOOL)next andPlay:(BOOL)play {
-    //NSLog(@"> currentTrackIndex: %d, total: %d", self.currentTrackIndex.integerValue, [self.playlistData count]);
     if(self.currentTrackIndex.integerValue == -1){
         self.currentTrackIndex = [NSNumber numberWithInt:0];
         [self setCurrentTrackByIndex:self.currentTrackIndex];
@@ -210,8 +207,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 	NSInteger zIndex	= [pIndexSetOfRows firstIndex];
 	SNDTrack * zDataObj	= [self.playlistData objectAtIndex:zIndex];
 	NSString *zDataString = zDataObj.path;
-	[pboard setString:zDataString forType:@"public.utf8-plain-text"];
-    
+	[pboard setString:zDataString forType:@"public.utf8-plain-text"];    
     return YES;
 }
 
@@ -261,7 +257,6 @@ NSString *const PBType = @"playlistRowDragDropType";
         [self setCurrentTrackIndexByTrack:self.currentTrack];
         [playlistTableView noteNumberOfRowsChanged];
         [playlistTableView deselectAll:self];
-        //[self setCurrentTrackAfterDrag];
 		[playlistTableView reloadData];
 		return YES;
 	}
@@ -270,7 +265,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 		NSLog(@"public.utf8-plain-text");
 		NSData* zStringData = [zPBoard dataForType:@"public.utf8-plain-text"];
 		NSString * aStr = [[NSString alloc] initWithData:zStringData encoding:NSASCIIStringEncoding];
-		//NSLog(@"zStringData =%@",aStr);
 		SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:aStr]];
 		[self.playlistData insertObject:zDataObj atIndex:pRow];
 		[playlistTableView noteNumberOfRowsChanged];
@@ -318,23 +312,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 	return i;
 }
 
-/*- (void)moveObjectsInArrangedObjectsFromIndexes:(NSIndexSet *)indexSet toIndex:(unsigned int)insertIndex {
-	NSUInteger index = [indexSet lastIndex];
-	NSUInteger aboveInsertIndexCount = 0;
-	NSUInteger removeIndex;
-    
-	while (index != NSNotFound) {
-		if (index >= insertIndex) {
-			removeIndex = index + aboveInsertIndexCount;
-			aboveInsertIndexCount += 1;
-		} else {
-			removeIndex = index;
-			insertIndex -= 1;
-		}
-		index = [indexSet indexLessThanIndex:index];
-	}
-}*/
-
 - (void)playlistDeleteNotification:(NSNotification *)notification{
     [playlistTableView abortEditing];
     
@@ -351,11 +328,6 @@ NSString *const PBType = @"playlistRowDragDropType";
     [playlistTableView reloadData];
     [self savePlaylist];
 }
-
-//- (void)playerFinishedPlayingNotification:(NSNotification *)notification{
-//    NSLog(@"> playerFinishedNotification, trying to play next..");
-//    [self selectNextOrPreviousTrack:YES ];
-//}
 
 // WindowDropDelegate methods
 - (void) filesDroppedIntoWindow:(NSArray *)filesURL {
@@ -403,19 +375,17 @@ NSString *const PBType = @"playlistRowDragDropType";
                 }
             }
             
-            NSArray *sortedFiles = [self sortSNDTracksByTrackNumber:unsortedFiles];
-            
+            NSArray *sortedFiles = [self sortSNDTracksByTrackNumber:unsortedFiles];            
             for (i = 0; i < [sortedFiles count]; i++) {
                 if(row != -1){
                     [self.playlistData insertObject:[sortedFiles objectAtIndex:i] atIndex:row++];
                 } else {
-                    //[self.playlistData addObject:zDataObj];
                     [self.playlistData addObject:[sortedFiles objectAtIndex:i]];
                 }
             }          
             
         } else {
-            //NSLog (@"is a file, %@", aStrPath);
+            //NSLog (@"is a file");
             if([self.sndPlayer.acceptableFileExtensions containsObject:aStrPath.pathExtension]){
                 SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:aStrPath]];
                 if(row != -1){
@@ -440,7 +410,6 @@ NSString *const PBType = @"playlistRowDragDropType";
     if(current < total){
         SNDTrack *t = [self.playlistData objectAtIndex:current + 1];
         [self selectNextOrPreviousTrack:YES andPlay:NO];
-        //NSLog (@"> nextTrack is: %@", t);
         return t;
     }
     return nil;

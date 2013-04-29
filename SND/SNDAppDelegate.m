@@ -24,9 +24,6 @@
     self.sndPlaylist.managedObjectContext = self.managedObjectContext;
     [self.sndPlaylist loadPlaylist];
     
-    //NSLog(@"** %@", [[[NSProcessInfo processInfo] environment] allKeys]);
-    
-    
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(traceNotifications:) name:nil object:nil];
     
     //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];

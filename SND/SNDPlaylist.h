@@ -18,16 +18,9 @@
 
 @class SNDPlayer;
 
-//@protocol PlayerDelegate <NSObject>
-//- (void) playURL:(NSURL *)fileURL;
-//- (void) playPauseAction;
-//@end
-
 @interface SNDPlaylist : NSObject <WindowDropDelegate, DockDropDelegate, NSTableViewDataSource> {
     IBOutlet NSTableView *playlistTableView;
 }
-
-//@property (nonatomic, weak) id <PlayerDelegate> playerDelegate;
 
 @property (nonatomic, assign) IBOutlet SNDWindow *sndWindow;
 @property (nonatomic, assign) IBOutlet SNDAppDelegate *sndAppDelegate;
@@ -44,7 +37,6 @@
 
 // player will preload next track in queue for smooth track swithing
 - (SNDTrack *) nextTrack;
-
 
 // loading playlist from disk
 - (void) loadPlaylist;

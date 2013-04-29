@@ -29,7 +29,6 @@
 - (IBAction)positionSlider:(NSSlider *)sender;
 
 - (void) playTrack:(SNDTrack *)track;
-//- (void) playURL:(NSURL *)fileURL;
 - (void) playPauseAction;
 
 @end

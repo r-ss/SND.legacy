@@ -11,13 +11,8 @@
 #import "TagLib/TagLib.h"
 #include "TagLib/tag_c.h"
 
-//#import "TagLib.h"
-//#include "tag_c.h"
-
 @implementation SNDTrack
 
-//@synthesize artist = _artist;
-//@synthesize title = _title;
 @synthesize url = _url;
 @synthesize path = _path;
 @synthesize filename = _filename;
