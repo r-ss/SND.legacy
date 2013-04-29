@@ -67,10 +67,10 @@
 
 - (IBAction)positionSlider:(NSSlider *)sender {
     if(self.isPlaying){
-        float percent = [sender doubleValue] / 100;
-        double targetTime = self.duration.doubleValue * percent;
+        //float percent = [sender doubleValue] / 100;
+        //double targetTime = self.duration.doubleValue * percent;
         //NSLog(@"percent: %f, duration, %f, targetTime: %f", percent, self.duration.doubleValue, targetTime);
-        [self.player seekToTime:targetTime];
+        [self.player seekToTime:[sender doubleValue]];
     }
 }
 
@@ -87,15 +87,11 @@
 
 -(void)updatePositionViews {
     [durationOutlet setStringValue:[NSString stringWithString:[self hhmmssFromSeconds:self.position.integerValue]]];
-    NSNumber *percent = [NSNumber numberWithDouble:(self.position.doubleValue / self.duration.doubleValue) * 100];
-    [positionSlider setIntegerValue:percent.integerValue];
+    [positionSlider setDoubleValue:self.position.doubleValue];    
 }
 
 -(void) timerTick: (NSTimer *)timer {
-    self.position = [NSNumber numberWithDouble:self.player.amountPlayed];
-    if(self.duration.intValue == 0)
-        self.duration = [NSNumber numberWithDouble:self.player.trackTime];
-    
+    self.position = [NSNumber numberWithDouble:self.player.amountPlayed];   
     [self updatePositionViews];    
     
     //NSNumber *percent = [NSNumber numberWithDouble:(self.position.doubleValue / self.duration.doubleValue) * 100];
@@ -164,9 +160,10 @@
             //_ivCover.image = data ? [[NSImage alloc] initWithData:data] : nil;
             
             self.position = [NSNumber numberWithDouble:0];
-            self.duration = [NSNumber numberWithDouble:0];
+            self.duration = [NSNumber numberWithDouble:self.player.trackTime];
+            [positionSlider setMaxValue:self.duration.doubleValue];
             [self updatePositionViews];
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
             
             //self.preloadedTrack = nil;
             

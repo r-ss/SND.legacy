@@ -7,11 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AVFoundation/AVFoundation.h>
 
 @interface SNDTrack : NSObject
-
-
 
 //@property (nonatomic) BOOL isCurrent;
 @property (nonatomic) NSURL *url;
@@ -39,7 +36,6 @@
 //@property (nonatomic, retain) NSNumber *length;
 //@property (nonatomic, retain) NSNumber *sampleRate;
 //@property (nonatomic, retain) NSNumber *bitRate;
-
 
 
 - (id)initWithURL:(NSURL *)url;
