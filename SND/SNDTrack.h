@@ -19,8 +19,28 @@
 @property (nonatomic) NSString *filename;
 @property (nonatomic) NSNumber *duration;
 @property (nonatomic) NSString *formattedDuration;
-@property (nonatomic) NSString *artist;
-@property (nonatomic) NSString *title;
+//@property (nonatomic) NSString *artist;
+//@property (nonatomic) NSString *title;
+
+
+@property (nonatomic) BOOL validTags;
+@property (nonatomic) BOOL validAudioProperties;
+
+// Tags
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *artist;
+@property (nonatomic, copy) NSString *album;
+@property (nonatomic, copy) NSString *comment;
+@property (nonatomic, copy) NSString *genre;
+@property (nonatomic, retain) NSNumber *track;
+@property (nonatomic, retain) NSNumber *year;
+
+// Audio properties
+@property (nonatomic, retain) NSNumber *length;
+@property (nonatomic, retain) NSNumber *sampleRate;
+@property (nonatomic, retain) NSNumber *bitRate;
+
+
 
 - (id)initWithURL:(NSURL *)url;
 
