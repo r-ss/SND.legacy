@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SNDBox.h"
-
-@class SNDTrack;
+#import "SNDPlaylist.h"
 
 
 @interface SNDPlayer : NSObject {
@@ -20,7 +18,7 @@
 
 @property (readonly) NSArray *acceptableFileExtensions; 
 
-@property (nonatomic, assign) IBOutlet SNDBox *sndBox;
+@property (nonatomic, assign) IBOutlet SNDPlaylist *sndPlaylist;
 
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic) NSNumber *volume;

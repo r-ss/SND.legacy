@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Alex Antipov. All rights reserved.
 //
 #import "SNDPlayer.h"
-#import "SNDTrack.h"
 #import <OrigamiEngine/ORGMEngine.h>
 
 // private part
@@ -97,7 +96,7 @@
 
 #pragma mark - ORGMEngineDelegate
 - (NSURL *)engineExpectsNextUrl:(ORGMEngine *)engine {
-    SNDTrack *nextTrack = [self.sndBox nextTrack];
+    SNDTrack *nextTrack = [self.sndPlaylist nextTrack];
     return nextTrack.url;
 }
 
