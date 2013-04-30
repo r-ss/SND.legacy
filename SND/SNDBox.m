@@ -381,6 +381,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     return sortedTracks;
 }
 
+
 - (void) addFiles:(NSArray *)filesURL atRow:(NSInteger)row {
     //NSLog(@"> addFiles at row: %ld", (long)row);
     NSInteger i;
@@ -391,38 +392,59 @@ NSString *const PBType = @"playlistRowDragDropType";
         BOOL isDir;
         if([[NSFileManager defaultManager] fileExistsAtPath: aStrPath isDirectory:&isDir] && isDir){
             //NSLog(@"is a directory");
+            /*
+            search for subdirs
+            sort subdirs alphabetical
+            search tracks in sorted subdirs and add to playlist
+            add tracks at 1st directory level to end of playlist
+            */
             NSDirectoryEnumerator *dirEnum = [[NSFileManager defaultManager] enumeratorAtPath:aStrPath];
             
-            NSMutableArray *unsortedFiles = [[NSMutableArray alloc] init];
+            NSMutableArray *unsortedSubdirectories = [[NSMutableArray alloc] init];
+            NSMutableArray *unsortedTracks = [[NSMutableArray alloc] init];
             
             for (NSString *filepath in dirEnum) {
-                NSLog(@"file: %@", filepath);
-                //if ([[filepath pathExtension] isEqualToString: @"mp3"]) {
-                if ([self.sndPlayer.acceptableFileExtensions containsObject:filepath.pathExtension]) {
-                    NSString *path = [NSString stringWithFormat:@"%@/%@", aStrPath, filepath];
-                    SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:path]];
-                    [unsortedFiles addObject:zDataObj];
-                }
-            }
-            
-            NSArray *sortedFiles = [self sortSNDTracksByTrackNumber:unsortedFiles];
-            for (i = 0; i < [sortedFiles count]; i++) {
-                if(row != -1){
-                    [self.currentSelectedPlaylist.tracks insertObject:[sortedFiles objectAtIndex:i] atIndex:row++];
+                NSString *path = [NSString stringWithFormat:@"%@/%@", aStrPath, filepath];
+                BOOL isSubDir;
+                if([[NSFileManager defaultManager] fileExistsAtPath: path isDirectory:&isSubDir] && isSubDir){
+                    [unsortedSubdirectories addObject:path];
                 } else {
-                    [self.currentSelectedPlaylist.tracks addObject:[sortedFiles objectAtIndex:i]];
+                    if ([self.sndPlayer.acceptableFileExtensions containsObject:filepath.pathExtension] && [dirEnum level] == 1) {
+                        SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:path]];
+                        [unsortedTracks addObject:zDataObj];
+                    }
                 }
             }
             
+            NSArray *sortedSubdirectories = [unsortedSubdirectories sortedArrayUsingSelector:@selector(compare:)];
+  
+            for (i = 0; i < [sortedSubdirectories count]; i++) {
+                NSDirectoryEnumerator *subdirEnum = [[NSFileManager defaultManager] enumeratorAtPath:[sortedSubdirectories objectAtIndex:i]];                
+                NSMutableArray *unsortedTracksInSubdir = [[NSMutableArray alloc] init];                
+                for (NSString *sfilepath in subdirEnum) {
+                    NSString *path = [NSString stringWithFormat:@"%@/%@", [sortedSubdirectories objectAtIndex:i], sfilepath];                    
+                    if ([self.sndPlayer.acceptableFileExtensions containsObject:sfilepath.pathExtension]) {
+                        SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:path]];
+                        [unsortedTracksInSubdir addObject:zDataObj];
+                    }                    
+                }
+                NSArray *sortedTracksInSubdir = [self sortSNDTracksByTrackNumber:unsortedTracksInSubdir];
+                NSInteger k;
+                for (k = 0; k < [sortedTracksInSubdir count]; k++) {
+                    NSLog(@"++");
+                    (row != -1) ? [self.currentSelectedPlaylist.tracks insertObject:[sortedTracksInSubdir objectAtIndex:k] atIndex:row++] : [self.currentSelectedPlaylist.tracks addObject:[sortedTracksInSubdir objectAtIndex:k]];
+                }
+            }
+            
+            NSArray *sortedTracks = [self sortSNDTracksByTrackNumber:unsortedTracks];
+            for (i = 0; i < [sortedTracks count]; i++) {                
+                (row != -1) ? [self.currentSelectedPlaylist.tracks insertObject:[sortedTracks objectAtIndex:i] atIndex:row++] : [self.currentSelectedPlaylist.tracks addObject:[sortedTracks objectAtIndex:i]];
+            }            
         } else {
             //NSLog (@"is a file");
             if([self.sndPlayer.acceptableFileExtensions containsObject:aStrPath.pathExtension]){
-                SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:aStrPath]];
-                if(row != -1){
-                    [self.currentSelectedPlaylist.tracks insertObject:zDataObj atIndex:row++];
-                } else {
-                    [self.currentSelectedPlaylist.tracks addObject:zDataObj];
-                }
+                SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:aStrPath]];                
+                (row != -1) ? [self.currentSelectedPlaylist.tracks insertObject:zDataObj atIndex:row++] : [self.currentSelectedPlaylist.tracks addObject:zDataObj];
             }
         }
     }
@@ -449,7 +471,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (IBAction) doubleClick:(id)sender {
     [self logToConsole:@"doubleClick"];
-    //[self.currentPlaylist selectItemAtRow:[playlistTableView clickedRow]];
     self.currentPlayingPlaylist = self.currentSelectedPlaylist;
     [self playTrack:[self.currentSelectedPlaylist selectItemAtRow:[playlistTableView clickedRow]]];
     
@@ -458,8 +479,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 - (void) playTrack:(SNDTrack *)track {
     [self logToConsole:@"playTrack"];
     [self.sndPlayer playTrack:track];
-    //if(!self.currentPlayingPlaylist)
-        //self.currentPlayingPlaylist = self.currentSelectedPlaylist;
     [playlistTableView reloadData];
 }
 
