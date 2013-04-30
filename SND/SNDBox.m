@@ -396,6 +396,7 @@ NSString *const PBType = @"playlistRowDragDropType";
             NSMutableArray *unsortedFiles = [[NSMutableArray alloc] init];
             
             for (NSString *filepath in dirEnum) {
+                NSLog(@"file: %@", filepath);
                 //if ([[filepath pathExtension] isEqualToString: @"mp3"]) {
                 if ([self.sndPlayer.acceptableFileExtensions containsObject:filepath.pathExtension]) {
                     NSString *path = [NSString stringWithFormat:@"%@/%@", aStrPath, filepath];

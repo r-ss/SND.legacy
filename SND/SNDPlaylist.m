@@ -23,10 +23,6 @@
     return self;
 }
 
-//- (void) deactivate {
-//    self.currentTrackIndex = [NSNumber numberWithInt:-1];
-//}
-
 - (void) setCurrentTrackByIndex:(NSNumber *)index {
     self.currentTrackIndex = index;
     self.currentTrack = [self.tracks objectAtIndex:index.integerValue];
@@ -65,7 +61,6 @@
 - (SNDTrack *) selectItemAtRow:(NSInteger)rowIndex{
     self.currentTrackIndex = [NSNumber numberWithInt:rowIndex];
     [self setCurrentTrackByIndex:self.currentTrackIndex];
-    //SNDTrack *track = [seld.tracks objectAtIndex:]
     return self.currentTrack;
 }
 

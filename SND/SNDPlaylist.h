@@ -17,8 +17,6 @@
 @property (nonatomic) NSNumber *currentTrackIndex;
 @property (nonatomic) SNDTrack *currentTrack;
 
-
-//- (void) deactivate;
 - (void) setCurrentTrackByIndex:(NSNumber *)index;
 - (void) setCurrentTrackIndexByTrack:(SNDTrack *)currentTrack;
 

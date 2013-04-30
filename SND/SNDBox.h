@@ -9,11 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-
-
 #import "SNDAppDelegate.h"
 #import "SNDWindow.h"
-
 
 @class SNDPlayer;
 @class SNDTrack;
@@ -32,19 +29,14 @@
 
 @property (nonatomic) SNDTrack *currentTrack;
 
-
-
-
 @property (nonatomic, weak) NSManagedObjectContext *managedObjectContext;
 
 
 - (IBAction)tabAction:(NSSegmentedControl *)sender;
-
 - (IBAction)controlAction:(NSSegmentedControl *)sender;
 
 // player will preload next track in queue for smooth track swithing
 - (SNDTrack *) nextTrack;
-
 
 // loading playlist from disk
 - (void) load;

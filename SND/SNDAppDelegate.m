@@ -20,7 +20,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
     self.sndBox.managedObjectContext = self.managedObjectContext;
     [self.sndBox load];
     
