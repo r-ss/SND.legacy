@@ -73,7 +73,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender {
-    NSLog(@"tab click: %ld", sender.selectedSegment);
+    //NSLog(@"tab click: %ld", sender.selectedSegment);
     if([self.playlists indexOfObject:self.currentPlaylist] != sender.selectedSegment){
         //[self.currentPlaylist deactivate];
         self.currentPlaylist = [self.playlists objectAtIndex:sender.selectedSegment];
@@ -148,19 +148,17 @@ NSString *const PBType = @"playlistRowDragDropType";
         }
         
         NSLog(@"found %ld raw tracks", [rawTracks count]);
-        NSLog(@"raw tracks %@", rawTracks);
+        //NSLog(@"raw tracks %@", rawTracks);
         
         
         for (i = 0; i < [self.playlists count]; i++) {
             NSMutableArray *unsortedRows = [[NSMutableArray alloc] init];
             NSInteger k;
             for (k = 0; k < [rawTracks count]; k++) {
-                NSArray *rawTrack = [rawTracks objectAtIndex:k];                
+                NSArray *rawTrack = [rawTracks objectAtIndex:k];
                 NSNumber *memberOf = [rawTrack objectAtIndex:0];
                 if(memberOf.intValue == i){
                     [unsortedRows addObject:[rawTracks objectAtIndex:k]];
-                    //SNDPlaylist *playlist = [self.playlists objectAtIndex:i];
-                    //[playlist.tracks addObject:[[rawTracks objectAtIndex:k] objectAtIndex:2]];
                 }
             }
             NSArray *sortedRows = [unsortedRows sortedArrayUsingComparator:^(id a, id b)

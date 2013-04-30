@@ -23,9 +23,9 @@
     return self;
 }
 
-- (void) deactivate {
-    self.currentTrackIndex = [NSNumber numberWithInt:-1];
-}
+//- (void) deactivate {
+//    self.currentTrackIndex = [NSNumber numberWithInt:-1];
+//}
 
 - (void) setCurrentTrackByIndex:(NSNumber *)index {
     self.currentTrackIndex = index;
