@@ -63,7 +63,7 @@
 }
 
 - (void) updatePositionViews {
-    [durationOutlet setStringValue:[NSString stringWithString:[self.position hhmmssFromSeconds:self.position]]];
+    [durationOutlet setStringValue:[NSString stringWithString:[[NSNumber alloc] hhmmssFromSeconds:self.position]]];
     [positionSlider setDoubleValue:self.position.doubleValue];    
 }
 
@@ -74,8 +74,12 @@
 
 
 - (void) playTrack:(SNDTrack *)track {
-    if(track)
+    if(track){
+        if(self.player.currentState == ORGMEngineStatePlaying){
+           [self.player stop];
+        }
         [self.player playUrl:track.url];
+    }
 }
 
 - (void) playPauseAction {

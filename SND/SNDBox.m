@@ -73,7 +73,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void)logToConsole:(NSString *)message {
-    NSLog(@"log: %@", message);
+    //NSLog(@"log: %@", message);
 }
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender {
