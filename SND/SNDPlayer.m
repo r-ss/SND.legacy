@@ -96,7 +96,7 @@
 
 #pragma mark - ORGMEngineDelegate
 - (NSURL *)engineExpectsNextUrl:(ORGMEngine *)engine {
-    SNDTrack *nextTrack = [self.sndPlaylist nextTrack];
+    SNDTrack *nextTrack = [self.sndBox nextTrack];
     return nextTrack.url;
 }
 

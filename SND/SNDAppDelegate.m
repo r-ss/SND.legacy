@@ -7,12 +7,12 @@
 //
 
 #import "SNDAppDelegate.h"
+#import "SNDBox.h"
 
-#import "SNDPlayer.h"
 
 @implementation SNDAppDelegate
 
-@synthesize sndPlaylist = _sndPlaylist;
+@synthesize sndBox = _sndBox;
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -21,8 +21,8 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
-    self.sndPlaylist.managedObjectContext = self.managedObjectContext;
-    [self.sndPlaylist loadPlaylist];
+    self.sndBox.managedObjectContext = self.managedObjectContext;
+    //[self.sndPlaylist loadPlaylist];
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(traceNotifications:) name:nil object:nil];
     

@@ -7,38 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
-#import "SNDAppDelegate.h"
-#import "SNDWindow.h"
-#import "SNDPlaylistView.h"
-#import "SNDTrack.h"
+@class SNDTrack;
 
+@interface SNDPlaylist : NSObject
 
-
-@class SNDPlayer;
-
-@interface SNDPlaylist : NSObject <WindowDropDelegate, DockDropDelegate, NSTableViewDataSource> {
-    IBOutlet NSTableView *playlistTableView;
-}
-
-@property (nonatomic, assign) IBOutlet SNDWindow *sndWindow;
-@property (nonatomic, assign) IBOutlet SNDAppDelegate *sndAppDelegate;
-@property (nonatomic, assign) IBOutlet SNDPlayer *sndPlayer;
-
-@property (nonatomic) SNDTrack *currentTrack;
+@property (nonatomic, strong, readwrite) NSMutableArray *tracks;
 @property (nonatomic) NSNumber *currentTrackIndex;
-@property (nonatomic) NSMutableArray *playlistData;
-
-@property (nonatomic, weak) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) SNDTrack *currentTrack;
 
 
-- (IBAction)controlAction:(NSSegmentedControl *)sender;
-
-// player will preload next track in queue for smooth track swithing
-- (SNDTrack *) nextTrack;
-
-// loading playlist from disk
-- (void) loadPlaylist;
+- (void) setCurrentTrackByIndex:(NSNumber *)index;
+- (void) setCurrentTrackIndexByTrack:(SNDTrack *)currentTrack;
+- (void) selectNextOrPreviousTrack:(BOOL)next andPlay:(BOOL)play;
+- (void) selectItemAtRow:(NSInteger)rowIndex andPlay:(BOOL)play;
 
 @end

@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+//#import "SNDBox.h"
+
+@class SNDBox;
+
 @class SNDPlaylist;
 
 @protocol DockDropDelegate <NSObject>
@@ -18,7 +22,7 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
-@property (assign) IBOutlet SNDPlaylist *sndPlaylist;
+@property (assign) IBOutlet SNDBox *sndBox;
 
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
