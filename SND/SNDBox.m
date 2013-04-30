@@ -478,8 +478,12 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void) playTrack:(SNDTrack *)track {
     [self logToConsole:@"playTrack"];
-    [self.sndPlayer playTrack:track];
-    [playlistTableView reloadData];
+    if(track){
+        [self.sndPlayer playTrack:track];
+        if(!self.currentPlayingPlaylist)
+            self.currentPlayingPlaylist = self.currentSelectedPlaylist;
+        [playlistTableView reloadData];
+    }
 }
 
 - (IBAction)controlAction:(NSSegmentedControl *)sender {
@@ -488,13 +492,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         // previous button
         case 0:
         {
-            ////[self.currentPlaylist selectNextOrPreviousTrack:NO andPlay:YES];
-            if(self.currentPlayingPlaylist){
-                [self playTrack:[self.currentPlayingPlaylist selectNextOrPreviousTrack:NO]];
-            } else {
-                [self playTrack:[self.currentSelectedPlaylist selectNextOrPreviousTrack:NO]];
-                //self.currentPlayingPlaylist = self.currentSelectedPlaylist;
-            }
+            (self.currentPlayingPlaylist) ? [self playTrack:[self.currentPlayingPlaylist selectNextOrPreviousTrack:NO]] : [self playTrack:[self.currentSelectedPlaylist selectNextOrPreviousTrack:NO]];
             break;
         }
         // play/pause button
@@ -521,12 +519,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         // next button
         case 2:
         {
-            if(self.currentPlayingPlaylist){
-                [self playTrack:[self.currentPlayingPlaylist selectNextOrPreviousTrack:YES]];
-            } else {
-                [self playTrack:[self.currentSelectedPlaylist selectNextOrPreviousTrack:YES]];
-                //self.currentPlayingPlaylist = self.currentSelectedPlaylist;
-            }
+            (self.currentPlayingPlaylist) ? [self playTrack:[self.currentPlayingPlaylist selectNextOrPreviousTrack:YES]] : [self playTrack:[self.currentSelectedPlaylist selectNextOrPreviousTrack:YES]];
             break;
         }
     }
