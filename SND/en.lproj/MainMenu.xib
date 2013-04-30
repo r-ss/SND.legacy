@@ -368,7 +368,7 @@
 											<string key="NSFrameSize">{517, 224}</string>
 											<reference key="NSSuperview" ref="764692948"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="505514637"/>
+											<reference key="NSNextKeyView" ref="362367530"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -641,7 +641,6 @@
 									<string key="NSFrame">{{1, 251}, {419, 15}}</string>
 									<reference key="NSSuperview" ref="472939342"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
 									<string key="NSReuseIdentifierKey">_NS:60</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<int key="NSsFlags">1</int>
@@ -669,7 +668,7 @@
 							<string key="NSFrame">{{-1, -1}, {519, 242}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="362367530"/>
+							<reference key="NSNextKeyView" ref="764692948"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133682</int>
 							<reference key="NSVScroller" ref="505514637"/>
@@ -763,7 +762,7 @@
 						<object class="NSSegmentedControl" id="78656762">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{18, 252}, {155, 24}}</string>
+							<string key="NSFrame">{{18, 251}, {155, 24}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="472939342"/>
@@ -778,6 +777,7 @@
 								<array class="NSMutableArray" key="NSSegmentImages">
 									<object class="NSSegmentItem">
 										<string key="NSSegmentItemLabel">0</string>
+										<bool key="NSSegmentItemSelected">YES</bool>
 										<int key="NSSegmentItemImageScaling">0</int>
 									</object>
 									<object class="NSSegmentItem">
@@ -798,8 +798,6 @@
 										<int key="NSSegmentItemImageScaling">0</int>
 									</object>
 								</array>
-								<int key="NSSelectedSegment">1</int>
-								<int key="NSTrackingMode">2</int>
 								<int key="NSSegmentStyle">1</int>
 							</object>
 							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -990,6 +988,14 @@
 						<reference key="destination" ref="533945429"/>
 					</object>
 					<int key="connectionID">1197</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">sndBox</string>
+						<reference key="source" ref="256344463"/>
+						<reference key="destination" ref="787609694"/>
+					</object>
+					<int key="connectionID">1356</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1410,7 +1416,7 @@
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="626379406">
+							<object class="IBNSLayoutConstraint" id="436058711">
 								<reference key="firstItem" ref="78656762"/>
 								<int key="firstAttribute">3</int>
 								<int key="relation">0</int>
@@ -1418,7 +1424,7 @@
 								<int key="secondAttribute">3</int>
 								<float key="multiplier">1</float>
 								<object class="IBLayoutConstant" key="constant">
-									<double key="value">55</double>
+									<double key="value">56</double>
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="439893737"/>
@@ -1478,8 +1484,8 @@
 							<reference ref="834976639"/>
 							<reference ref="416479895"/>
 							<reference ref="472939342"/>
-							<reference ref="78656762"/>
 							<reference ref="422687267"/>
+							<reference ref="78656762"/>
 						</array>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -1760,16 +1766,6 @@
 						<reference key="parent" ref="439893737"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1278</int>
-						<reference key="object" ref="265163645"/>
-						<reference key="parent" ref="439893737"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1279</int>
-						<reference key="object" ref="242341690"/>
-						<reference key="parent" ref="439893737"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1256</int>
 						<reference key="object" ref="475440799"/>
 						<reference key="parent" ref="439893737"/>
@@ -1829,24 +1825,34 @@
 						<reference key="parent" ref="78656762"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1332</int>
-						<reference key="object" ref="863338269"/>
-						<reference key="parent" ref="439893737"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1333</int>
 						<reference key="object" ref="197228304"/>
-						<reference key="parent" ref="439893737"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1335</int>
-						<reference key="object" ref="626379406"/>
 						<reference key="parent" ref="439893737"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1336</int>
 						<reference key="object" ref="787609694"/>
 						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1279</int>
+						<reference key="object" ref="242341690"/>
+						<reference key="parent" ref="439893737"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1278</int>
+						<reference key="object" ref="265163645"/>
+						<reference key="parent" ref="439893737"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1332</int>
+						<reference key="object" ref="863338269"/>
+						<reference key="parent" ref="439893737"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1355</int>
+						<reference key="object" ref="436058711"/>
+						<reference key="parent" ref="439893737"/>
 					</object>
 				</array>
 			</object>
@@ -1895,9 +1901,9 @@
 				<string key="1327.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1332.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1333.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1335.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1336.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="134.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1355.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="136.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="143.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="145.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1917,7 +1923,7 @@
 					<reference ref="352093006"/>
 					<reference ref="767766866"/>
 					<reference ref="863338269"/>
-					<reference ref="626379406"/>
+					<reference ref="436058711"/>
 					<reference ref="651436880"/>
 					<reference ref="224002142"/>
 					<reference ref="936397903"/>
@@ -1984,7 +1990,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1344</int>
+			<int key="maxID">1356</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2023,12 +2029,17 @@
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="controlAction:">NSSegmentedControl</string>
+						<string key="doubleClick:">id</string>
 						<string key="tabAction:">NSSegmentedControl</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="controlAction:">
 							<string key="name">controlAction:</string>
 							<string key="candidateClassName">NSSegmentedControl</string>
+						</object>
+						<object class="IBActionInfo" key="doubleClick:">
+							<string key="name">doubleClick:</string>
+							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="tabAction:">
 							<string key="name">tabAction:</string>

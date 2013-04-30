@@ -23,6 +23,10 @@
     return self;
 }
 
+- (void) deactivate {
+    self.currentTrackIndex = [NSNumber numberWithInt:-1];
+}
+
 - (void) setCurrentTrackByIndex:(NSNumber *)index {
     self.currentTrackIndex = index;
     self.currentTrack = [self.tracks objectAtIndex:index.integerValue];
@@ -32,12 +36,13 @@
     self.currentTrackIndex = [NSNumber numberWithInteger:[self.tracks indexOfObject:currentTrack]];
 }
 
--(void) selectNextOrPreviousTrack:(BOOL)next andPlay:(BOOL)play {
+- (SNDTrack *) selectNextOrPreviousTrack:(BOOL)next {
+    NSLog(@"> selectNextOrPreviousTrack");
     if(self.currentTrackIndex.integerValue == -1){
         self.currentTrackIndex = [NSNumber numberWithInt:0];
         [self setCurrentTrackByIndex:self.currentTrackIndex];
-        [self selectItemAtRow:self.currentTrackIndex.intValue andPlay:YES];
-        return;
+        [self selectItemAtRow:self.currentTrackIndex.intValue];
+        return nil;
     }
     NSInteger current = self.currentTrackIndex.intValue;
     NSInteger total = [self.tracks count] - 1;
@@ -52,19 +57,16 @@
             }
         }
         if(current != self.currentTrackIndex.intValue)
-            [self selectItemAtRow:current andPlay:play];
+            return [self selectItemAtRow:current];
     }
+    return nil;
 }
 
--(void)selectItemAtRow:(NSInteger)rowIndex andPlay:(BOOL)play {
-    //SNDTrack *t = [self.tracks objectAtIndex:rowIndex];
+- (SNDTrack *) selectItemAtRow:(NSInteger)rowIndex{
     self.currentTrackIndex = [NSNumber numberWithInt:rowIndex];
     [self setCurrentTrackByIndex:self.currentTrackIndex];
-    //[playlistTableView reloadData];
-    if(play) {
-        NSLog(@">>> play");
-    }
-        //[self.sndPlayer playTrack:t];
+    //SNDTrack *track = [seld.tracks objectAtIndex:]
+    return self.currentTrack;
 }
 
 

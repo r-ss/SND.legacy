@@ -71,7 +71,7 @@
     }
 }
 
--(void)updatePositionViews {
+- (void) updatePositionViews {
     [durationOutlet setStringValue:[NSString stringWithString:[self hhmmssFromSeconds:self.position.integerValue]]];
     [positionSlider setDoubleValue:self.position.doubleValue];    
 }
@@ -83,10 +83,11 @@
 
 
 - (void) playTrack:(SNDTrack *)track {
-    [self.player playUrl:track.url];
+    if(track)
+        [self.player playUrl:track.url];
 }
 
--(void) playPauseAction {
+- (void) playPauseAction {
     if(self.player.currentState == ORGMEngineStatePlaying){
         [self.player pause];
     } else if (self.player.currentState == ORGMEngineStatePaused) {
@@ -95,8 +96,9 @@
 }
 
 #pragma mark - ORGMEngineDelegate
-- (NSURL *)engineExpectsNextUrl:(ORGMEngine *)engine {
+- (NSURL *) engineExpectsNextUrl:(ORGMEngine *)engine {
     SNDTrack *nextTrack = [self.sndBox nextTrack];
+    NSLog(@"next track is: %@", nextTrack);
     return nextTrack.url;
 }
 

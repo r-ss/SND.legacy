@@ -8,6 +8,7 @@
 
 #import "SNDBox.h"
 #import "SNDPlaylist.h"
+
 #import "SNDPlayer.h"
 #import "SNDTrack.h"
 #import "SNDPlaylistView.h"
@@ -58,7 +59,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     
     self.currentPlaylist = [self.playlists objectAtIndex:0];
     
-    NSLog(@"NNNNNN %@", self.currentPlaylist);
+    
     
     
     //self.currentTrackIndex = [NSNumber numberWithInt:-1];
@@ -70,9 +71,13 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender {
     NSLog(@"tab click: %ld", sender.selectedSegment);
-    self.currentPlaylist = [self.playlists objectAtIndex:sender.selectedSegment];
-    [playlistTableView reloadData];
-    NSLog(@"%@", self.currentPlaylist.tracks);
+    if([self.playlists indexOfObject:self.currentPlaylist] != sender.selectedSegment){
+        //[self.currentPlaylist deactivate];
+        self.currentPlaylist = [self.playlists objectAtIndex:sender.selectedSegment];
+        [playlistTableView reloadData];
+        [playlistTableView deselectAll:self];
+    }
+    //NSLog(@"%@", self.currentPlaylist.tracks);
 }
 /*
 - (void) savePlaylist {
@@ -332,7 +337,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) addFiles:(NSArray *)filesURL atRow:(NSInteger)row {
-    NSLog(@"> addFiles at row: %ld", (long)row);
+    //NSLog(@"> addFiles at row: %ld", (long)row);
     NSInteger i;
     for (i = 0; i < [filesURL count]; i++) {
         NSString * zStrFilePath	= [filesURL objectAtIndex:i];
@@ -340,7 +345,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         
         BOOL isDir;
         if([[NSFileManager defaultManager] fileExistsAtPath: aStrPath isDirectory:&isDir] && isDir){
-            NSLog(@"is a directory");
+            //NSLog(@"is a directory");
             NSDirectoryEnumerator *dirEnum = [[NSFileManager defaultManager] enumeratorAtPath:aStrPath];
             
             NSMutableArray *unsortedFiles = [[NSMutableArray alloc] init];
@@ -364,18 +369,13 @@ NSString *const PBType = @"playlistRowDragDropType";
             }
             
         } else {
-            NSLog (@"is a file");
+            //NSLog (@"is a file");
             if([self.sndPlayer.acceptableFileExtensions containsObject:aStrPath.pathExtension]){
                 SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:aStrPath]];
                 if(row != -1){
-                    NSLog(@"ifghfhjory -1.....");
-
                     [self.currentPlaylist.tracks insertObject:zDataObj atIndex:row++];
-                    
                 } else {
-                    NSLog(@"ifghfhjory");
                     [self.currentPlaylist.tracks addObject:zDataObj];
-                    NSLog(@"NNNNNN %@", self.currentPlaylist);
                 }
             }
         }
@@ -391,30 +391,33 @@ NSString *const PBType = @"playlistRowDragDropType";
 - (SNDTrack *)nextTrack {
     NSInteger current = self.currentPlaylist.currentTrackIndex.intValue;
     NSInteger total = [self.currentPlaylist.tracks count] - 1;
+    NSLog(@"atata");
     if(current < total){
-        SNDTrack *t = [self.currentPlaylist.tracks objectAtIndex:current + 1];
-        [self.currentPlaylist selectNextOrPreviousTrack:YES andPlay:NO];
+        SNDTrack *t = [self.currentPlaylist selectNextOrPreviousTrack:YES];
+        if(t)
+            [playlistTableView reloadData];
         return t;
     }
     return nil;
 }
 
-
-
-
 - (IBAction) doubleClick:(id)sender {
-    [self.currentPlaylist selectItemAtRow:[playlistTableView clickedRow] andPlay:YES];
+    //[self.currentPlaylist selectItemAtRow:[playlistTableView clickedRow]];
+    [self.sndPlayer playTrack:[self.currentPlaylist selectItemAtRow:[playlistTableView clickedRow]]];
+    [playlistTableView reloadData];
 }
 
 - (IBAction)controlAction:(NSSegmentedControl *)sender {
     switch(sender.selectedSegment) {
-            // previous button
+        // previous button
         case 0:
         {
-            [self.currentPlaylist selectNextOrPreviousTrack:NO andPlay:YES];
+            ////[self.currentPlaylist selectNextOrPreviousTrack:NO andPlay:YES];
+            [self.sndPlayer playTrack:[self.currentPlaylist selectNextOrPreviousTrack:NO]];
+            [playlistTableView reloadData];
             break;
         }
-            // play/pause button
+        // play/pause button
         case 1:
         {
             if([self.currentPlaylist.tracks count] > 0){
@@ -422,17 +425,19 @@ NSString *const PBType = @"playlistRowDragDropType";
                 if(self.currentPlaylist.currentTrackIndex.integerValue == -1){
                     self.currentPlaylist.currentTrackIndex = [NSNumber numberWithInt:0];
                     [self.currentPlaylist setCurrentTrackByIndex:self.currentPlaylist.currentTrackIndex];
-                    [self.currentPlaylist selectItemAtRow:self.currentPlaylist.currentTrackIndex.intValue andPlay:YES];
+                    [self.sndPlayer playTrack:[self.currentPlaylist selectItemAtRow:self.currentPlaylist.currentTrackIndex.intValue]];
                     break;
                 }
                 [self.sndPlayer playPauseAction];
+                [playlistTableView reloadData];
             }
             break;
         }
-            // next button
+        // next button
         case 2:
         {
-            [self.currentPlaylist selectNextOrPreviousTrack:YES andPlay:YES];
+            [self.sndPlayer playTrack:[self.currentPlaylist selectNextOrPreviousTrack:YES]];
+            [playlistTableView reloadData];
             break;
         }
     }

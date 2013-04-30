@@ -7,19 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SNDBox.h"
 
 @class SNDTrack;
 
-@interface SNDPlaylist : NSObject
+@interface SNDPlaylist : SNDBox
 
 @property (nonatomic, strong, readwrite) NSMutableArray *tracks;
 @property (nonatomic) NSNumber *currentTrackIndex;
 @property (nonatomic) SNDTrack *currentTrack;
 
 
+- (void) deactivate;
 - (void) setCurrentTrackByIndex:(NSNumber *)index;
 - (void) setCurrentTrackIndexByTrack:(SNDTrack *)currentTrack;
-- (void) selectNextOrPreviousTrack:(BOOL)next andPlay:(BOOL)play;
-- (void) selectItemAtRow:(NSInteger)rowIndex andPlay:(BOOL)play;
+
+- (SNDTrack *) selectNextOrPreviousTrack:(BOOL)next;
+- (SNDTrack *) selectItemAtRow:(NSInteger)rowIndex;
 
 @end
