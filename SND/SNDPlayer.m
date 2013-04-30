@@ -39,20 +39,20 @@
     self.isPlaying = NO;
     
     // Restoring volume from user defaults
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    self.volume = [NSNumber numberWithFloat:[userDefaults floatForKey:@"defaultVolume"]];
-    [volumeSlider setIntegerValue:self.volume.floatValue * 100];
+    //NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    //self.volume = [NSNumber numberWithFloat:[userDefaults floatForKey:@"defaultVolume"]];
+    //[volumeSlider setIntegerValue:self.volume.floatValue * 100];
     
     self.player = [[ORGMEngine alloc] init];
     self.player.delegate = self;
 }
 
 
-- (IBAction)volumeSlider:(NSSlider *)sender {
-    self.volume = [NSNumber numberWithFloat:[sender floatValue] / 100];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setFloat:self.volume.floatValue forKey:@"defaultVolume"];
-}
+//- (IBAction)volumeSlider:(NSSlider *)sender {
+//    self.volume = [NSNumber numberWithFloat:[sender floatValue] / 100];
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    [userDefaults setFloat:self.volume.floatValue forKey:@"defaultVolume"];
+//}
 
 - (IBAction)positionSlider:(NSSlider *)sender {
     if(self.isPlaying){

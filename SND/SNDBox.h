@@ -27,7 +27,7 @@
 @property (nonatomic, assign) IBOutlet SNDPlayer *sndPlayer;
 
 @property (nonatomic) NSMutableArray *playlists;
-@property (nonatomic) SNDPlaylist *currentPlaylist;
+@property (nonatomic) SNDPlaylist *currentSelectedPlaylist;
 @property (nonatomic) SNDPlaylist *currentPlayingPlaylist;
 
 @property (nonatomic) SNDTrack *currentTrack;
