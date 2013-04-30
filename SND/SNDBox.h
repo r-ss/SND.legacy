@@ -28,6 +28,7 @@
 
 @property (nonatomic) NSMutableArray *playlists;
 @property (nonatomic) SNDPlaylist *currentPlaylist;
+@property (nonatomic) SNDPlaylist *currentPlayingPlaylist;
 
 @property (nonatomic) SNDTrack *currentTrack;
 
@@ -46,7 +47,7 @@
 
 
 // loading playlist from disk
-//- (void) loadPlaylist;
+- (void) load;
 
 
 @end

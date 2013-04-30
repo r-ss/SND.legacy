@@ -22,7 +22,7 @@
 {
     // Insert code here to initialize your application
     self.sndBox.managedObjectContext = self.managedObjectContext;
-    //[self.sndPlaylist loadPlaylist];
+    [self.sndBox load];
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(traceNotifications:) name:nil object:nil];
     
