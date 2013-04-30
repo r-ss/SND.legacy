@@ -46,6 +46,7 @@
 		D0B5B58B171ED7FD0024A6B8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B5B58A171ED7FD0024A6B8 /* AVFoundation.framework */; };
 		D0C489141726A053009FF7C7 /* SNDPlaybackSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C489131726A053009FF7C7 /* SNDPlaybackSegmentedControl.m */; };
 		D0D5DB73172E74430079AFA6 /* SNDTrack.mm in Sources */ = {isa = PBXBuildFile; fileRef = D0D5DB72172E74430079AFA6 /* SNDTrack.mm */; };
+		D0DF747B172FEC3F00AA7E8A /* NSNumber+hhmmssFromSeconds.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DF747A172FEC3F00AA7E8A /* NSNumber+hhmmssFromSeconds.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -113,6 +114,8 @@
 		D0C489121726A053009FF7C7 /* SNDPlaybackSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDPlaybackSegmentedControl.h; path = SND/SNDPlaybackSegmentedControl.h; sourceTree = "<group>"; };
 		D0C489131726A053009FF7C7 /* SNDPlaybackSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDPlaybackSegmentedControl.m; path = SND/SNDPlaybackSegmentedControl.m; sourceTree = "<group>"; };
 		D0D5DB72172E74430079AFA6 /* SNDTrack.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SNDTrack.mm; sourceTree = "<group>"; };
+		D0DF7479172FEC3F00AA7E8A /* NSNumber+hhmmssFromSeconds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+hhmmssFromSeconds.h"; path = "../NSNumber+hhmmssFromSeconds.h"; sourceTree = "<group>"; };
+		D0DF747A172FEC3F00AA7E8A /* NSNumber+hhmmssFromSeconds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+hhmmssFromSeconds.m"; path = "../NSNumber+hhmmssFromSeconds.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +193,8 @@
 				D0D5DB72172E74430079AFA6 /* SNDTrack.mm */,
 				D00AD411171E985A00068DF1 /* SNDWindow.h */,
 				D00AD412171E985A00068DF1 /* SNDWindow.m */,
+				D0DF7479172FEC3F00AA7E8A /* NSNumber+hhmmssFromSeconds.h */,
+				D0DF747A172FEC3F00AA7E8A /* NSNumber+hhmmssFromSeconds.m */,
 				D0E71BA717269AC8009E17DD /* misc */,
 				D09EFBA8172655200039EF03 /* XIB */,
 				D09EFBA917265B950039EF03 /* resources */,
@@ -353,6 +358,7 @@
 				D0C489141726A053009FF7C7 /* SNDPlaybackSegmentedControl.m in Sources */,
 				D0D5DB73172E74430079AFA6 /* SNDTrack.mm in Sources */,
 				D05B2F8D172FA6250043A774 /* SNDBox.m in Sources */,
+				D0DF747B172FEC3F00AA7E8A /* NSNumber+hhmmssFromSeconds.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

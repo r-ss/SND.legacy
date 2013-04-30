@@ -8,6 +8,8 @@
 
 #import "SNDTrack.h"
 
+#import "NSNumber+hhmmssFromSeconds.h"
+
 #import "TagLib/TagLib.h"
 #include "TagLib/tag_c.h"
 
@@ -98,7 +100,7 @@
             taglib_file_free(file);
         };        
         
-        self.formattedDuration = [self hhmmssFromSeconds:self.duration.integerValue];        
+        self.formattedDuration = [self.duration hhmmssFromSeconds:self.duration];
     };
     return self;
 }
@@ -107,18 +109,6 @@
 - (void) setUrl:(NSURL *)url {
     _url = url;
    [self setPath:url.path];
-}
-
-
-- (NSString *)hhmmssFromSeconds:(NSInteger)s {
-    NSInteger seconds = s % 60;
-    NSInteger minutes = (s / 60) % 60;
-    NSInteger hours = (s / 3600);
-    if (hours > 0){
-        return [NSString stringWithFormat:@"%li:%02li:%02li", (long)hours, (long)minutes, (long)seconds];
-    } else {
-        return [NSString stringWithFormat:@"%02li:%02li", (long)minutes, (long)seconds];
-    }
 }
 
 - (NSString*)description

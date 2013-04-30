@@ -8,6 +8,8 @@
 #import "SNDPlayer.h"
 #import <OrigamiEngine/ORGMEngine.h>
 
+#import "NSNumber+hhmmssFromSeconds.h"
+
 // private part
 @interface SNDPlayer() <ORGMEngineDelegate>
 @property (strong, nonatomic) ORGMEngine *player;
@@ -60,19 +62,8 @@
     }
 }
 
-- (NSString *)hhmmssFromSeconds:(NSInteger)s {
-    NSInteger seconds = s % 60;
-    NSInteger minutes = (s / 60) % 60;
-    NSInteger hours = (s / 3600);
-    if (hours > 0){
-        return [NSString stringWithFormat:@"%li:%02li:%02li", (long)hours, (long)minutes, (long)seconds];
-    } else {
-        return [NSString stringWithFormat:@"%02li:%02li", (long)minutes, (long)seconds];
-    }
-}
-
 - (void) updatePositionViews {
-    [durationOutlet setStringValue:[NSString stringWithString:[self hhmmssFromSeconds:self.position.integerValue]]];
+    [durationOutlet setStringValue:[NSString stringWithString:[self.position hhmmssFromSeconds:self.position]]];
     [positionSlider setDoubleValue:self.position.doubleValue];    
 }
 
