@@ -10,7 +10,7 @@
 
 @interface SNDPlaybackSegmentedControl()
 @property (nonatomic) NSImage *pic;
-@property (nonatomic) NSTimer *timer; // need little delay for prevent playback icon blinking
+@property (nonatomic) NSTimer *timer; // need little delay for prevent playback icon blinking on tracks switching
 @end
 
 @implementation SNDPlaybackSegmentedControl

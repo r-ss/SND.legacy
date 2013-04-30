@@ -457,7 +457,8 @@ NSString *const PBType = @"playlistRowDragDropType";
 - (void) playTrack:(SNDTrack *)track {
     [self logToConsole:@"playTrack"];
     [self.sndPlayer playTrack:track];
-    //self.currentPlayingPlaylist = self.currentSelectedPlaylist;
+    //if(!self.currentPlayingPlaylist)
+        //self.currentPlayingPlaylist = self.currentSelectedPlaylist;
     [playlistTableView reloadData];
 }
 
@@ -472,6 +473,7 @@ NSString *const PBType = @"playlistRowDragDropType";
                 [self playTrack:[self.currentPlayingPlaylist selectNextOrPreviousTrack:NO]];
             } else {
                 [self playTrack:[self.currentSelectedPlaylist selectNextOrPreviousTrack:NO]];
+                //self.currentPlayingPlaylist = self.currentSelectedPlaylist;
             }
             break;
         }
@@ -503,6 +505,7 @@ NSString *const PBType = @"playlistRowDragDropType";
                 [self playTrack:[self.currentPlayingPlaylist selectNextOrPreviousTrack:YES]];
             } else {
                 [self playTrack:[self.currentSelectedPlaylist selectNextOrPreviousTrack:YES]];
+                //self.currentPlayingPlaylist = self.currentSelectedPlaylist;
             }
             break;
         }

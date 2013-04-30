@@ -76,7 +76,8 @@
 - (void) playTrack:(SNDTrack *)track {
     if(track){
         if(self.player.currentState == ORGMEngineStatePlaying){
-           [self.player stop];
+            [self.player setNextUrl:track.url withDataFlush:NO];
+            return;
         }
         [self.player playUrl:track.url];
     }
