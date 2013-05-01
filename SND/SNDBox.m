@@ -385,6 +385,9 @@ NSString *const PBType = @"playlistRowDragDropType";
 - (void) addFiles:(NSArray *)filesURL atRow:(NSInteger)row {
     //NSLog(@"> addFiles at row: %ld", (long)row);
     NSInteger i;
+    //NSLog (@"fff: %@", filesURL);
+    //return;
+    
     for (i = 0; i < [filesURL count]; i++) {
         NSString * zStrFilePath	= [filesURL objectAtIndex:i];
         NSString * aStrPath = [zStrFilePath stringByStandardizingPath];
@@ -417,15 +420,22 @@ NSString *const PBType = @"playlistRowDragDropType";
             }
             
             NSArray *sortedSubdirectories = [unsortedSubdirectories sortedArrayUsingSelector:@selector(compare:)];
-  
-            for (i = 0; i < [sortedSubdirectories count]; i++) {
-                NSDirectoryEnumerator *subdirEnum = [[NSFileManager defaultManager] enumeratorAtPath:[sortedSubdirectories objectAtIndex:i]];                
+            
+            NSLog(@"==== >>>> %@", sortedSubdirectories);
+            
+            //NSInteger ia;
+            for (NSString *subdirpath in sortedSubdirectories) {
+                NSLog(@"========================");
+                NSLog(@"========================");
+                NSLog(@"========================");
+                NSDirectoryEnumerator *subdirEnum = [[NSFileManager defaultManager] enumeratorAtPath:subdirpath];
                 NSMutableArray *unsortedTracksInSubdir = [[NSMutableArray alloc] init];                
                 for (NSString *sfilepath in subdirEnum) {
-                    NSString *path = [NSString stringWithFormat:@"%@/%@", [sortedSubdirectories objectAtIndex:i], sfilepath];                    
+                    NSString *path = [NSString stringWithFormat:@"%@/%@", subdirpath, sfilepath];
                     if ([self.sndPlayer.acceptableFileExtensions containsObject:sfilepath.pathExtension]) {
                         SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:path]];
                         [unsortedTracksInSubdir addObject:zDataObj];
+                        NSLog(@"--");
                     }                    
                 }
                 NSArray *sortedTracksInSubdir = [self sortSNDTracksByTrackNumber:unsortedTracksInSubdir];
@@ -437,8 +447,9 @@ NSString *const PBType = @"playlistRowDragDropType";
             }
             
             NSArray *sortedTracks = [self sortSNDTracksByTrackNumber:unsortedTracks];
-            for (i = 0; i < [sortedTracks count]; i++) {                
-                (row != -1) ? [self.currentSelectedPlaylist.tracks insertObject:[sortedTracks objectAtIndex:i] atIndex:row++] : [self.currentSelectedPlaylist.tracks addObject:[sortedTracks objectAtIndex:i]];
+            NSInteger ib;
+            for (ib = 0; ib < [sortedTracks count]; ib++) {
+                (row != -1) ? [self.currentSelectedPlaylist.tracks insertObject:[sortedTracks objectAtIndex:ib] atIndex:row++] : [self.currentSelectedPlaylist.tracks addObject:[sortedTracks objectAtIndex:ib]];
             }            
         } else {
             //NSLog (@"is a file");
