@@ -12,8 +12,10 @@
 
 // private part
 @interface SNDPlayer() <ORGMEngineDelegate>
-@property (strong, nonatomic) ORGMEngine *player;
+//@property (strong, nonatomic) ORGMEngine *player;
+@property (strong) ORGMEngine *player;
 @property (nonatomic) NSTimer *timer;
+//@property (nonatomic) BOOL firstPlay;
 @end
 
 @implementation SNDPlayer
@@ -22,8 +24,9 @@
 @synthesize isPlaying = _isPlaying;
 @synthesize volume = _volume;
 @synthesize position, duration;
-@synthesize timer = _timer;
+@synthesize timer = _timer; // private
 @synthesize player = _player; // private
+//@synthesize firstPlay = _firstPlay; // private
 
 /* OGRMEngine methods
 [_player metadata];                         // current metadata
@@ -40,6 +43,8 @@
     self.volume = [NSNumber numberWithInteger:1];
     self.isPlaying = NO;
     
+    //self.firstPlay = YES;
+
     // Restoring volume from user defaults
     //NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //self.volume = [NSNumber numberWithFloat:[userDefaults floatForKey:@"defaultVolume"]];
@@ -74,12 +79,20 @@
 
 
 - (void) playTrack:(SNDTrack *)track {
+//    if(!self.player){
+//        NSLog(@"NO PLAYER");
+//        self.player = [[ORGMEngine alloc] init];
+//        self.player.delegate = self;
+//    }
+    
     if(track){
         if(self.player.currentState == ORGMEngineStatePlaying){
-            [self.player setNextUrl:track.url withDataFlush:NO];
-            return;
+            NSLog(@"A");
+            [self.player setNextUrl:track.url withDataFlush:YES];
+        } else {
+            NSLog(@"B");
+            [self.player playUrl:track.url];
         }
-        [self.player playUrl:track.url];
     }
 }
 

@@ -356,6 +356,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 - (void)playerStoppedPlayingNotification:(NSNotification *)notification{
     [self logToConsole:@"playerStoppedPlayingNotification"];
     self.currentPlayingPlaylist = nil;
+    [playlistTableView reloadData];
 }
 
 // WindowDropDelegate methods
@@ -387,7 +388,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     NSInteger i;
     //NSLog (@"fff: %@", filesURL);
     //return;
-    
+
     for (i = 0; i < [filesURL count]; i++) {
         NSString * zStrFilePath	= [filesURL objectAtIndex:i];
         NSString * aStrPath = [zStrFilePath stringByStandardizingPath];
