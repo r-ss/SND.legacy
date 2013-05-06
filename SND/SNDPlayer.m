@@ -12,10 +12,8 @@
 
 // private part
 @interface SNDPlayer() <ORGMEngineDelegate>
-//@property (strong, nonatomic) ORGMEngine *player;
 @property (strong) ORGMEngine *player;
 @property (nonatomic) NSTimer *timer;
-//@property (nonatomic) BOOL firstPlay;
 @end
 
 @implementation SNDPlayer
@@ -26,7 +24,6 @@
 @synthesize position, duration;
 @synthesize timer = _timer; // private
 @synthesize player = _player; // private
-//@synthesize firstPlay = _firstPlay; // private
 
 /* OGRMEngine methods
 [_player metadata];                         // current metadata
@@ -42,12 +39,9 @@
     
     _volume = [NSNumber numberWithDouble:100];
     self.isPlaying = NO;
-    
-    //self.firstPlay = YES;
 
     // Restoring volume from user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSLog(@"Found volume: %@", [NSNumber numberWithDouble:[userDefaults doubleForKey:@"defaultVolume"]]);
     [self setVolume:[NSNumber numberWithDouble:[userDefaults doubleForKey:@"defaultVolume"]]];
     [volumeSlider setIntegerValue:self.volume.doubleValue];
     
@@ -58,6 +52,7 @@
     
 }
 
+// overriding synthesized setVolume method
 - (void) setVolume:(NSNumber *)volume {
     _volume = volume;
     [self.player setVolume:_volume.doubleValue];
@@ -69,8 +64,6 @@
 
 - (IBAction)volumeSlider:(NSSlider *)sender {
     [self setVolume:[NSNumber numberWithDouble:[sender doubleValue]]];
-    //..self.volume = [NSNumber numberWithDouble:[sender doubleValue]];
-    //..[self.player setVolume:self.volume.doubleValue];
 }
 
 - (IBAction)positionSlider:(NSSlider *)sender {
@@ -89,14 +82,13 @@
     [self updatePositionViews];
 }
 
-
 - (void) playTrack:(SNDTrack *)track {
     if(track){
         if(self.player.currentState == ORGMEngineStatePlaying){
-            NSLog(@"A");
+            //NSLog(@"A");
             [self.player setNextUrl:track.url withDataFlush:YES];
         } else {
-            NSLog(@"B");
+            //NSLog(@"B");
             [self.player playUrl:track.url];            
         }
     }
@@ -138,7 +130,7 @@
         case ORGMEngineStatePlaying: {
             NSLog(@">>> ORGMEngineStatePlaying");
             [self.player setVolume:self.volume.doubleValue];
-            self.position = [NSNumber numberWithDouble:0];
+            //self.position = [NSNumber numberWithDouble:0];
             self.duration = [NSNumber numberWithDouble:self.player.trackTime];
             [positionSlider setMaxValue:self.duration.doubleValue];
             [self updatePositionViews];

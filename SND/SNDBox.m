@@ -72,12 +72,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
-- (void)logToConsole:(NSString *)message {
-    //NSLog(@"log: %@", message);
-}
-
 - (IBAction) tabAction:(NSSegmentedControl *)sender {
-    [self logToConsole:@"tabAction"];
     //NSLog(@"tab click: %ld", sender.selectedSegment);
     if([self.playlists indexOfObject:self.currentSelectedPlaylist] != sender.selectedSegment){
         //[self.currentPlaylist deactivate];
@@ -89,7 +84,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) save {
-    [self logToConsole:@"save"];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Track" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
@@ -129,7 +123,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) load {
-    [self logToConsole:@"load"];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Track" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
@@ -137,14 +130,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     NSManagedObject *trackMO = nil;
     
     if([tracks count] > 0){
-        NSLog(@"found");
-        
-        
-        NSMutableArray *rawTracks = [[NSMutableArray alloc] init];
-        
-        
-        
-        
+        NSMutableArray *rawTracks = [[NSMutableArray alloc] init];       
         NSInteger i;
         for (i = 0; i < [tracks count]; i++) {
             trackMO = [tracks objectAtIndex:i];
@@ -155,9 +141,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         }
         
         NSLog(@"found %ld raw tracks", [rawTracks count]);
-        //NSLog(@"raw tracks %@", rawTracks);
-        
-        
+
         for (i = 0; i < [self.playlists count]; i++) {
             NSMutableArray *unsortedRows = [[NSMutableArray alloc] init];
             NSInteger k;
@@ -337,10 +321,8 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void)playlistDeleteNotification:(NSNotification *)notification{
-    [playlistTableView abortEditing];
-    
-    NSIndexSet *selectedRowIndexes = [playlistTableView selectedRowIndexes];
-    
+    [playlistTableView abortEditing];    
+    NSIndexSet *selectedRowIndexes = [playlistTableView selectedRowIndexes];    
     [selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop){
         if(index == self.currentSelectedPlaylist.currentTrackIndex.integerValue){
             self.currentSelectedPlaylist.currentTrackIndex = [NSNumber numberWithInteger: -1];
@@ -354,7 +336,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void)playerStoppedPlayingNotification:(NSNotification *)notification{
-    [self logToConsole:@"playerStoppedPlayingNotification"];
     self.currentPlayingPlaylist.currentTrack = nil;
     self.currentPlayingPlaylist.currentTrackIndex = [NSNumber numberWithInt:-1];
     self.currentPlayingPlaylist = nil;
@@ -386,10 +367,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 
 - (void) addFiles:(NSArray *)filesURL atRow:(NSInteger)row {
-    //NSLog(@"> addFiles at row: %ld", (long)row);
     NSInteger i;
-    //NSLog (@"fff: %@", filesURL);
-    //return;
 
     for (i = 0; i < [filesURL count]; i++) {
         NSString * zStrFilePath	= [filesURL objectAtIndex:i];
@@ -424,13 +402,8 @@ NSString *const PBType = @"playlistRowDragDropType";
             
             NSArray *sortedSubdirectories = [unsortedSubdirectories sortedArrayUsingSelector:@selector(compare:)];
             
-            NSLog(@"==== >>>> %@", sortedSubdirectories);
-            
             //NSInteger ia;
             for (NSString *subdirpath in sortedSubdirectories) {
-                NSLog(@"========================");
-                NSLog(@"========================");
-                NSLog(@"========================");
                 NSDirectoryEnumerator *subdirEnum = [[NSFileManager defaultManager] enumeratorAtPath:subdirpath];
                 NSMutableArray *unsortedTracksInSubdir = [[NSMutableArray alloc] init];                
                 for (NSString *sfilepath in subdirEnum) {
@@ -438,13 +411,11 @@ NSString *const PBType = @"playlistRowDragDropType";
                     if ([self.sndPlayer.acceptableFileExtensions containsObject:sfilepath.pathExtension]) {
                         SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:path]];
                         [unsortedTracksInSubdir addObject:zDataObj];
-                        NSLog(@"--");
                     }                    
                 }
                 NSArray *sortedTracksInSubdir = [self sortSNDTracksByTrackNumber:unsortedTracksInSubdir];
                 NSInteger k;
                 for (k = 0; k < [sortedTracksInSubdir count]; k++) {
-                    NSLog(@"++");
                     (row != -1) ? [self.currentSelectedPlaylist.tracks insertObject:[sortedTracksInSubdir objectAtIndex:k] atIndex:row++] : [self.currentSelectedPlaylist.tracks addObject:[sortedTracksInSubdir objectAtIndex:k]];
                 }
             }
@@ -471,7 +442,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 // player will preload next track in queue for smooth track swithing
 - (SNDTrack *)nextTrack {
-    [self logToConsole:@"nextTrack"];
     NSInteger current = self.currentPlayingPlaylist.currentTrackIndex.intValue;
     NSInteger total = [self.currentPlayingPlaylist.tracks count] - 1;
     if(current < total){
@@ -484,14 +454,12 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (IBAction) doubleClick:(id)sender {
-    [self logToConsole:@"doubleClick"];
     self.currentPlayingPlaylist = self.currentSelectedPlaylist;
     [self playTrack:[self.currentSelectedPlaylist selectItemAtRow:[playlistTableView clickedRow]]];
     
 }
 
 - (void) playTrack:(SNDTrack *)track {
-    [self logToConsole:@"playTrack"];
     if(track){
         [self.sndPlayer playTrack:track];
         if(!self.currentPlayingPlaylist)
@@ -501,7 +469,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (IBAction)controlAction:(NSSegmentedControl *)sender {
-    [self logToConsole:@"controlAction"];
     switch(sender.selectedSegment) {
         // previous button
         case 0:

@@ -32,8 +32,8 @@
 @property (nonatomic, weak) NSManagedObjectContext *managedObjectContext;
 
 
-- (IBAction)tabAction:(NSSegmentedControl *)sender;
-- (IBAction)controlAction:(NSSegmentedControl *)sender;
+- (IBAction) tabAction:(NSSegmentedControl *)sender;
+- (IBAction) controlAction:(NSSegmentedControl *)sender;
 
 // player will preload next track in queue for smooth track swithing
 - (SNDTrack *) nextTrack;

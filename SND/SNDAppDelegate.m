@@ -22,18 +22,6 @@
 {
     self.sndBox.managedObjectContext = self.managedObjectContext;
     [self.sndBox load];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(traceNotifications:) name:nil object:nil];
-    
-    //NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    //[nc postNotificationName:@"SND.Notification.applicationDidFinishLaunching" object:self];
-    
-    
-}
-
-- (void)traceNotifications:(NSNotification *)notification
-{
-    NSLog(@"** %@", [notification name]);
 }
 
 // CoreData gogogo
@@ -75,7 +63,6 @@
     
 }
 
-
 // To enable window reopen after close
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag {
     if (flag) {
@@ -90,9 +77,5 @@
     //NSLog(@"BB %@", filenames);
     [self.dockDropDelegate filesDroppedIntoDock:files];
 }
-
-
-
-
 
 @end

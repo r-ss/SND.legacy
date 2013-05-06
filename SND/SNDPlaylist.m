@@ -14,7 +14,7 @@
 @synthesize tracks = _tracks;
 @synthesize currentTrackIndex = _currentTrackIndex;
 
-- (id)init {
+- (id) init {
     self = [super init];
     if (self) {
         self.tracks = [[NSMutableArray alloc] init];
@@ -33,15 +33,11 @@
 }
 
 - (SNDTrack *) selectNextOrPreviousTrack:(BOOL)next {
-    NSLog(@"> selectNextOrPreviousTrack");
-    NSLog(@"> currentTrackIndex: %ld", self.currentTrackIndex.integerValue);
     if([self.tracks count] == 0)
-        return nil;
-    
+        return nil;    
     if(self.currentTrackIndex.integerValue == -1){
         self.currentTrackIndex = [NSNumber numberWithInt:0];
         [self setCurrentTrackByIndex:self.currentTrackIndex];
-        //[self selectItemAtRow:self.currentTrackIndex.intValue];
         return [self selectItemAtRow:self.currentTrackIndex.intValue];
     }
     NSInteger current = self.currentTrackIndex.intValue;
