@@ -14,7 +14,7 @@
 @interface SNDPlayer : NSObject {
     IBOutlet NSTextField *durationOutlet;
     IBOutlet NSSlider *positionSlider;
-    //IBOutlet NSSlider *volumeSlider;
+    IBOutlet NSSlider *volumeSlider;
 }
 
 @property (readonly) NSArray *acceptableFileExtensions; 
@@ -26,7 +26,7 @@
 @property (nonatomic) NSNumber *position;
 @property (nonatomic) NSNumber *duration;
 
-//- (IBAction)volumeSlider:(NSSlider *)sender;
+- (IBAction)volumeSlider:(NSSlider *)sender;
 - (IBAction)positionSlider:(NSSlider *)sender;
 
 - (void) playTrack:(SNDTrack *)track;

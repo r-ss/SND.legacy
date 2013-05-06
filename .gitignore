@@ -8,3 +8,5 @@ icon.icns
 *.no_git
 *.xcuserstate
 *.xcsettings
+
+/SND/Frameworks

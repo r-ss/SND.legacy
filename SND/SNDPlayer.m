@@ -40,26 +40,38 @@
 - (void)awakeFromNib {
     _acceptableFileExtensions = [[NSArray alloc] initWithObjects:@"mp3", @"flac", nil];
     
-    self.volume = [NSNumber numberWithInteger:1];
+    _volume = [NSNumber numberWithDouble:100];
     self.isPlaying = NO;
     
     //self.firstPlay = YES;
 
     // Restoring volume from user defaults
-    //NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    //self.volume = [NSNumber numberWithFloat:[userDefaults floatForKey:@"defaultVolume"]];
-    //[volumeSlider setIntegerValue:self.volume.floatValue * 100];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"Found volume: %@", [NSNumber numberWithDouble:[userDefaults doubleForKey:@"defaultVolume"]]);
+    [self setVolume:[NSNumber numberWithDouble:[userDefaults doubleForKey:@"defaultVolume"]]];
+    [volumeSlider setIntegerValue:self.volume.doubleValue];
     
     self.player = [[ORGMEngine alloc] init];
     self.player.delegate = self;
+    
+    [_player setVolume:_volume.doubleValue];
+    
+}
+
+- (void) setVolume:(NSNumber *)volume {
+    _volume = volume;
+    [self.player setVolume:_volume.doubleValue];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setDouble:_volume.doubleValue forKey:@"defaultVolume"];
+    [userDefaults synchronize];
 }
 
 
-//- (IBAction)volumeSlider:(NSSlider *)sender {
-//    self.volume = [NSNumber numberWithFloat:[sender floatValue] / 100];
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    [userDefaults setFloat:self.volume.floatValue forKey:@"defaultVolume"];
-//}
+- (IBAction)volumeSlider:(NSSlider *)sender {
+    [self setVolume:[NSNumber numberWithDouble:[sender doubleValue]]];
+    //..self.volume = [NSNumber numberWithDouble:[sender doubleValue]];
+    //..[self.player setVolume:self.volume.doubleValue];
+}
 
 - (IBAction)positionSlider:(NSSlider *)sender {
     if(self.isPlaying){
@@ -73,25 +85,19 @@
 }
 
 -(void) timerTick: (NSTimer *)timer {
-    self.position = [NSNumber numberWithDouble:self.player.amountPlayed];   
-    [self updatePositionViews];    
+    self.position = [NSNumber numberWithDouble:self.player.amountPlayed];
+    [self updatePositionViews];
 }
 
 
 - (void) playTrack:(SNDTrack *)track {
-//    if(!self.player){
-//        NSLog(@"NO PLAYER");
-//        self.player = [[ORGMEngine alloc] init];
-//        self.player.delegate = self;
-//    }
-    
     if(track){
         if(self.player.currentState == ORGMEngineStatePlaying){
             NSLog(@"A");
             [self.player setNextUrl:track.url withDataFlush:YES];
         } else {
             NSLog(@"B");
-            [self.player playUrl:track.url];
+            [self.player playUrl:track.url];            
         }
     }
 }
@@ -131,6 +137,7 @@
         }
         case ORGMEngineStatePlaying: {
             NSLog(@">>> ORGMEngineStatePlaying");
+            [self.player setVolume:self.volume.doubleValue];
             self.position = [NSNumber numberWithDouble:0];
             self.duration = [NSNumber numberWithDouble:self.player.trackTime];
             [positionSlider setMaxValue:self.duration.doubleValue];

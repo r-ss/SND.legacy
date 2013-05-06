@@ -355,6 +355,8 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void)playerStoppedPlayingNotification:(NSNotification *)notification{
     [self logToConsole:@"playerStoppedPlayingNotification"];
+    self.currentPlayingPlaylist.currentTrack = nil;
+    self.currentPlayingPlaylist.currentTrackIndex = [NSNumber numberWithInt:-1];
     self.currentPlayingPlaylist = nil;
     [playlistTableView reloadData];
 }
