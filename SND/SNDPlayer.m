@@ -42,7 +42,8 @@
 
     // Restoring volume from user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [self setVolume:[NSNumber numberWithDouble:[userDefaults doubleForKey:@"defaultVolume"]]];
+    NSLog(@"Volume found: %@", [NSNumber numberWithDouble:[userDefaults doubleForKey:@"SNDVolume"]]);
+    [self setVolume:[NSNumber numberWithDouble:[userDefaults doubleForKey:@"SNDVolume"]]];
     [volumeSlider setIntegerValue:self.volume.doubleValue];
     
     self.player = [[ORGMEngine alloc] init];
@@ -57,7 +58,7 @@
     _volume = volume;
     [self.player setVolume:_volume.doubleValue];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setDouble:_volume.doubleValue forKey:@"defaultVolume"];
+    [userDefaults setDouble:_volume.doubleValue forKey:@"SNDVolume"];
     [userDefaults synchronize];
 }
 

@@ -101,7 +101,7 @@
         };        
         
         //self.formattedDuration = [self.duration hhmmssFromSeconds:self.duration];
-        self.formattedDuration = [[NSNumber alloc] hhmmssFromSeconds:self.duration];
+        self.formattedDuration = [self.duration hhmmssFromSeconds:self.duration];
     };
     return self;
 }

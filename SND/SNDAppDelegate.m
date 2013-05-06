@@ -9,10 +9,13 @@
 #import "SNDAppDelegate.h"
 #import "SNDBox.h"
 
+#import "SNDPreferencesController.h"
+
 
 @implementation SNDAppDelegate
 
 @synthesize sndBox = _sndBox;
+@synthesize preferencesController = _preferencesController;
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -22,6 +25,14 @@
 {
     self.sndBox.managedObjectContext = self.managedObjectContext;
     [self.sndBox load];
+    //self.preferencesController = [[SNDPreferencesController alloc] init];
+}
+
+- (IBAction) showPreferencesPanel:(id)sender {
+    //if(self.preferencesController == nil){
+       self.preferencesController = [[SNDPreferencesController alloc] init];
+    //}
+    [self.preferencesController showWindow:self];
 }
 
 // CoreData gogogo

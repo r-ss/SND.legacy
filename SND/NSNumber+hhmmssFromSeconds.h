@@ -10,6 +10,6 @@
 
 @interface NSNumber (hhmmssFromSeconds)
 
-- (NSString *)hhmmssFromSeconds:(NSNumber *)seconds;
+- (NSString *)hhmmssFromSeconds:(NSNumber *)s;
 
 @end

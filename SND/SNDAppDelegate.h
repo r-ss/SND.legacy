@@ -13,6 +13,7 @@
 @class SNDBox;
 
 @class SNDPlaylist;
+@class SNDPreferencesController;
 
 @protocol DockDropDelegate <NSObject>
 - (void) filesDroppedIntoDock:(NSArray *)filesURL;
@@ -29,5 +30,9 @@
 @property (nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @property (nonatomic, weak) id <DockDropDelegate> dockDropDelegate;
+
+@property (strong) SNDPreferencesController *preferencesController;
+
+- (IBAction) showPreferencesPanel:(id)sender;
 
 @end
