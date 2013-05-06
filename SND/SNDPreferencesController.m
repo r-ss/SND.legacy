@@ -18,22 +18,25 @@
 
 - (id)init
 {
-    self = [super initWithWindowNibName:@"Preferences"];
+    //self = [super initWithWindowNibName:@"Preferences"];
+    self = [super init];
     if (self) {
         // Initialization code here.
-    }    
+    }
     return self;
 }
 
 - (void) awakeFromNib {
+    NSLog(@">> Preferences awakeFromNib");
+}
+
+- (void)windowDidLoad {
+    NSLog(@">> Preferences windowDidLoad");
+    [super windowDidLoad];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL quit = [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];
     quit ? NSLog(@">> YES") : NSLog(@">> NO");
     [self.quitOnWindowCloseButton setState:quit];
-}
-
-- (void)windowDidLoad {    
-    [super windowDidLoad];
 }
 
 - (IBAction) quitOnWindowCloseAction:(id)sender {

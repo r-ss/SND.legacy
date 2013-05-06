@@ -198,8 +198,6 @@
 				D0D5DB72172E74430079AFA6 /* SNDTrack.mm */,
 				D00AD411171E985A00068DF1 /* SNDWindow.h */,
 				D00AD412171E985A00068DF1 /* SNDWindow.m */,
-				D0D13D101737AB2F004AF1EB /* MainMenu.xib */,
-				D0D13D0E1737AB0A004AF1EB /* Preferences.xib */,
 				D0D13D091737AAAA004AF1EB /* SNDPreferencesController.h */,
 				D0D13D0A1737AAAA004AF1EB /* SNDPreferencesController.m */,
 				D0E71BA717269AC8009E17DD /* misc */,
@@ -226,6 +224,8 @@
 		D09EFBA8172655200039EF03 /* XIB */ = {
 			isa = PBXGroup;
 			children = (
+				D0D13D101737AB2F004AF1EB /* MainMenu.xib */,
+				D0D13D0E1737AB0A004AF1EB /* Preferences.xib */,
 			);
 			name = XIB;
 			sourceTree = "<group>";

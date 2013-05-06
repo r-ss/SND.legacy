@@ -25,13 +25,17 @@
 {
     self.sndBox.managedObjectContext = self.managedObjectContext;
     [self.sndBox load];
+    
     //self.preferencesController = [[SNDPreferencesController alloc] init];
+    self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
+    //self.preferencesController = [[SNDPreferencesController alloc] init];
+    //[self.preferencesController showWindow:self];
 }
 
 - (IBAction) showPreferencesPanel:(id)sender {
-    //if(self.preferencesController == nil){
-       self.preferencesController = [[SNDPreferencesController alloc] init];
-    //}
+    if(!self.preferencesController){
+       
+    }
     [self.preferencesController showWindow:self];
 }
 
