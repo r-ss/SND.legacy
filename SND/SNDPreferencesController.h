@@ -11,6 +11,9 @@
 @interface SNDPreferencesController : NSWindowController
 
 @property (nonatomic, retain) IBOutlet NSButton *quitOnWindowCloseButton;
+
+@property (nonatomic, retain) IBOutlet NSTextField *totalPlaybackTimeField;
+
 - (IBAction) quitOnWindowCloseAction:(id)sender;
 
 @end

@@ -23,17 +23,17 @@
     
     // registering in notification center
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(playerPlayerStartedPlayingNotification:) name:@"SND.Notification.PlayerStartedPlaying" object:nil];
-    [nc addObserver:self selector:@selector(playerPlayerStoppedPlayingNotification:) name:@"SND.Notification.PlayerStoppedPlaying" object:nil];
-    [nc addObserver:self selector:@selector(playerPlayerStoppedPlayingNotification:) name:@"SND.Notification.PlayerPausedPlaying" object:nil];
+    [nc addObserver:self selector:@selector(playerStartedPlayingNotification:) name:@"SND.Notification.PlayerStartedPlaying" object:nil];
+    [nc addObserver:self selector:@selector(playerStoppedPlayingNotification:) name:@"SND.Notification.PlayerStoppedPlaying" object:nil];
+    [nc addObserver:self selector:@selector(playerStoppedPlayingNotification:) name:@"SND.Notification.PlayerPausedPlaying" object:nil];
 }
 
-- (void)playerPlayerStartedPlayingNotification:(NSNotification *)notification {
+- (void)playerStartedPlayingNotification:(NSNotification *)notification {
     self.pic = [NSImage imageNamed:@"pic_pause"];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.025 target:self selector:@selector(changePic:) userInfo:nil repeats:NO];
 }
 
-- (void)playerPlayerStoppedPlayingNotification:(NSNotification *)notification {
+- (void)playerStoppedPlayingNotification:(NSNotification *)notification {
     self.pic = [NSImage imageNamed:@"pic_play"];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.025 target:self selector:@selector(changePic:) userInfo:nil repeats:NO];
 }

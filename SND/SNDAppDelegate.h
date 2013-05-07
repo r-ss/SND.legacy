@@ -14,6 +14,7 @@
 
 @class SNDPlaylist;
 @class SNDPreferencesController;
+@class SNDTotalPlaybackTimeCounter;
 
 @protocol DockDropDelegate <NSObject>
 - (void) filesDroppedIntoDock:(NSArray *)filesURL;
@@ -30,8 +31,9 @@
 @property (nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @property (nonatomic, weak) id <DockDropDelegate> dockDropDelegate;
-
 @property (strong) SNDPreferencesController *preferencesController;
+
+@property (strong) SNDTotalPlaybackTimeCounter *totalPlaybackTimeCounter;
 
 - (IBAction) showPreferencesPanel:(id)sender;
 
