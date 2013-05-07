@@ -8,6 +8,10 @@
 
 #import "SNDPreferencesController.h"
 
+#import "SNDAppDelegate.h"
+#import "SNDTotalPlaybackTimeCounter.h"
+
+
 @interface SNDPreferencesController ()
 
 @end
@@ -15,8 +19,9 @@
 @implementation SNDPreferencesController
 
 @synthesize quitOnWindowCloseButton = _quitOnWindowCloseButton;
+@synthesize totalPlaybackTimeField = _totalPlaybackTimeField;
 
-- (id)init
+- (id) init
 {
     //self = [super initWithWindowNibName:@"Preferences"];
     self = [super init];
@@ -28,9 +33,18 @@
 
 - (void) awakeFromNib {
     NSLog(@">> Preferences awakeFromNib");
+    
+    // temp total time view solution
+    //NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    //NSNumber *totalTime = [NSNumber numberWithDouble:[userDefaults doubleForKey:@"SNDTotalPlaybackTime"]];
+    //[self.totalPlaybackTimeField setDoubleValue:totalTime.doubleValue];
+    
+    SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
+    [self.totalPlaybackTimeField setStringValue:[appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
+    
 }
 
-- (void)windowDidLoad {
+- (void) windowDidLoad {
     NSLog(@">> Preferences windowDidLoad");
     [super windowDidLoad];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

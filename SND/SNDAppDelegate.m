@@ -10,12 +10,14 @@
 #import "SNDBox.h"
 
 #import "SNDPreferencesController.h"
+#import "SNDTotalPlaybackTimeCounter.h"
 
 
 @implementation SNDAppDelegate
 
 @synthesize sndBox = _sndBox;
 @synthesize preferencesController = _preferencesController;
+@synthesize totalPlaybackTimeCounter = _totalPlaybackTimeCounter;
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -28,6 +30,11 @@
     
     //self.preferencesController = [[SNDPreferencesController alloc] init];
     self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
+    
+    self.totalPlaybackTimeCounter = [[SNDTotalPlaybackTimeCounter alloc] init];
+    
+    NSLog(@"total playback time: %@", [self.totalPlaybackTimeCounter getTotalPlaybackTime]);
+    
     //self.preferencesController = [[SNDPreferencesController alloc] init];
     //[self.preferencesController showWindow:self];
 }
