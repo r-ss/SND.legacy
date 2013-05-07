@@ -27,8 +27,11 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    self.appDelegate = NSApplication.sharedApplication.delegate;
+    self.appDelegate.dockDropDelegate = self;
+    
     self.sndWindow.windowDropDelegate = self;
-    self.sndAppDelegate.dockDropDelegate = self;
     
     self.playlists = [[NSMutableArray alloc] init];
         

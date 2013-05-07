@@ -19,8 +19,9 @@
     IBOutlet NSTableView *playlistTableView;
 }
 
+@property (nonatomic, assign) SNDAppDelegate *appDelegate;
+
 @property (nonatomic, assign) IBOutlet SNDWindow *sndWindow;
-@property (nonatomic, assign) IBOutlet SNDAppDelegate *sndAppDelegate;
 @property (nonatomic, assign) IBOutlet SNDPlayer *sndPlayer;
 
 @property (nonatomic) NSMutableArray *playlists;
