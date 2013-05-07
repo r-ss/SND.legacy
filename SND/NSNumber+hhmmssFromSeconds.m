@@ -11,14 +11,42 @@
 @implementation NSNumber (hhmmssFromSeconds)
 
 - (NSString *)hhmmssFromSeconds:(NSNumber *)s {
-    NSInteger seconds = s.integerValue % 60;
-    NSInteger minutes = (s.integerValue / 60) % 60;
-    NSInteger hours = (s.integerValue / 3600);
-    if (hours > 0){
-        return [NSString stringWithFormat:@"%li:%02li:%02li", (long)hours, (long)minutes, (long)seconds];
-    } else {
-        return [NSString stringWithFormat:@"%02li:%02li", (long)minutes, (long)seconds];
-    }
+	NSString		*result			= nil;
+	unsigned		value;
+	unsigned		days			= 0;
+	unsigned		hours			= 0;
+	unsigned		minutes			= 0;
+	unsigned		seconds			= 0;
+    
+	value		= (unsigned)([s doubleValue]);
+    
+	seconds		= value % 60;
+	minutes		= value / 60;
+	
+	while(60 <= minutes) {
+		minutes -= 60;
+		++hours;
+	}
+	
+	while(24 <= hours) {
+		hours -= 24;
+		++days;
+	}
+    
+	if(0 < days) {
+		result = [NSString stringWithFormat:@"%u:%.2u:%.2u:%.2u", days, hours, minutes, seconds];
+	}
+	else if(0 < hours) {
+		result = [NSString stringWithFormat:@"%.2u:%.2u:%.2u", hours, minutes, seconds];
+	}
+	else if(0 < minutes) {
+		result = [NSString stringWithFormat:@"%.2u:%.2u", minutes, seconds];
+	}
+	else {
+		result = [NSString stringWithFormat:@"00:%.2u", seconds];
+	}
+	
+	return result;
 }
 
 @end

@@ -108,7 +108,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     for (i = 0; i < [self.playlists count]; i++) {
         NSInteger k;
         SNDPlaylist *playlist = [self.playlists objectAtIndex:i];
-                
+        
         for (k = 0; k < [playlist.tracks count]; k++) {
             SNDTrack *t = [playlist.tracks objectAtIndex:k];
             trackMO = [NSEntityDescription insertNewObjectForEntityForName:@"Track" inManagedObjectContext:self.appDelegate.managedObjectContext];
@@ -457,9 +457,11 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (IBAction) doubleClick:(id)sender {
-    self.currentPlayingPlaylist = self.currentSelectedPlaylist;
-    [self playTrack:[self.currentSelectedPlaylist selectItemAtRow:[playlistTableView clickedRow]]];
-    
+    NSInteger clickedRow = [playlistTableView clickedRow];
+    if([self.currentSelectedPlaylist.tracks count] >= clickedRow){
+        self.currentPlayingPlaylist = self.currentSelectedPlaylist;
+        [self playTrack:[self.currentSelectedPlaylist selectItemAtRow:clickedRow]];
+    }
 }
 
 - (void) playTrack:(SNDTrack *)track {
