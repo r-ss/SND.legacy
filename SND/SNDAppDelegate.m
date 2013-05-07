@@ -25,11 +25,14 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    self.sndBox.managedObjectContext = self.managedObjectContext;
+    //self.sndBox = [[SNDBox alloc] init];
+    
+    
+    //self.sndBox.managedObjectContext = self.managedObjectContext;
     [self.sndBox load];
     
     //self.preferencesController = [[SNDPreferencesController alloc] init];
-    self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
+    
     
     self.totalPlaybackTimeCounter = [[SNDTotalPlaybackTimeCounter alloc] init];
     
@@ -41,9 +44,10 @@
 
 - (IBAction) showPreferencesPanel:(id)sender {
     if(!self.preferencesController){
-       
+       self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
     }
     [self.preferencesController showWindow:self];
+    [self.preferencesController setup];
 }
 
 // CoreData gogogo

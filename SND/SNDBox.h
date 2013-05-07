@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+
 
 #import "SNDAppDelegate.h"
 #import "SNDWindow.h"
@@ -29,8 +29,6 @@
 @property (nonatomic) SNDPlaylist *currentPlayingPlaylist;
 
 @property (nonatomic) SNDTrack *currentTrack;
-
-@property (nonatomic, weak) NSManagedObjectContext *managedObjectContext;
 
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender;

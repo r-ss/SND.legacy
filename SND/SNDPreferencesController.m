@@ -7,8 +7,6 @@
 //
 
 #import "SNDPreferencesController.h"
-
-#import "SNDAppDelegate.h"
 #import "SNDTotalPlaybackTimeCounter.h"
 
 
@@ -20,37 +18,34 @@
 
 @synthesize quitOnWindowCloseButton = _quitOnWindowCloseButton;
 @synthesize totalPlaybackTimeField = _totalPlaybackTimeField;
+@synthesize playbackCounterTimer = _playbackCounterTimer;
 
-- (id) init
-{
-    //self = [super initWithWindowNibName:@"Preferences"];
-    self = [super init];
-    if (self) {
-        // Initialization code here.
-    }
-    return self;
+- (void) setup {
+    NSLog(@">> preferences setup");
+    self.appDelegate = NSApplication.sharedApplication.delegate;
+    self.window.delegate = self;
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL quit = [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];
+    [self.quitOnWindowCloseButton setState:quit];
+    
+    [self.totalPlaybackTimeField setStringValue:[self.appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
+    self.playbackCounterTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];    
 }
 
-- (void) awakeFromNib {
-    NSLog(@">> Preferences awakeFromNib");
-    
-    // temp total time view solution
-    //NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    //NSNumber *totalTime = [NSNumber numberWithDouble:[userDefaults doubleForKey:@"SNDTotalPlaybackTime"]];
-    //[self.totalPlaybackTimeField setDoubleValue:totalTime.doubleValue];
-    
-    SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
-    [self.totalPlaybackTimeField setStringValue:[appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
-    
+- (void) timerTick: (NSTimer *)timer {
+    NSLog(@">> tick");
+    //self.appDelegate = NSApplication.sharedApplication.delegate;
+    [self.totalPlaybackTimeField setStringValue:[self.appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
+}
+
+- (void)windowWillClose:(NSNotification *)notification {
+    NSLog(@">> windowWillClose");
+    [self.playbackCounterTimer invalidate];
 }
 
 - (void) windowDidLoad {
-    NSLog(@">> Preferences windowDidLoad");
     [super windowDidLoad];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    BOOL quit = [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];
-    quit ? NSLog(@">> YES") : NSLog(@">> NO");
-    [self.quitOnWindowCloseButton setState:quit];
 }
 
 - (IBAction) quitOnWindowCloseAction:(id)sender {

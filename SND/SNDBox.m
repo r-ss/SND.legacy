@@ -21,7 +21,7 @@
 @synthesize currentSelectedPlaylist = _currentSelectedPlaylist;
 @synthesize currentPlayingPlaylist = _currentPlayingPlaylist;
 
-@synthesize managedObjectContext = _managedObjectContext;
+//@synthesize managedObjectContext = _managedObjectContext;
 
 NSString *const PBType = @"playlistRowDragDropType";
 
@@ -88,10 +88,10 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void) save {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Track" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Track" inManagedObjectContext:self.appDelegate.managedObjectContext];
     [fetchRequest setEntity:entity];
     
-    NSArray *tracks = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    NSArray *tracks = [self.appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:nil];
     NSManagedObject *trackMO = nil;
     
     // delete all data before saving new
@@ -100,7 +100,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         NSInteger i;
         for (i = 0; i < [tracks count]; i++) {
             trackMO = [tracks objectAtIndex:i];
-            [self.managedObjectContext deleteObject:trackMO];
+            [self.appDelegate.managedObjectContext deleteObject:trackMO];
         }
     }
     
@@ -111,7 +111,7 @@ NSString *const PBType = @"playlistRowDragDropType";
                 
         for (k = 0; k < [playlist.tracks count]; k++) {
             SNDTrack *t = [playlist.tracks objectAtIndex:k];
-            trackMO = [NSEntityDescription insertNewObjectForEntityForName:@"Track" inManagedObjectContext:self.managedObjectContext];
+            trackMO = [NSEntityDescription insertNewObjectForEntityForName:@"Track" inManagedObjectContext:self.appDelegate.managedObjectContext];
             [trackMO setValue:t.path forKey:@"path"];
             [trackMO setValue:[NSNumber numberWithInteger:k] forKey:@"row"];
             [trackMO setValue:[NSNumber numberWithInteger:i] forKey:@"memberOfPlaylist"];
@@ -119,7 +119,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     }
       
     NSError *err = nil;
-    if(![self.managedObjectContext save:&err]){
+    if(![self.appDelegate.managedObjectContext save:&err]){
         NSLog(@"error %@, %@", err, [err userInfo]);
         abort();
     }
@@ -127,9 +127,9 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void) load {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Track" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Track" inManagedObjectContext:self.appDelegate.managedObjectContext];
     [fetchRequest setEntity:entity];
-    NSArray *tracks = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    NSArray *tracks = [self.appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:nil];
     NSManagedObject *trackMO = nil;
     
     if([tracks count] > 0){

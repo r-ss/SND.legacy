@@ -39,7 +39,7 @@
 }
 
 - (void) timerTick: (NSTimer *)timer {
-    NSLog(@"tick: %@", self.totalTime);
+    //NSLog(@"tick: %@", self.totalTime);
     NSNumber *tickTime = @1;
     
     self.totalTime = [NSNumber numberWithDouble:self.totalTime.doubleValue + tickTime.doubleValue];
