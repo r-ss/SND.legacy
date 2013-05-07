@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSNumber *totalTime;
 @property (nonatomic, strong) NSTimer *playbackTimer;
+@property (nonatomic, strong) NSTimer *saveTimer;
 
 - (NSString *) getTotalPlaybackTime;
 

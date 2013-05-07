@@ -34,7 +34,7 @@
 }
 
 - (void) timerTick: (NSTimer *)timer {
-    NSLog(@">> tick");
+    //NSLog(@">> tick");
     //self.appDelegate = NSApplication.sharedApplication.delegate;
     [self.totalPlaybackTimeField setStringValue:[self.appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
 }

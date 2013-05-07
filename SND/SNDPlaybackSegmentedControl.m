@@ -10,13 +10,13 @@
 
 @interface SNDPlaybackSegmentedControl()
 @property (nonatomic) NSImage *pic;
-@property (nonatomic) NSTimer *timer; // need little delay for prevent playback icon blinking on tracks switching
+//@property (nonatomic) NSTimer *timer; // need little delay for prevent playback icon blinking on tracks switching
 @end
 
 @implementation SNDPlaybackSegmentedControl
 
 @synthesize pic = _pic;
-@synthesize timer = _timer;
+//@synthesize timer = _timer;
 
 - (void)awakeFromNib {
     //NSLog(@"banderlog2");
@@ -30,17 +30,19 @@
 
 - (void)playerStartedPlayingNotification:(NSNotification *)notification {
     self.pic = [NSImage imageNamed:@"pic_pause"];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.025 target:self selector:@selector(changePic:) userInfo:nil repeats:NO];
+    [self setImage:self.pic forSegment:1];
+    //self.timer = [NSTimer scheduledTimerWithTimeInterval:0.025 target:self selector:@selector(changePic:) userInfo:nil repeats:NO];
 }
 
 - (void)playerStoppedPlayingNotification:(NSNotification *)notification {
     self.pic = [NSImage imageNamed:@"pic_play"];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.025 target:self selector:@selector(changePic:) userInfo:nil repeats:NO];
+    [self setImage:self.pic forSegment:1];
+    //self.timer = [NSTimer scheduledTimerWithTimeInterval:0.025 target:self selector:@selector(changePic:) userInfo:nil repeats:NO];
 }
 
-- (void) changePic:(NSTimer *)timer {
-    [self setImage:self.pic forSegment:1];
-}
+//- (void) changePic:(NSTimer *)timer {
+ //   [self setImage:self.pic forSegment:1];
+//}
 
 
 

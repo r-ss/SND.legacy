@@ -13,6 +13,7 @@
 
 @synthesize totalTime = _totalTime;
 @synthesize playbackTimer = _playbackTimer;
+@synthesize saveTimer = _saveTimer;
 
 - (id)init
 {
@@ -31,20 +32,26 @@
 }
 
 - (void) playerStartedPlayingNotification:(NSNotification *)notification {
-    self.playbackTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
+    if(!self.playbackTimer)
+        self.playbackTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
+    if(!self.saveTimer)
+        self.saveTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(saveTimerTick:) userInfo:nil repeats:YES];
 }
 
 - (void) playerStoppedPlayingNotification:(NSNotification *)notification {
     [self.playbackTimer invalidate];
+    self.playbackTimer = nil;
+    [self.saveTimer invalidate];
+    self.saveTimer = nil;
 }
 
 - (void) timerTick: (NSTimer *)timer {
-    //NSLog(@"tick: %@", self.totalTime);
     NSNumber *tickTime = @1;
-    
     self.totalTime = [NSNumber numberWithDouble:self.totalTime.doubleValue + tickTime.doubleValue];
-    
-    
+}
+
+- (void) saveTimerTick: (NSTimer *)timer {
+    NSLog(@"save timer tick");
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setDouble:[self.totalTime doubleValue] forKey:@"SNDTotalPlaybackTime"];
 }
