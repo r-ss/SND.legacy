@@ -31,7 +31,7 @@
     //self.sndBox.managedObjectContext = self.managedObjectContext;
     [self.sndBox load];
     
-    //self.preferencesController = [[SNDPreferencesController alloc] init];
+    self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
     
     
     self.totalPlaybackTimeCounter = [[SNDTotalPlaybackTimeCounter alloc] init];
@@ -43,9 +43,9 @@
 }
 
 - (IBAction) showPreferencesPanel:(id)sender {
-    if(!self.preferencesController){
-       self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
-    }
+    //if(!self.preferencesController){
+       //self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
+    //}
     [self.preferencesController showWindow:self];
     [self.preferencesController setup];
 }
@@ -88,6 +88,9 @@
     return _managedObjectContext;
     
 }
+
+
+
 
 // To enable window reopen after close
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag {

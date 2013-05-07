@@ -7,6 +7,8 @@
 //
 
 #import "SNDWindow.h"
+#import "SNDAppDelegate.h"
+#import "SNDPreferencesController.h"
 
 @implementation SNDWindow
 
@@ -15,9 +17,18 @@
     [super awakeFromNib];
     //NSLog(@"Init");
     [self registerForDraggedTypes:[NSArray arrayWithObject:NSURLPboardType]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowClosing:) name:NSWindowWillCloseNotification object:self];
+    
 }
 
-
+- (void)windowClosing:(NSNotification*)aNotification {
+    NSLog(@">> windowClosing");
+    SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
+    if([appDelegate.preferencesController quitOnWindowClose]){
+        [[NSApplication sharedApplication] terminate:self];
+    }
+}
 
 // NSDraggingDestination methods
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {

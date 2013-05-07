@@ -54,4 +54,9 @@
     [userDefaults synchronize];
 }
 
+- (BOOL) quitOnWindowClose {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    return [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];
+}
+
 @end

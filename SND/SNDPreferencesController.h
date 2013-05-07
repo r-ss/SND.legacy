@@ -21,4 +21,6 @@
 
 - (void) setup;
 
+- (BOOL) quitOnWindowClose;
+
 @end
