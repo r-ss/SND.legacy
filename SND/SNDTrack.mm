@@ -31,6 +31,8 @@
 @synthesize tracknumber;
 @synthesize year;
 
+@synthesize isAccessible = _isAccessible;
+
 
 - (id) initWithURL:(NSURL *)url {
     self = [super init];
@@ -116,6 +118,16 @@
 - (NSString*)description
 {
     return [NSString stringWithFormat:@"SNDTrack: %@ - %@", self.artist, self.title];
+}
+
+// Overriding isAccessible getter
+// lowercase 'bool' here because c++
+- (bool) isAccessible {    
+    if([[NSFileManager defaultManager] fileExistsAtPath:self.path]) {
+        return YES;
+    } else {        
+        return NO;
+    }    
 }
 
 

@@ -16,9 +16,10 @@
 @property (nonatomic) NSNumber *duration;
 @property (nonatomic) NSString *formattedDuration;
 
-
 @property (nonatomic) BOOL validTags;
 @property (nonatomic) BOOL validAudioProperties;
+
+@property (nonatomic, readonly) bool isAccessible;
 
 // Tags
 @property (nonatomic, copy) NSString *title;
@@ -36,5 +37,6 @@
 
 
 - (id)initWithURL:(NSURL *)url;
+
 
 @end

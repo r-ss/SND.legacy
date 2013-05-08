@@ -185,14 +185,18 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     if (tableView == playlistTableView) {
+        SNDTrack *t = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
+        
         if([tableColumn.identifier isEqualToString:@"state"]){
+            if(!t.isAccessible){
+                return @"?";
+            }            
             if (row == self.currentSelectedPlaylist.currentTrackIndex.intValue && [self.currentSelectedPlaylist isEqualTo:self.currentPlayingPlaylist]){
                 return @">";
             } else {
                 return @"";
             }
-        }
-        SNDTrack *t = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
+        }        
         NSString *identifier = tableColumn.identifier;
         return [t valueForKey:identifier];
 	}
@@ -466,10 +470,12 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void) playTrack:(SNDTrack *)track {
     if(track){
-        [self.sndPlayer playTrack:track];
-        if(!self.currentPlayingPlaylist)
-            self.currentPlayingPlaylist = self.currentSelectedPlaylist;
-        [playlistTableView reloadData];
+        if(track.isAccessible){
+            [self.sndPlayer playTrack:track];
+            if(!self.currentPlayingPlaylist)
+                self.currentPlayingPlaylist = self.currentSelectedPlaylist;
+            [playlistTableView reloadData];
+        }
     }
 }
 
