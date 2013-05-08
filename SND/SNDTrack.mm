@@ -130,5 +130,10 @@
     }    
 }
 
+- (void) dealloc
+{
+    //NSLog(@"dealloc: %@", [self description]);
+}
+
 
 @end
