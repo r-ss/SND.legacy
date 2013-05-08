@@ -37,6 +37,7 @@
     if (self) {
         self.url = url;
         self.artist = @"n/a";
+        self.album = @"n/a";
         self.title = @"n/a";
         [self setPath:self.url.path];
         [self setFilename:[NSString stringWithString:[self.url lastPathComponent]]];

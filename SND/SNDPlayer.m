@@ -35,7 +35,7 @@
 */
 
 - (void)awakeFromNib {
-    _acceptableFileExtensions = [[NSArray alloc] initWithObjects:@"mp3", @"flac", nil];
+    _acceptableFileExtensions = [[NSArray alloc] initWithObjects:@"mp3", @"flac", @"wav", nil];
     
     _volume = [NSNumber numberWithDouble:100];
     self.isPlaying = NO;
