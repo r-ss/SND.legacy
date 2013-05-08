@@ -64,6 +64,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         NSNumber *index = [NSNumber numberWithInteger:i + 1];
         SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:index];
         [self.playlists addObject:playlist];
+        [self setupMenuForTab:i];
     }
     
     self.currentSelectedPlaylist = [self.playlists objectAtIndex:0];
@@ -77,6 +78,56 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self updateAllTabsTitles];
     [playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PBType, NSFilenamesPboardType, @"public.utf8-plain-text", nil]];
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+}
+
+
+- (void)setupMenuForTab:(NSInteger)tab {    
+    NSMenu *newMenu = [[NSMenu alloc] init];
+	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete playlist" action:nil keyEquivalent:@""];
+    [menuItem setEnabled:YES];
+    [menuItem setTarget:self];
+    [menuItem setRepresentedObject:[NSNumber numberWithInteger:tab]]; // pass playlist index
+    [menuItem setAction:@selector(playlistDeleteItemPressed:)];
+	[newMenu insertItem:menuItem atIndex:0];
+    [self.tabs setMenu:newMenu forSegment:tab];
+}
+
+
+- (IBAction) addPlaylist:(NSButton *)sender {
+    NSLog(@"> addPlaylist");
+    NSNumber *newPlaylistIndex = [NSNumber numberWithInteger:[self.playlists count] + 1];
+    SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:newPlaylistIndex];
+    [self.playlists addObject:playlist];
+    
+    
+    [self.tabs setSegmentCount:[self.playlists count]];
+    [self updateTabTitle:newPlaylistIndex.integerValue - 1];    
+    [self setupMenuForTab:newPlaylistIndex.integerValue - 1];
+}
+
+- (void) playlistDeleteItemPressed:(id)sender {
+    NSLog(@"> playlistDeleteItemPressed %@", [sender representedObject]);
+    if([self.playlists count] > 1){
+        NSInteger currentSelectedPlaylistIndex = [self.playlists indexOfObject:self.currentSelectedPlaylist];
+        NSNumber *index = [sender representedObject];
+        
+        [self.playlists removeObjectAtIndex:index.integerValue];
+        [self.tabs setSegmentCount:[self.playlists count]];        
+        [self updateAllTabsTitles];
+        
+        if(currentSelectedPlaylistIndex == index.integerValue){
+            if(currentSelectedPlaylistIndex == [self.playlists count]){
+                self.currentSelectedPlaylist = [self.playlists objectAtIndex:currentSelectedPlaylistIndex - 1];
+                [self.tabs setSelectedSegment:currentSelectedPlaylistIndex - 1];
+            } else {
+                self.currentSelectedPlaylist = [self.playlists objectAtIndex:currentSelectedPlaylistIndex];
+                [self.tabs setSelectedSegment:currentSelectedPlaylistIndex];
+            }
+            [playlistTableView reloadData];
+        }
+    } else {
+        [self showCommonInformationalAlert:@"Please don't delete last playlist" informativeText:@"because program will crash :)"];
+    }
 }
 
 - (void) updateAllTabsTitles {
@@ -495,6 +546,24 @@ NSString *const PBType = @"playlistRowDragDropType";
     }
 }
 
+- (void) showCommonInformationalAlert:(NSString *)messageText informativeText:(NSString *)information {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setAlertStyle:NSInformationalAlertStyle];
+    [alert addButtonWithTitle:@"OK"];
+    [alert setMessageText:messageText];
+    [alert setInformativeText:information];    
+    SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
+    [alert beginSheetModalForWindow:appDelegate.window modalDelegate:self didEndSelector:@selector(commonInformationalAlertDidEnd:returnCode:contextInfo:) contextInfo:(__bridge void *)(self)];
+}
+
+- (void)commonInformationalAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)info {
+//	if (returnCode == NSAlertFirstButtonReturn) {
+//        NSLog(@"1");
+//    } else {
+//        NSLog(@"2");
+//	}
+}
+
 - (void) playTrack:(SNDTrack *)track {
     if(track){
         if(track.isAccessible){
@@ -503,6 +572,8 @@ NSString *const PBType = @"playlistRowDragDropType";
                 self.currentPlayingPlaylist = self.currentSelectedPlaylist;
             [playlistTableView reloadData];
             [self updateAllTabsTitles];
+        } else {
+            [self showCommonInformationalAlert:@"File not found" informativeText:@"maybe it's moved or deleted"];
         }
     }
 }

@@ -38,9 +38,17 @@
     
     NSLog(@"total playback time: %@", [self.totalPlaybackTimeCounter getTotalPlaybackTime]);
     
+    
+    
+    
+    //NSString *currentFullName = (NSString *)CSIdentityGetFullName((CSIdentityRef)[_identities objectAtIndex:[_identityTableView selectedRow]]);
+	
+    
+    
     //self.preferencesController = [[SNDPreferencesController alloc] init];
     //[self.preferencesController showWindow:self];
 }
+
 
 - (IBAction) showPreferencesPanel:(id)sender {
     //if(!self.preferencesController){

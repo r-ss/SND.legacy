@@ -98,5 +98,15 @@
     return self.currentTrack;
 }
 
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"SNDPlaylist with %ld item(s)", (unsigned long)[self.tracks count]];
+}
+
+- (void) dealloc
+{
+    NSLog(@"dealloc playlist: %@", [self description]);
+}
+
 
 @end

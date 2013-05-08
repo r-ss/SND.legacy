@@ -36,6 +36,8 @@
 
 - (IBAction) controlAction:(NSSegmentedControl *)sender;
 
+- (IBAction) addPlaylist:(NSButton *)sender;
+
 // player will preload next track in queue for smooth track swithing
 - (SNDTrack *) nextTrack;
 
