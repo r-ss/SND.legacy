@@ -21,6 +21,8 @@
 @synthesize currentSelectedPlaylist = _currentSelectedPlaylist;
 @synthesize currentPlayingPlaylist = _currentPlayingPlaylist;
 
+@synthesize tabs = _tabs;
+
 //@synthesize managedObjectContext = _managedObjectContext;
 
 NSString *const PBType = @"playlistRowDragDropType";
@@ -59,7 +61,8 @@ NSString *const PBType = @"playlistRowDragDropType";
     
     NSInteger i;
     for(i = 0; i < 5; i++){
-        SNDPlaylist *playlist = [[SNDPlaylist alloc] init];
+        NSNumber *index = [NSNumber numberWithInteger:i + 1];
+        SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:index];
         [self.playlists addObject:playlist];
     }
     
@@ -71,8 +74,21 @@ NSString *const PBType = @"playlistRowDragDropType";
     //self.currentTrackIndex = [NSNumber numberWithInt:-1];
     
     [playlistTableView reloadData];
+    [self updateAllTabsTitles];
     [playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PBType, NSFilenamesPboardType, @"public.utf8-plain-text", nil]];
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+}
+
+- (void) updateAllTabsTitles {
+    NSInteger i;
+    for (i = 0; i < [self.playlists count]; i++){
+        [self updateTabTitle:i];
+    }
+}
+
+- (void) updateTabTitle:(NSInteger)tabIndex {
+    SNDPlaylist *playlist = [self.playlists objectAtIndex:tabIndex];
+    [self.tabs setLabel:playlist.title forSegment:tabIndex];
 }
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender {
@@ -81,7 +97,11 @@ NSString *const PBType = @"playlistRowDragDropType";
         //[self.currentPlaylist deactivate];
         self.currentSelectedPlaylist = [self.playlists objectAtIndex:sender.selectedSegment];
         [playlistTableView reloadData];
+        [self updateAllTabsTitles];
         [playlistTableView deselectAll:self];
+        
+        SNDPlaylist *playlist = [self.playlists objectAtIndex:sender.selectedSegment];
+        [self.tabs setLabel:playlist.title forSegment:sender.selectedSegment];
     }
     //NSLog(@"%@", self.currentPlaylist.tracks);
 }
@@ -173,6 +193,7 @@ NSString *const PBType = @"playlistRowDragDropType";
             }
         }
         [playlistTableView reloadData];
+        [self updateAllTabsTitles];
     }
 }
 
@@ -273,6 +294,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         [playlistTableView noteNumberOfRowsChanged];
         [playlistTableView deselectAll:self];
 		[playlistTableView reloadData];
+        [self updateAllTabsTitles];
 		return YES;
 	}
 	
@@ -286,6 +308,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         [playlistTableView deselectAll:self];
         [self.currentSelectedPlaylist setCurrentTrackIndexByTrack:self.currentSelectedPlaylist.currentTrack];
 		[playlistTableView reloadData];
+        [self updateAllTabsTitles];
 		return YES;
 	}
 	
@@ -339,6 +362,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self.currentSelectedPlaylist.tracks removeObjectsAtIndexes:selectedRowIndexes];
     [playlistTableView deselectAll:self];
     [playlistTableView reloadData];
+    [self updateAllTabsTitles];
     [self save];
 }
 
@@ -347,6 +371,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     self.currentPlayingPlaylist.currentTrackIndex = [NSNumber numberWithInt:-1];
     self.currentPlayingPlaylist = nil;
     [playlistTableView reloadData];
+    [self updateAllTabsTitles];
 }
 
 // WindowDropDelegate methods
@@ -444,6 +469,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     [playlistTableView deselectAll:self];
     [self.currentSelectedPlaylist setCurrentTrackIndexByTrack:self.currentSelectedPlaylist.currentTrack];
     [playlistTableView reloadData];
+    [self updateAllTabsTitles];
     [self save];
 }
 
@@ -455,6 +481,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         SNDTrack *t = [self.currentPlayingPlaylist selectNextOrPreviousTrack:YES];
         if(t)
             [playlistTableView reloadData];
+        [self updateAllTabsTitles];
         return t;
     }
     return nil;
@@ -475,6 +502,7 @@ NSString *const PBType = @"playlistRowDragDropType";
             if(!self.currentPlayingPlaylist)
                 self.currentPlayingPlaylist = self.currentSelectedPlaylist;
             [playlistTableView reloadData];
+            [self updateAllTabsTitles];
         }
     }
 }

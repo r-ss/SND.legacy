@@ -32,6 +32,8 @@
 
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender;
+@property (nonatomic, assign) IBOutlet NSSegmentedControl *tabs;
+
 - (IBAction) controlAction:(NSSegmentedControl *)sender;
 
 // player will preload next track in queue for smooth track swithing

@@ -13,6 +13,9 @@
 
 @interface SNDPlaylist : SNDBox
 
+@property (nonatomic) NSNumber *index;
+@property (nonatomic, readonly) NSString *title;
+
 @property (nonatomic, strong, readwrite) NSMutableArray *tracks;
 @property (nonatomic) NSNumber *currentTrackIndex;
 @property (nonatomic) SNDTrack *currentTrack;
@@ -22,5 +25,7 @@
 
 - (SNDTrack *) selectNextOrPreviousTrack:(BOOL)next;
 - (SNDTrack *) selectItemAtRow:(NSInteger)rowIndex;
+
+- (id) initWithIndex:(NSNumber *)i;
 
 @end
