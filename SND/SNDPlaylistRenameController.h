@@ -10,10 +10,14 @@
 
 @interface SNDPlaylistRenameController : NSObject
 
-//@property (nonatomic, strong) NSMutableArray *stupid_ARC_or_Stupid_Me;
+@property (assign) IBOutlet NSWindow *playlistRenameWindow;
 
-- (void) showModal;
+@property (assign) IBOutlet NSTextField *nameField;
 
-- (void) closeSheet;
+
+- (void) show;
+
+- (IBAction) renameButton:(id)sender;
+- (IBAction) cancelButton:(id)sender;
 
 @end

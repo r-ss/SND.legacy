@@ -10,11 +10,12 @@
 
 #import "SNDAppDelegate.h"
 
+#import "SNDBox.h"
+
 @implementation SNDPlaylistRenameController
 
-//@synthesize playlistRename = _playlistRename;
-
-//@synthesize stupid_ARC_or_Stupid_Me = _stupid_ARC_or_Stupid_Me;
+@synthesize playlistRenameWindow = _playlistRenameWindow;
+@synthesize nameField = _nameField;
 
 - (id) init {
     self = [super init];
@@ -26,46 +27,54 @@
     return self;
 }
 
-- (void) showModal {
+- (void) show {
     SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
     
     //[[NSApplication sharedApplication] beginSheet:self.playlistRenameWindow modalForWindow:appDelegate.window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:(__bridge void *)(self)];
     //NSLog(@"aa window: %@", playlistRename);
-    //if(!playlistRename)
-        //[NSBundle loadNibNamed:@"PlaylistRename" owner:self];
+    if(!self.playlistRenameWindow)
+        //NSLog(@">Loading");
+        [NSBundle loadNibNamed:@"PlaylistRename" owner:self];
+        //self.playlistRenameWindow = [[NSWindow alloc] initWithWindowNibName:@"mainMenu"];
     //NSLog(@"aa window2: %@", playlistRename);
     //[self.stupid_ARC_or_Stupid_Me addObject:playlistRename];
     
     
-    //NSLog(@"www: %@", playlistRenameWindow);
+    //NSLog(@"window at opening: %@", self.playlistRenameWindow);
     
     
     
-    [[NSApplication sharedApplication] beginSheet:appDelegate.playlistRenameWindow modalForWindow:appDelegate.window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:(__bridge void *)(self)];
+    [[NSApplication sharedApplication] beginSheet:self.playlistRenameWindow modalForWindow:appDelegate.window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:(__bridge void *)(self)];
     
-    NSLog(@">hhhmm");
+    //[[NSApplication sharedApplication] beginSheet:self.playlistRenameWindow modalForWindow:appDelegate.window modalDelegate:nil didEndSelector:@selector(sheetDidEnd) contextInfo:nil];
+    
+    //NSLog(@">hhhmm");
 }
 
-- (void) closeSheet {
-    NSLog(@">End sheet");
-    //NSLog(@"window: %@", playlistRename);
-    //if(!playlistRename)
-        //[NSBundle loadNibNamed:@"PlaylistRename" owner:self];
-    
-    
-    //self.playlistRename = [self.stupid_ARC_or_Stupid_Me lastObject];
-    
-    //NSLog(@"window2: %@", playlistRename);
-    SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
-    [[NSApplication sharedApplication] endSheet:appDelegate.playlistRenameWindow];
-    //[playlistRename orderOut:self];
-    
-    //playlistRename = nil;
+- (IBAction) renameButton:(id)sender {
+    [[NSApplication sharedApplication] endSheet:self.playlistRenameWindow returnCode:NSOKButton];
+}
+- (IBAction) cancelButton:(id)sender {
+    [[NSApplication sharedApplication] endSheet:self.playlistRenameWindow returnCode:NSCancelButton];
 }
 
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
-     NSLog(@"> ko ko ko ");
+    //NSLog(@"> ko ko ko ");
 	[sheet orderOut:self];
+    
+    NSLog(@"return code: %ld", (long)returnCode);
+    NSLog(@"context info: %@", contextInfo);
+    
+    if (returnCode == NSOKButton) {
+        //NSLog(@"field value: %@", self.nameField.stringValue);
+    
+        SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
+    
+        [appDelegate.sndBox renamePlaylist:self.nameField.stringValue];
+    }
+    
+    
+    //[[NSApplication sharedApplication] endSheet:self.playlistRenameWindow];
 //    
 //	if (returnCode == NSOKButton) {
 //		NSString *fullName = [_addIdentityFullName stringValue];

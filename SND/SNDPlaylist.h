@@ -15,6 +15,7 @@
 
 @property (nonatomic) NSNumber *index;
 @property (nonatomic, readonly) NSString *title;
+@property (nonatomic) NSString *manualEnteredName;
 
 @property (nonatomic, strong, readwrite) NSMutableArray *tracks;
 @property (nonatomic) NSNumber *currentTrackIndex;

@@ -13,6 +13,8 @@
 #import "SNDTrack.h"
 #import "SNDPlaylistView.h"
 
+#import "SNDPlaylistRenameController.h"
+
 @implementation SNDBox
 
 @synthesize playlists = _playlists;
@@ -22,6 +24,8 @@
 @synthesize currentPlayingPlaylist = _currentPlayingPlaylist;
 
 @synthesize tabs = _tabs;
+
+@synthesize playlistRenameController = _playlistRenameController;
 
 //@synthesize managedObjectContext = _managedObjectContext;
 
@@ -36,7 +40,10 @@ NSString *const PBType = @"playlistRowDragDropType";
     self.sndWindow.windowDropDelegate = self;
     
     self.playlists = [[NSMutableArray alloc] init];
-        
+    
+    
+    self.playlistRenameController = [[SNDPlaylistRenameController alloc] init];
+    //[self.playlistRenameController show];
     
     // registering in notification center
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -78,6 +85,12 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self updateAllTabsTitles];
     [playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PBType, NSFilenamesPboardType, @"public.utf8-plain-text", nil]];
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+}
+
+- (void) renamePlaylist:(NSString *)name {
+    NSLog(@"rename to: %@", name);
+    self.currentSelectedPlaylist.manualEnteredName = name;
+    [self updateAllTabsTitles];
 }
 
 
@@ -143,6 +156,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender {
+    [self.playlistRenameController show];
     //NSLog(@"tab click: %ld", sender.selectedSegment);
     if([self.playlists indexOfObject:self.currentSelectedPlaylist] != sender.selectedSegment){
         //[self.currentPlaylist deactivate];

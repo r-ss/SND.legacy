@@ -38,6 +38,9 @@
 
 // Overriding title getter
 - (NSString *) title {
+    if(self.manualEnteredName)
+        return self.manualEnteredName;
+    
     if ([self.tracks count] > 0){
         SNDTrack *firstTrack = [self.tracks objectAtIndex:0];
         NSString *firstTrackArtist = firstTrack.artist;

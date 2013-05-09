@@ -15,6 +15,8 @@
 @class SNDPlayer;
 @class SNDTrack;
 
+@class SNDPlaylistRenameController;
+
 @interface SNDBox : NSObject <WindowDropDelegate, DockDropDelegate, NSTableViewDataSource> {
     IBOutlet NSTableView *playlistTableView;
 }
@@ -30,6 +32,8 @@
 
 @property (nonatomic) SNDTrack *currentTrack;
 
+@property (nonatomic, strong) SNDPlaylistRenameController *playlistRenameController;
+
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender;
 @property (nonatomic, assign) IBOutlet NSSegmentedControl *tabs;
@@ -43,6 +47,8 @@
 
 // loading playlist from disk
 - (void) load;
+
+- (void) renamePlaylist:(NSString *)name;
 
 
 @end
