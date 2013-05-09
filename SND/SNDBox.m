@@ -137,7 +137,8 @@ NSString *const PBType = @"playlistRowDragDropType";
                 [self.tabs setSelectedSegment:currentSelectedPlaylistIndex];
             }
             [playlistTableView reloadData];
-        }
+        }        
+        [self save];
     } else {
         [self showCommonInformationalAlert:@"Please don't delete last playlist" informativeText:@"because program will crash :)"];
     }
