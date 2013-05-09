@@ -25,7 +25,7 @@
 }
 
 - (void) keyDown:(NSEvent *)theEvent {
-    NSLog(@"%hu", theEvent.keyCode);
+    //NSLog(@"%hu", theEvent.keyCode);
     // delete (117) or backspace (51)
     if (theEvent.keyCode == 117 || theEvent.keyCode == 51) {
         NSLog(@"key delete track");

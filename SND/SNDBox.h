@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
-
 #import "SNDAppDelegate.h"
 #import "SNDWindow.h"
 

@@ -10,7 +10,6 @@
 #import "SNDBox.h"
 #import "SNDTrack.h"
 
-
 @interface SNDPlayer : NSObject {
     IBOutlet NSTextField *durationOutlet;
     IBOutlet NSSlider *positionSlider;

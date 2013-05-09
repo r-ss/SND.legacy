@@ -17,15 +17,6 @@
 @synthesize tracks = _tracks;
 @synthesize currentTrackIndex = _currentTrackIndex;
 
-//- (id) init {
-//    self = [super init];
-//    if (self) {
-//        self.tracks = [[NSMutableArray alloc] init];
-//        self.currentTrackIndex = [NSNumber numberWithInt:-1];
-//    }
-//    return self;
-//}
-
 - (id) initWithIndex:(NSNumber *)i {
     self = [super init];
     if (self) {

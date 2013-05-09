@@ -8,7 +8,6 @@
 
 #import "SNDAppDelegate.h"
 #import "SNDBox.h"
-
 #import "SNDPreferencesController.h"
 #import "SNDTotalPlaybackTimeCounter.h"
 

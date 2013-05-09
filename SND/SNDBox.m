@@ -19,63 +19,36 @@
 
 @synthesize playlists = _playlists;
 @synthesize currentTrack = _currentTrack;
-
 @synthesize currentSelectedPlaylist = _currentSelectedPlaylist;
 @synthesize currentPlayingPlaylist = _currentPlayingPlaylist;
-
 @synthesize tabs = _tabs;
-
 @synthesize playlistRenameController = _playlistRenameController;
-
-//@synthesize managedObjectContext = _managedObjectContext;
 
 NSString *const PBType = @"playlistRowDragDropType";
 
 - (void)awakeFromNib {
-    [super awakeFromNib];
-    
+    [super awakeFromNib];    
     self.appDelegate = NSApplication.sharedApplication.delegate;
-    self.appDelegate.dockDropDelegate = self;
-    
+    self.appDelegate.dockDropDelegate = self;    
     self.sndWindow.windowDropDelegate = self;
     
-    self.playlists = [[NSMutableArray alloc] init];
-    
-    
+    self.playlists = [[NSMutableArray alloc] init];   
     self.playlistRenameController = [[SNDPlaylistRenameController alloc] init];
-    //[self.playlistRenameController show];
     
     // registering in notification center
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(playlistDeleteTrackNotification:) name:@"SND.Notification.PlaylistDeleteTrackKeyPressed" object:nil];
     [nc addObserver:self selector:@selector(playerStoppedPlayingNotification:) name:@"SND.Notification.PlayerStoppedPlaying" object:nil];
-    
     [nc addObserver:self selector:@selector(playpauseKeyPressedNotification:) name:@"SND.Notification.PlaylistPlayKeyPressed" object:nil];
     [nc addObserver:self selector:@selector(playlistPreviousKeyPressedNotification:) name:@"SND.Notification.PlaylistPreviousKeyPressed" object:nil];
     [nc addObserver:self selector:@selector(playlistNextKeyPressedNotification:) name:@"SND.Notification.PlaylistNextKeyPressed" object:nil];
-    
     [nc addObserver:self selector:@selector(playlistNewKeyPressedNotification:) name:@"SND.Notification.PlaylistNewPressed" object:nil];
     [nc addObserver:self selector:@selector(playlistDeletePlaylistKeyPressedNotification:) name:@"SND.Notification.PlaylistDeletePlaylistPressed" object:nil];
-   
-    
-    //[nc addObserver:self selector:@selector(applicationDidFinishLaunchingNotification:) name:@"SND.Notification.applicationDidFinishLaunching" object:nil];
-    //[nc addObserver:self selector:@selector(playerPlayingStateWasChangedNotification:) name:@"SND.Notification.PlayerStoppedPlaying" object:nil];
-    //[nc addObserver:self selector:@selector(playerPlayingStateWasChangedNotification:) name:@"SND.Notification.PlayerStartedPlaying" object:nil];
-    //[nc addObserver:self selector:@selector(playlistPreviousNotification:) name:@"PlaylistPreviousKeyPressed" object:nil];
-    //[nc addObserver:self selector:@selector(playlistNextNotification:) name:@"PlaylistNextKeyPressed" object:nil];
     
     [playlistTableView setTarget:self];
     [playlistTableView setDoubleAction:@selector(doubleClick:)];
-    [playlistTableView registerForDraggedTypes:[NSArray arrayWithObject:PBType]];
+    //[playlistTableView registerForDraggedTypes:[NSArray arrayWithObject:PBType]];
     [playlistTableView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
-    
-    
-    // create five empty playlist
-    // they will be purged if "load" method will find saved playlists on database
-    
-    
-
-    //self.currentTrackIndex = [NSNumber numberWithInt:-1];
     [playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PBType, NSFilenamesPboardType, @"public.utf8-plain-text", nil]];
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
@@ -102,8 +75,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self save];
 }
 
-
-- (void)setupMenuForTab:(NSInteger)tab {    
+- (void) setupMenuForTab:(NSInteger)tab {    
     NSMenu *newMenu = [[NSMenu alloc] init];
     
     NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:nil keyEquivalent:@""];
@@ -121,7 +93,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 	[newMenu insertItem:menuItem atIndex:1];
     [self.tabs setMenu:newMenu forSegment:tab];
 }
-
 
 - (IBAction) addPlaylist:(NSButton *)sender {
     NSLog(@"> addPlaylist");
@@ -363,14 +334,14 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self updateAllTabsTitles];
 }
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+- (NSInteger) numberOfRowsInTableView:(NSTableView *)tableView {
     if (tableView == playlistTableView) {
         return [self.currentSelectedPlaylist.tracks count];
 	}
 	return 0;
 }
 
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+- (id) tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     if (tableView == playlistTableView) {
         SNDTrack *t = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
         
@@ -390,14 +361,13 @@ NSString *const PBType = @"playlistRowDragDropType";
 	return NULL;
 }
 
-- (void)tableView:(NSTableView *)pTableView setObjectValue:(id)pObject forTableColumn:(NSTableColumn *)pTableColumn row:(NSInteger)pRowIndex {
+- (void) tableView:(NSTableView *)pTableView setObjectValue:(id)pObject forTableColumn:(NSTableColumn *)pTableColumn row:(NSInteger)pRowIndex {
     if (pTableView == playlistTableView) {
 		SNDTrack * zData = [self.currentSelectedPlaylist.tracks objectAtIndex:pRowIndex];
 		zData.path	= (NSString *)pObject;
         [self.currentSelectedPlaylist.tracks replaceObjectAtIndex:pRowIndex withObject:zData];
 	}
 }
-
 
 - (BOOL) tableView:(NSTableView *)pTableView writeRowsWithIndexes:(NSIndexSet *)pIndexSetOfRows toPasteboard:(NSPasteboard*)pboard {
     NSData *zNSIndexSetData = [NSKeyedArchiver archivedDataWithRootObject:pIndexSetOfRows];
@@ -413,11 +383,11 @@ NSString *const PBType = @"playlistRowDragDropType";
     return YES;
 }
 
-- (NSDragOperation)tableView:(NSTableView*)pTableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)op {
+- (NSDragOperation) tableView:(NSTableView*)pTableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)op {
     return NSDragOperationEvery;
 }
 
-- (BOOL)tableView:(NSTableView *)pTableView acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)pRow dropOperation:(NSTableViewDropOperation)operation {
+- (BOOL) tableView:(NSTableView *)pTableView acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)pRow dropOperation:(NSTableViewDropOperation)operation {
 	
     NSPasteboard* zPBoard = [info draggingPasteboard];
 	NSArray *supportedTypes = [NSArray arrayWithObjects: PBType, NSFilenamesPboardType, @"public.utf8-plain-text", NSPasteboardTypeString, nil];
@@ -488,7 +458,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 	return NO;
 }
 
-- (BOOL)tableView:(NSTableView *)tv writeRows:(NSArray *)rows toPasteboard:(NSPasteboard *)pboard {
+- (BOOL) tableView:(NSTableView *)tv writeRows:(NSArray *)rows toPasteboard:(NSPasteboard *)pboard {
 	// declare our own pasteboard types
 	NSArray *typesArray = [NSArray arrayWithObjects:PBType, nil];
 	[pboard declareTypes:typesArray owner:self];
@@ -497,15 +467,14 @@ NSString *const PBType = @"playlistRowDragDropType";
 	return YES;
 }
 
-- (NSIndexSet *)indexSetFromRows:(NSArray *)rows {
+- (NSIndexSet *) indexSetFromRows:(NSArray *)rows {
 	NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
     NSUInteger NSUI = 2;
     [indexSet addIndex:NSUI];
 	return indexSet;
 }
 
-
-- (int)rowsAboveRow:(int)row inIndexSet:(NSIndexSet *)indexSet {
+- (int) rowsAboveRow:(int)row inIndexSet:(NSIndexSet *)indexSet {
 	NSUInteger currentIndex = [indexSet firstIndex];
 	int i = 0;
 	while (currentIndex != NSNotFound) {
@@ -516,7 +485,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 	return i;
 }
 
-- (void)playlistDeleteTrackNotification:(NSNotification *)notification{
+- (void) playlistDeleteTrackNotification:(NSNotification *)notification{
     [playlistTableView abortEditing];    
     NSIndexSet *selectedRowIndexes = [playlistTableView selectedRowIndexes];    
     [selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop){
@@ -532,15 +501,16 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self save];
 }
 
-- (void)playlistNewKeyPressedNotification:(NSNotification *)notification {
+- (void) playlistNewKeyPressedNotification:(NSNotification *)notification {
     [self addPlaylist:nil];
 }
-- (void)playlistDeletePlaylistKeyPressedNotification:(NSNotification *)notification {
+
+- (void) playlistDeletePlaylistKeyPressedNotification:(NSNotification *)notification {
     NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
     [self deletePlaylist:index];
 }
 
-- (void)playerStoppedPlayingNotification:(NSNotification *)notification{
+- (void) playerStoppedPlayingNotification:(NSNotification *)notification{
     self.currentPlayingPlaylist.currentTrack = nil;
     self.currentPlayingPlaylist.currentTrackIndex = [NSNumber numberWithInt:-1];
     self.currentPlayingPlaylist = nil;
@@ -548,18 +518,17 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self updateAllTabsTitles];
 }
 
-- (void)playpauseKeyPressedNotification:(NSNotification *)notification {
+- (void) playpauseKeyPressedNotification:(NSNotification *)notification {
     [self playPause];
 }
 
-- (void)playlistPreviousKeyPressedNotification:(NSNotification *)notification {
+- (void) playlistPreviousKeyPressedNotification:(NSNotification *)notification {
     [self previous];
 }
 
-- (void)playlistNextKeyPressedNotification:(NSNotification *)notification {
+- (void) playlistNextKeyPressedNotification:(NSNotification *)notification {
     [self next];
 }
-
 
 // WindowDropDelegate methods
 - (void) filesDroppedIntoWindow:(NSArray *)filesURL {
@@ -583,7 +552,6 @@ NSString *const PBType = @"playlistRowDragDropType";
     }];
     return sortedTracks;
 }
-
 
 - (void) addFiles:(NSArray *)filesURL atRow:(NSInteger)row {
     NSInteger i;
@@ -661,7 +629,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 // player will preload next track in queue for smooth track swithing
-- (SNDTrack *)nextTrack {
+- (SNDTrack *) nextTrack {
     NSInteger current = self.currentPlayingPlaylist.currentTrackIndex.intValue;
     NSInteger total = [self.currentPlayingPlaylist.tracks count] - 1;
     if(current < total){
@@ -714,7 +682,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     }
 }
 
-- (IBAction)controlAction:(NSSegmentedControl *)sender {
+- (IBAction) controlAction:(NSSegmentedControl *)sender {
     switch(sender.selectedSegment) {
         // previous button
         case 0:

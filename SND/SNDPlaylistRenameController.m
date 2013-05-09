@@ -7,9 +7,7 @@
 //
 
 #import "SNDPlaylistRenameController.h"
-
 #import "SNDAppDelegate.h"
-
 #import "SNDBox.h"
 
 @implementation SNDPlaylistRenameController
@@ -49,8 +47,6 @@
     if (returnCode == NSOKButton) {
         SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
         [appDelegate.sndBox renamePlaylist:self.sessionForTab.integerValue withName:self.nameField.stringValue];
-    } else {
-        //NSLog(@"value: %@", nameFieldValue);
     }
 }
 
