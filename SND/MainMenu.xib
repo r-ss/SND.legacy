@@ -395,7 +395,7 @@
 											<string key="NSFrameSize">{699, 256}</string>
 											<reference key="NSSuperview" ref="764692948"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="505514637"/>
+											<reference key="NSNextKeyView" ref="362367530"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -482,7 +482,6 @@
 													</object>
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
-													<bool key="NSIsEditable">YES</bool>
 													<reference key="NSTableView" ref="653615633"/>
 												</object>
 												<object class="NSTableColumn" id="85786736">
@@ -494,7 +493,7 @@
 														<int key="NSCellFlags">75497536</int>
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">track</string>
-														<reference key="NSSupport" ref="26"/>
+														<reference key="NSSupport" ref="22"/>
 														<reference key="NSBackgroundColor" ref="413838855"/>
 														<reference key="NSTextColor" ref="247085330"/>
 													</object>
@@ -509,7 +508,6 @@
 													</object>
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
-													<bool key="NSIsEditable">YES</bool>
 													<reference key="NSTableView" ref="653615633"/>
 												</object>
 												<object class="NSTableColumn" id="591383381">
@@ -550,7 +548,7 @@
 														<int key="NSCellFlags">75497536</int>
 														<int key="NSCellFlags2">2048</int>
 														<string key="NSContents">album</string>
-														<reference key="NSSupport" ref="26"/>
+														<reference key="NSSupport" ref="22"/>
 														<reference key="NSBackgroundColor" ref="413838855"/>
 														<reference key="NSTextColor" ref="247085330"/>
 													</object>
@@ -565,7 +563,6 @@
 													</object>
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
-													<bool key="NSIsEditable">YES</bool>
 													<reference key="NSTableView" ref="653615633"/>
 												</object>
 												<object class="NSTableColumn" id="799208922">
@@ -696,7 +693,7 @@
 							<string key="NSFrame">{{-1, -1}, {701, 274}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="362367530"/>
+							<reference key="NSNextKeyView" ref="764692948"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133682</int>
 							<reference key="NSVScroller" ref="505514637"/>
@@ -819,7 +816,6 @@
 							<string key="NSFrame">{{670, 271}, {30, 21}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:22</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="481279915">
@@ -1669,10 +1665,10 @@
 							<reference ref="416479895"/>
 							<reference ref="32111069"/>
 							<reference ref="834976639"/>
-							<reference ref="472939342"/>
 							<reference ref="801498526"/>
 							<reference ref="1012793110"/>
 							<reference ref="78656762"/>
+							<reference ref="472939342"/>
 						</array>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -2341,6 +2337,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="addPlaylist:">NSButton</string>
 						<string key="controlAction:">NSSegmentedControl</string>
+						<string key="doubleClick:">id</string>
 						<string key="tabAction:">NSSegmentedControl</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -2351,6 +2348,10 @@
 						<object class="IBActionInfo" key="controlAction:">
 							<string key="name">controlAction:</string>
 							<string key="candidateClassName">NSSegmentedControl</string>
+						</object>
+						<object class="IBActionInfo" key="doubleClick:">
+							<string key="name">doubleClick:</string>
+							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="tabAction:">
 							<string key="name">tabAction:</string>

@@ -47,8 +47,17 @@ NSString *const PBType = @"playlistRowDragDropType";
     
     // registering in notification center
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(playlistDeleteNotification:) name:@"SND.Notification.PlaylistDeleteKeyPressed" object:nil];
+    [nc addObserver:self selector:@selector(playlistDeleteTrackNotification:) name:@"SND.Notification.PlaylistDeleteTrackKeyPressed" object:nil];
     [nc addObserver:self selector:@selector(playerStoppedPlayingNotification:) name:@"SND.Notification.PlayerStoppedPlaying" object:nil];
+    
+    [nc addObserver:self selector:@selector(playpauseKeyPressedNotification:) name:@"SND.Notification.PlaylistPlayKeyPressed" object:nil];
+    [nc addObserver:self selector:@selector(playlistPreviousKeyPressedNotification:) name:@"SND.Notification.PlaylistPreviousKeyPressed" object:nil];
+    [nc addObserver:self selector:@selector(playlistNextKeyPressedNotification:) name:@"SND.Notification.PlaylistNextKeyPressed" object:nil];
+    
+    [nc addObserver:self selector:@selector(playlistNewKeyPressedNotification:) name:@"SND.Notification.PlaylistNewPressed" object:nil];
+    [nc addObserver:self selector:@selector(playlistDeletePlaylistKeyPressedNotification:) name:@"SND.Notification.PlaylistDeletePlaylistPressed" object:nil];
+   
+    
     //[nc addObserver:self selector:@selector(applicationDidFinishLaunchingNotification:) name:@"SND.Notification.applicationDidFinishLaunching" object:nil];
     //[nc addObserver:self selector:@selector(playerPlayingStateWasChangedNotification:) name:@"SND.Notification.PlayerStoppedPlaying" object:nil];
     //[nc addObserver:self selector:@selector(playerPlayingStateWasChangedNotification:) name:@"SND.Notification.PlayerStartedPlaying" object:nil];
@@ -64,6 +73,14 @@ NSString *const PBType = @"playlistRowDragDropType";
     // create five empty playlist
     // they will be purged if "load" method will find saved playlists on database
     
+    
+
+    //self.currentTrackIndex = [NSNumber numberWithInt:-1];
+    [playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PBType, NSFilenamesPboardType, @"public.utf8-plain-text", nil]];
+	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+}
+
+- (void) setupDefaultEmptyPlaylists {
     NSInteger i;
     for(i = 0; i < 5; i++){
         NSNumber *index = [NSNumber numberWithInteger:i];
@@ -71,16 +88,10 @@ NSString *const PBType = @"playlistRowDragDropType";
         [self.playlists addObject:playlist];
         [self.tabs setSegmentCount:[self.playlists count]];
         [self setupMenuForTab:i];
-    }
-    
+    }    
     self.currentSelectedPlaylist = [self.playlists objectAtIndex:0];
-
-    //self.currentTrackIndex = [NSNumber numberWithInt:-1];
-    
     [playlistTableView reloadData];
     [self updateAllTabsTitles];
-    [playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PBType, NSFilenamesPboardType, @"public.utf8-plain-text", nil]];
-	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
 - (void) renamePlaylist:(NSInteger)index withName:(NSString *)name {
@@ -116,8 +127,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     NSLog(@"> addPlaylist");
     NSNumber *newPlaylistIndex = [NSNumber numberWithInteger:[self.playlists count]];
     SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:newPlaylistIndex];
-    [self.playlists addObject:playlist];
-    
+    [self.playlists addObject:playlist];    
     
     [self.tabs setSegmentCount:[self.playlists count]];
     [self updateTabTitle:newPlaylistIndex.integerValue];    
@@ -135,15 +145,19 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void) playlistDeleteMenuItemPressed:(id)sender {
     NSLog(@"> playlistDeleteMenuItemPressed %@", [sender representedObject]);
+    NSNumber *index = [sender representedObject];
+    [self deletePlaylist:index.integerValue];
+}
+
+- (void) deletePlaylist:(NSInteger)index {
     if([self.playlists count] > 1){
         NSInteger currentSelectedPlaylistIndex = [self.playlists indexOfObject:self.currentSelectedPlaylist];
-        NSNumber *index = [sender representedObject];
-        
-        [self.playlists removeObjectAtIndex:index.integerValue];
-        [self.tabs setSegmentCount:[self.playlists count]];        
+
+        [self.playlists removeObjectAtIndex:index];
+        [self.tabs setSegmentCount:[self.playlists count]];
         [self updateAllTabsTitles];
         
-        if(currentSelectedPlaylistIndex == index.integerValue){
+        if(currentSelectedPlaylistIndex == index){
             if(currentSelectedPlaylistIndex == [self.playlists count]){
                 self.currentSelectedPlaylist = [self.playlists objectAtIndex:currentSelectedPlaylistIndex - 1];
                 [self.tabs setSelectedSegment:currentSelectedPlaylistIndex - 1];
@@ -274,7 +288,6 @@ NSString *const PBType = @"playlistRowDragDropType";
         NSInteger i;
         for (i = 0; i < [playlists count]; i++) {
             playlistMO = [playlists objectAtIndex:i];
-            NSLog(@"wow, index: %@", [NSNumber numberWithInteger:[[playlistMO valueForKey:@"index"] integerValue]]);
             SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:[NSNumber numberWithInteger:[[playlistMO valueForKey:@"index"] integerValue]]];
             playlist.manualEnteredName = [playlistMO valueForKey:@"manualName"];
             [unsortedPlaylists addObject:playlist];
@@ -292,10 +305,14 @@ NSString *const PBType = @"playlistRowDragDropType";
             [self.playlists addObject:[sortedPlaylists objectAtIndex:i]];
             [self.tabs setSegmentCount:[self.playlists count]];
             [self setupMenuForTab:i];
-            NSLog(@"ololo");
         }
         
         self.currentSelectedPlaylist = [self.playlists objectAtIndex:0];
+        [playlistTableView reloadData];
+        [self updateAllTabsTitles];
+    } else {
+        // if saved playlists not found setup default playlists
+        [self setupDefaultEmptyPlaylists];
     }
 
     // filling tracks
@@ -499,7 +516,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 	return i;
 }
 
-- (void)playlistDeleteNotification:(NSNotification *)notification{
+- (void)playlistDeleteTrackNotification:(NSNotification *)notification{
     [playlistTableView abortEditing];    
     NSIndexSet *selectedRowIndexes = [playlistTableView selectedRowIndexes];    
     [selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop){
@@ -515,6 +532,14 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self save];
 }
 
+- (void)playlistNewKeyPressedNotification:(NSNotification *)notification {
+    [self addPlaylist:nil];
+}
+- (void)playlistDeletePlaylistKeyPressedNotification:(NSNotification *)notification {
+    NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
+    [self deletePlaylist:index];
+}
+
 - (void)playerStoppedPlayingNotification:(NSNotification *)notification{
     self.currentPlayingPlaylist.currentTrack = nil;
     self.currentPlayingPlaylist.currentTrackIndex = [NSNumber numberWithInt:-1];
@@ -522,6 +547,19 @@ NSString *const PBType = @"playlistRowDragDropType";
     [playlistTableView reloadData];
     [self updateAllTabsTitles];
 }
+
+- (void)playpauseKeyPressedNotification:(NSNotification *)notification {
+    [self playPause];
+}
+
+- (void)playlistPreviousKeyPressedNotification:(NSNotification *)notification {
+    [self previous];
+}
+
+- (void)playlistNextKeyPressedNotification:(NSNotification *)notification {
+    [self next];
+}
+
 
 // WindowDropDelegate methods
 - (void) filesDroppedIntoWindow:(NSArray *)filesURL {
@@ -681,37 +719,50 @@ NSString *const PBType = @"playlistRowDragDropType";
         // previous button
         case 0:
         {
-            (self.currentPlayingPlaylist) ? [self playTrack:[self.currentPlayingPlaylist selectNextOrPreviousTrack:NO]] : [self playTrack:[self.currentSelectedPlaylist selectNextOrPreviousTrack:NO]];
+            [self previous];
             break;
         }
         // play/pause button
         case 1:
         {
-            if(self.currentPlayingPlaylist){
-                [self.sndPlayer playPauseAction];
-                break;
-            }
-                
-            if([self.currentSelectedPlaylist.tracks count] > 0){
-                // if no selected track
-                if(self.currentSelectedPlaylist.currentTrackIndex.integerValue == -1){
-                    self.currentSelectedPlaylist.currentTrackIndex = [NSNumber numberWithInt:0];
-                    [self.currentSelectedPlaylist setCurrentTrackByIndex:self.currentSelectedPlaylist.currentTrackIndex];
-                    [self playTrack:[self.currentSelectedPlaylist selectItemAtRow:self.currentSelectedPlaylist.currentTrackIndex.intValue]];
-                    self.currentPlayingPlaylist = self.currentSelectedPlaylist;
-                    break;
-                }
-                [self.sndPlayer playPauseAction];
-            }
+            [self playPause];
             break;
         }
         // next button
         case 2:
         {
-            (self.currentPlayingPlaylist) ? [self playTrack:[self.currentPlayingPlaylist selectNextOrPreviousTrack:YES]] : [self playTrack:[self.currentSelectedPlaylist selectNextOrPreviousTrack:YES]];
+            [self next];
             break;
         }
     }
+}
+
+- (void) previous {
+    (self.currentPlayingPlaylist) ? [self playTrack:[self.currentPlayingPlaylist selectNextOrPreviousTrack:NO]] : [self playTrack:[self.currentSelectedPlaylist selectNextOrPreviousTrack:NO]];
+}
+
+- (void) next {
+    (self.currentPlayingPlaylist) ? [self playTrack:[self.currentPlayingPlaylist selectNextOrPreviousTrack:YES]] : [self playTrack:[self.currentSelectedPlaylist selectNextOrPreviousTrack:YES]];
+}
+
+- (void) playPause {
+    if(self.currentPlayingPlaylist){
+        [self.sndPlayer playPauseAction];
+        return;
+    }
+    
+    if([self.currentSelectedPlaylist.tracks count] > 0){
+        // if no selected track
+        if(self.currentSelectedPlaylist.currentTrackIndex.integerValue == -1){
+            self.currentSelectedPlaylist.currentTrackIndex = [NSNumber numberWithInt:0];
+            [self.currentSelectedPlaylist setCurrentTrackByIndex:self.currentSelectedPlaylist.currentTrackIndex];
+            [self playTrack:[self.currentSelectedPlaylist selectItemAtRow:self.currentSelectedPlaylist.currentTrackIndex.intValue]];
+            self.currentPlayingPlaylist = self.currentSelectedPlaylist;
+            return;
+        }
+        [self.sndPlayer playPauseAction];
+    }
+    return;
 }
 
 @end
