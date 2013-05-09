@@ -48,7 +48,7 @@
 // loading playlist from disk
 - (void) load;
 
-- (void) renamePlaylist:(NSString *)name;
+- (void) renamePlaylist:(NSInteger)index withName:(NSString *)name;
 
 
 @end

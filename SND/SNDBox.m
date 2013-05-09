@@ -60,12 +60,6 @@ NSString *const PBType = @"playlistRowDragDropType";
     [playlistTableView registerForDraggedTypes:[NSArray arrayWithObject:PBType]];
     [playlistTableView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
     
-    // some default data
-    //[self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/file2.mp3"]]];
-    //[self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/01 - Foxygen - In The Darkness.mp3"]]];
-    //[self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/1 - Joy Orbison - Ellipsis.mp3"]]];
-    //[self.playlistData addObject:[[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:@"/Users/ress/Desktop/sndmp3/04 - DFRNT - That's Interesting.mp3"]]];
-    
     NSInteger i;
     for(i = 0; i < 5; i++){
         NSNumber *index = [NSNumber numberWithInteger:i + 1];
@@ -75,10 +69,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     }
     
     self.currentSelectedPlaylist = [self.playlists objectAtIndex:0];
-    
-    
-    
-    
+
     //self.currentTrackIndex = [NSNumber numberWithInt:-1];
     
     [playlistTableView reloadData];
@@ -87,21 +78,31 @@ NSString *const PBType = @"playlistRowDragDropType";
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
-- (void) renamePlaylist:(NSString *)name {
+- (void) renamePlaylist:(NSInteger)index withName:(NSString *)name {
     NSLog(@"rename to: %@", name);
-    self.currentSelectedPlaylist.manualEnteredName = name;
+    SNDPlaylist *playlist = [self.playlists objectAtIndex:index];
+    
+    playlist.manualEnteredName = name;
     [self updateAllTabsTitles];
 }
 
 
 - (void)setupMenuForTab:(NSInteger)tab {    
     NSMenu *newMenu = [[NSMenu alloc] init];
-	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete playlist" action:nil keyEquivalent:@""];
+    
+    NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:nil keyEquivalent:@""];
     [menuItem setEnabled:YES];
     [menuItem setTarget:self];
     [menuItem setRepresentedObject:[NSNumber numberWithInteger:tab]]; // pass playlist index
-    [menuItem setAction:@selector(playlistDeleteItemPressed:)];
+    [menuItem setAction:@selector(playlistRenameMenuItemPressed:)];
 	[newMenu insertItem:menuItem atIndex:0];
+    
+	menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete playlist" action:nil keyEquivalent:@""];
+    [menuItem setEnabled:YES];
+    [menuItem setTarget:self];
+    [menuItem setRepresentedObject:[NSNumber numberWithInteger:tab]]; // pass playlist index
+    [menuItem setAction:@selector(playlistDeleteMenuItemPressed:)];
+	[newMenu insertItem:menuItem atIndex:1];
     [self.tabs setMenu:newMenu forSegment:tab];
 }
 
@@ -118,8 +119,16 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self setupMenuForTab:newPlaylistIndex.integerValue - 1];
 }
 
-- (void) playlistDeleteItemPressed:(id)sender {
-    NSLog(@"> playlistDeleteItemPressed %@", [sender representedObject]);
+- (void) playlistRenameMenuItemPressed:(id)sender {
+    NSLog(@"> playlistRenameMenuItemPressed %@", [sender representedObject]);
+    NSNumber *tab = [sender representedObject];
+    NSLog(@"> tab id %ld", (long)tab.integerValue);
+    SNDPlaylist *playlist = [self.playlists objectAtIndex:tab.integerValue];
+    [self.playlistRenameController showWithInitialName:playlist.title forTab:tab.integerValue];
+}
+
+- (void) playlistDeleteMenuItemPressed:(id)sender {
+    NSLog(@"> playlistDeleteMenuItemPressed %@", [sender representedObject]);
     if([self.playlists count] > 1){
         NSInteger currentSelectedPlaylistIndex = [self.playlists indexOfObject:self.currentSelectedPlaylist];
         NSNumber *index = [sender representedObject];
@@ -156,7 +165,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender {
-    [self.playlistRenameController show];
     //NSLog(@"tab click: %ld", sender.selectedSegment);
     if([self.playlists indexOfObject:self.currentSelectedPlaylist] != sender.selectedSegment){
         //[self.currentPlaylist deactivate];

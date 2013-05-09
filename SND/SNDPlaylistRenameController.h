@@ -14,8 +14,9 @@
 
 @property (assign) IBOutlet NSTextField *nameField;
 
+@property (strong) NSNumber *sessionForTab;
 
-- (void) show;
+- (void) showWithInitialName:(NSString *)initialText forTab:(NSInteger)tab;
 
 - (IBAction) renameButton:(id)sender;
 - (IBAction) cancelButton:(id)sender;
