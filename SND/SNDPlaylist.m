@@ -49,7 +49,7 @@
             for (i = 1; i < [self.tracks count]; i++){
                 SNDTrack *track = [self.tracks objectAtIndex:i];
                 if(![track.artist isEqualToString:firstTrackArtist]){
-                    return [NSString stringWithFormat:@"%li", (long)self.index.integerValue];
+                    return [NSString stringWithFormat:@"%.2li", (long)self.index.integerValue + 1];
                 }
             }
             return firstTrackArtist;
@@ -57,7 +57,7 @@
             return firstTrackArtist;
         }
     }
-    return [NSString stringWithFormat:@"%li", (long)self.index.integerValue];
+    return [NSString stringWithFormat:@"%.2li", (long)self.index.integerValue + 1];
 }
 
 - (void) setCurrentTrackByIndex:(NSNumber *)index {
