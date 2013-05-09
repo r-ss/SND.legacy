@@ -12,6 +12,7 @@
 #import "SNDPreferencesController.h"
 #import "SNDTotalPlaybackTimeCounter.h"
 
+#import "SNDPlaylistRenameController.h"
 
 @implementation SNDAppDelegate
 
@@ -22,6 +23,15 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+@synthesize playlistRenameController = _playlistRenameController;
+
+
+- (IBAction) closeSheet:(id)sender {
+    NSLog(@">End sheet");
+    [self.playlistRenameController closeSheet];
+}
+
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -38,8 +48,8 @@
     
     NSLog(@"total playback time: %@", [self.totalPlaybackTimeCounter getTotalPlaybackTime]);
     
-    
-    
+    self.playlistRenameController = [[SNDPlaylistRenameController alloc] init];
+    [self.playlistRenameController showModal];
     
     //NSString *currentFullName = (NSString *)CSIdentityGetFullName((CSIdentityRef)[_identities objectAtIndex:[_identityTableView selectedRow]]);
 	

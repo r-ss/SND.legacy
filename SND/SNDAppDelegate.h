@@ -16,6 +16,8 @@
 @class SNDPreferencesController;
 @class SNDTotalPlaybackTimeCounter;
 
+@class SNDPlaylistRenameController;
+
 @protocol DockDropDelegate <NSObject>
 - (void) filesDroppedIntoDock:(NSArray *)filesURL;
 @end
@@ -23,6 +25,8 @@
 @interface SNDAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
+
+@property (assign) IBOutlet NSWindow *playlistRenameWindow;
 
 @property (assign) IBOutlet SNDBox *sndBox;
 
@@ -33,8 +37,12 @@
 @property (nonatomic, weak) id <DockDropDelegate> dockDropDelegate;
 @property (strong) SNDPreferencesController *preferencesController;
 
+@property (strong) SNDPlaylistRenameController *playlistRenameController;
+
 @property (strong) SNDTotalPlaybackTimeCounter *totalPlaybackTimeCounter;
 
 - (IBAction) showPreferencesPanel:(id)sender;
+
+- (IBAction) closeSheet:(id)sender;
 
 @end

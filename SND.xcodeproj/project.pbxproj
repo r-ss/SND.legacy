@@ -50,6 +50,8 @@
 		D0D13D111737AB2F004AF1EB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0D13D101737AB2F004AF1EB /* MainMenu.xib */; };
 		D0D13D121737ADD5004AF1EB /* NSNumber+hhmmssFromSeconds.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D13D0D1737AACE004AF1EB /* NSNumber+hhmmssFromSeconds.m */; };
 		D0D5DB73172E74430079AFA6 /* SNDTrack.mm in Sources */ = {isa = PBXBuildFile; fileRef = D0D5DB72172E74430079AFA6 /* SNDTrack.mm */; };
+		D0E716B6173A6FDC0062E609 /* SNDPlaylistRenameController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E716B5173A6FDC0062E609 /* SNDPlaylistRenameController.m */; };
+		D0E716BA173A83B60062E609 /* PlaylistRename.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0E716B9173A83B60062E609 /* PlaylistRename.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -124,6 +126,9 @@
 		D0D13D0E1737AB0A004AF1EB /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		D0D13D101737AB2F004AF1EB /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		D0D5DB72172E74430079AFA6 /* SNDTrack.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SNDTrack.mm; sourceTree = "<group>"; };
+		D0E716B4173A6FDC0062E609 /* SNDPlaylistRenameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDPlaylistRenameController.h; path = SND/SNDPlaylistRenameController.h; sourceTree = "<group>"; };
+		D0E716B5173A6FDC0062E609 /* SNDPlaylistRenameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDPlaylistRenameController.m; path = SND/SNDPlaylistRenameController.m; sourceTree = "<group>"; };
+		D0E716B9173A83B60062E609 /* PlaylistRename.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistRename.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +232,7 @@
 		D09EFBA8172655200039EF03 /* XIB */ = {
 			isa = PBXGroup;
 			children = (
+				D0E716B9173A83B60062E609 /* PlaylistRename.xib */,
 				D0D13D101737AB2F004AF1EB /* MainMenu.xib */,
 				D0D13D0E1737AB0A004AF1EB /* Preferences.xib */,
 			);
@@ -273,6 +279,8 @@
 				D0D13D0D1737AACE004AF1EB /* NSNumber+hhmmssFromSeconds.m */,
 				D0C489121726A053009FF7C7 /* SNDPlaybackSegmentedControl.h */,
 				D0C489131726A053009FF7C7 /* SNDPlaybackSegmentedControl.m */,
+				D0E716B4173A6FDC0062E609 /* SNDPlaylistRenameController.h */,
+				D0E716B5173A6FDC0062E609 /* SNDPlaylistRenameController.m */,
 			);
 			name = misc;
 			path = ..;
@@ -352,6 +360,7 @@
 				D09EFBCA17265E2C0039EF03 /* pic_pause@2x.png in Resources */,
 				D0D13D0F1737AB0B004AF1EB /* Preferences.xib in Resources */,
 				D0D13D111737AB2F004AF1EB /* MainMenu.xib in Resources */,
+				D0E716BA173A83B60062E609 /* PlaylistRename.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +384,7 @@
 				D0D13D121737ADD5004AF1EB /* NSNumber+hhmmssFromSeconds.m in Sources */,
 				D0D13D0B1737AAAA004AF1EB /* SNDPreferencesController.m in Sources */,
 				D0363F021738093100EDA811 /* SNDTotalPlaybackTimeCounter.m in Sources */,
+				D0E716B6173A6FDC0062E609 /* SNDPlaylistRenameController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
