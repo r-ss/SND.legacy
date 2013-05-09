@@ -60,11 +60,23 @@ NSString *const PBType = @"playlistRowDragDropType";
     [playlistTableView registerForDraggedTypes:[NSArray arrayWithObject:PBType]];
     [playlistTableView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
     
+    /*
     NSInteger i;
     for(i = 0; i < 5; i++){
         NSNumber *index = [NSNumber numberWithInteger:i + 1];
         SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:index];
         [self.playlists addObject:playlist];
+        [self setupMenuForTab:i];
+    }
+    */
+    
+    
+    NSInteger i;
+    for(i = 0; i < 3; i++){
+        NSNumber *index = [NSNumber numberWithInteger:i + 1];
+        SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:index];
+        [self.playlists addObject:playlist];
+        [self.tabs setSegmentCount:[self.playlists count]];
         [self setupMenuForTab:i];
     }
     
