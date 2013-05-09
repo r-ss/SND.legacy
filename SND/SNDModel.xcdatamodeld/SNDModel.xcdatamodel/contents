@@ -8,10 +8,9 @@
         <attribute name="memberOfPlaylist" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="row" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="relationship" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Track" inverseName="relationship" inverseEntity="Track" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Track" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Track" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Playlist" positionX="160" positionY="192" width="128" height="75"/>
     </elements>
 </model>

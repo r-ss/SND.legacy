@@ -70,7 +70,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     }
     */
     
-    
+    /*
     NSInteger i;
     for(i = 0; i < 3; i++){
         NSNumber *index = [NSNumber numberWithInteger:i + 1];
@@ -79,9 +79,10 @@ NSString *const PBType = @"playlistRowDragDropType";
         [self.tabs setSegmentCount:[self.playlists count]];
         [self setupMenuForTab:i];
     }
+     
     
     self.currentSelectedPlaylist = [self.playlists objectAtIndex:0];
-
+*/
     //self.currentTrackIndex = [NSNumber numberWithInt:-1];
     
     [playlistTableView reloadData];
@@ -166,6 +167,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void) updateAllTabsTitles {
     NSInteger i;
+    NSLog(@"playlists count: %ld", (unsigned long)[self.playlists count]);
     for (i = 0; i < [self.playlists count]; i++){
         [self updateTabTitle:i];
     }
@@ -173,6 +175,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void) updateTabTitle:(NSInteger)tabIndex {
     SNDPlaylist *playlist = [self.playlists objectAtIndex:tabIndex];
+    NSLog(@"playlist object: %@", playlist);
     [self.tabs setLabel:playlist.title forSegment:tabIndex];
 }
 
@@ -182,7 +185,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         //[self.currentPlaylist deactivate];
         self.currentSelectedPlaylist = [self.playlists objectAtIndex:sender.selectedSegment];
         [playlistTableView reloadData];
-        [self updateAllTabsTitles];
+        //[self updateAllTabsTitles];
         [playlistTableView deselectAll:self];
         
         SNDPlaylist *playlist = [self.playlists objectAtIndex:sender.selectedSegment];
@@ -192,16 +195,31 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) save {
+    NSLog(@"> save");
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Track" inManagedObjectContext:self.appDelegate.managedObjectContext];
-    [fetchRequest setEntity:entity];
     
+    // loading playlists
+    NSEntityDescription *playlistEntity = [NSEntityDescription entityForName:@"Playlist" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    [fetchRequest setEntity:playlistEntity];    
+    NSArray *playlists = [self.appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    
+    // loading tracks
+    NSEntityDescription *trackEntity = [NSEntityDescription entityForName:@"Track" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    [fetchRequest setEntity:trackEntity];    
     NSArray *tracks = [self.appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    
+    NSManagedObject *playlistMO = nil;
     NSManagedObject *trackMO = nil;
     
     // delete all data before saving new
+    if([playlists count] > 0){
+        NSInteger i;
+        for (i = 0; i < [playlists count]; i++) {
+            playlistMO = [playlists objectAtIndex:i];
+            [self.appDelegate.managedObjectContext deleteObject:playlistMO];
+        }
+    }
     if([tracks count] > 0){
-        //NSLog(@"found");
         NSInteger i;
         for (i = 0; i < [tracks count]; i++) {
             trackMO = [tracks objectAtIndex:i];
@@ -209,7 +227,16 @@ NSString *const PBType = @"playlistRowDragDropType";
         }
     }
     
+    // saving playlists
     NSInteger i;
+    for (i = 0; i < [self.playlists count]; i++) {
+        SNDPlaylist *playlist = [self.playlists objectAtIndex:i];
+        playlistMO = [NSEntityDescription insertNewObjectForEntityForName:@"Playlist" inManagedObjectContext:self.appDelegate.managedObjectContext];
+        [playlistMO setValue:[NSNumber numberWithInteger:i] forKey:@"index"];
+        [playlistMO setValue:playlist.manualEnteredName forKey:@"manualName"];
+    }
+    
+    // saving tracks    
     for (i = 0; i < [self.playlists count]; i++) {
         NSInteger k;
         SNDPlaylist *playlist = [self.playlists objectAtIndex:i];
@@ -232,11 +259,57 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void) load {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Track" inManagedObjectContext:self.appDelegate.managedObjectContext];
-    [fetchRequest setEntity:entity];
+    
+    // loading playlists
+    NSEntityDescription *playlistEntity = [NSEntityDescription entityForName:@"Playlist" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    [fetchRequest setEntity:playlistEntity];
+    NSArray *playlists = [self.appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    
+    // loading tracks
+    NSEntityDescription *trackEntity = [NSEntityDescription entityForName:@"Track" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    [fetchRequest setEntity:trackEntity];
     NSArray *tracks = [self.appDelegate.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+
+    NSManagedObject *playlistMO = nil;
     NSManagedObject *trackMO = nil;
     
+    
+    
+    // filling playlists
+    if([playlists count] > 0){
+        NSMutableArray *unsortedPlaylists = [[NSMutableArray alloc] init];
+        NSInteger i;
+        for (i = 0; i < [playlists count]; i++) {
+            playlistMO = [playlists objectAtIndex:i];
+            NSLog(@"wow, index: %@", [NSNumber numberWithInteger:[[playlistMO valueForKey:@"index"] integerValue]]);
+            SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:[NSNumber numberWithInteger:[[playlistMO valueForKey:@"index"] integerValue]]];
+            playlist.manualEnteredName = [playlistMO valueForKey:@"manualName"];
+            [unsortedPlaylists addObject:playlist];
+
+            //[self.playlists addObject:playlist];
+            //[self.tabs setSegmentCount:[self.playlists count]];
+            //[self setupMenuForTab:i];
+        }
+        
+        NSArray *sortedPlaylists = [unsortedPlaylists sortedArrayUsingComparator:^(SNDPlaylist *a, SNDPlaylist *b) {
+            if (a.index.integerValue > b.index.integerValue)
+                return (NSComparisonResult)NSOrderedDescending;
+            if (a.index.integerValue < b.index.integerValue)
+                return (NSComparisonResult)NSOrderedAscending;
+            return (NSComparisonResult)NSOrderedSame;
+        }];
+        
+        for (i = 0; i < [sortedPlaylists count]; i++) {
+            [self.playlists addObject:[sortedPlaylists objectAtIndex:i]];
+            [self.tabs setSegmentCount:[self.playlists count]];
+            [self setupMenuForTab:i];
+            NSLog(@"ololo");
+        }
+        
+        
+    }
+
+    // filling tracks
     if([tracks count] > 0){
         NSMutableArray *rawTracks = [[NSMutableArray alloc] init];       
         NSInteger i;
@@ -277,9 +350,11 @@ NSString *const PBType = @"playlistRowDragDropType";
                 [playlist.tracks addObject:[[sortedRows objectAtIndex:z] objectAtIndex:2]];
             }
         }
-        [playlistTableView reloadData];
-        [self updateAllTabsTitles];
-    }
+     }
+        
+    
+    [playlistTableView reloadData];
+    [self updateAllTabsTitles];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
