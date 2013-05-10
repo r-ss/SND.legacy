@@ -111,6 +111,23 @@
     return self;
 }
 
+- (id)initWithSavedData:(NSDictionary *)dict {
+    self = [super init];
+    if (self) {        
+        self.url = [dict objectForKey:@"path"];
+        self.artist = [dict objectForKey:@"tag_artist"];
+        self.album = [dict objectForKey:@"tag_album"];
+        self.title = [dict objectForKey:@"tag_title"];        
+        self.tracknumber = [dict objectForKey:@"tag_tracknumber"];
+        self.year = [dict objectForKey:@"tag_year"];
+        self.duration = [dict objectForKey:@"tag_duration"];
+        [self setPath:self.url.path];
+        [self setFilename:[NSString stringWithString:[self.url lastPathComponent]]];
+        self.formattedDuration = [self.duration hhmmssFromSeconds:self.duration];
+    };
+    return self;
+}
+
 // overriding synthesized setter for url
 - (void) setUrl:(NSURL *)url {
     _url = url;

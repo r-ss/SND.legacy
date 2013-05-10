@@ -37,6 +37,7 @@
 
 
 - (id)initWithURL:(NSURL *)url;
+- (id)initWithSavedData:(NSDictionary *)dict;
 
 
 @end

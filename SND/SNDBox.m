@@ -221,9 +221,15 @@ NSString *const PBType = @"playlistRowDragDropType";
         for (k = 0; k < [playlist.tracks count]; k++) {
             SNDTrack *t = [playlist.tracks objectAtIndex:k];
             trackMO = [NSEntityDescription insertNewObjectForEntityForName:@"Track" inManagedObjectContext:self.appDelegate.managedObjectContext];
-            [trackMO setValue:t.path forKey:@"path"];
             [trackMO setValue:[NSNumber numberWithInteger:k] forKey:@"row"];
             [trackMO setValue:[NSNumber numberWithInteger:i] forKey:@"memberOfPlaylist"];
+            [trackMO setValue:t.path forKey:@"path"];            
+            [trackMO setValue:t.artist forKey:@"tag_artist"];
+            [trackMO setValue:t.album forKey:@"tag_album"];
+            [trackMO setValue:t.title forKey:@"tag_title"];
+            [trackMO setValue:t.tracknumber forKey:@"tag_tracknumber"];
+            [trackMO setValue:t.year forKey:@"tag_year"];
+            [trackMO setValue:t.duration forKey:@"tag_duration"];            
         }
     }
       
@@ -296,7 +302,22 @@ NSString *const PBType = @"playlistRowDragDropType";
         NSInteger i;
         for (i = 0; i < [tracks count]; i++) {
             trackMO = [tracks objectAtIndex:i];
-            SNDTrack *t = [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:[trackMO valueForKey:@"path"]]];
+            
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            //[dict setObject:[[NSURL alloc] initFileURLWithPath:[trackMO valueForKey:@"path"]] forKey:@"tag_duration"];
+            [dict setObject:[[NSURL alloc] initFileURLWithPath:[trackMO valueForKey:@"path"]] forKey:@"path"];
+            [dict setObject:[NSNumber numberWithInteger:[[trackMO valueForKey:@"tag_duration"] intValue]] forKey:@"tag_duration"];
+            [dict setObject:[NSNumber numberWithInteger:[[trackMO valueForKey:@"tag_year"] intValue]] forKey:@"tag_year"];
+            [dict setObject:[NSNumber numberWithInteger:[[trackMO valueForKey:@"tag_tracknumber"] intValue]] forKey:@"tag_tracknumber"];            
+            [dict setObject:[NSString stringWithString:[trackMO valueForKey:@"tag_artist"]] forKey:@"tag_artist"];
+            [dict setObject:[NSString stringWithString:[trackMO valueForKey:@"tag_album"]] forKey:@"tag_album"];
+            [dict setObject:[NSString stringWithString:[trackMO valueForKey:@"tag_title"]] forKey:@"tag_title"];          
+            NSDictionary *finalDict = [dict copy];
+            dict = nil;
+            SNDTrack *t = [[SNDTrack alloc] initWithSavedData:finalDict];        
+            
+            
+            //SNDTrack *t = [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:[trackMO valueForKey:@"path"]]];
             int rowIndex = [[trackMO valueForKey:@"row"] intValue];
             int memberOfPlaylist = [[trackMO valueForKey:@"memberOfPlaylist"] intValue];
             [rawTracks addObject:[[NSArray alloc] initWithObjects:[NSNumber numberWithInt:memberOfPlaylist],[NSNumber numberWithInt:rowIndex],t, nil ]];
