@@ -235,6 +235,9 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) load {
+    NSDate *start = [NSDate date];
+    
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
     // loading playlists
@@ -333,6 +336,12 @@ NSString *const PBType = @"playlistRowDragDropType";
     
     [playlistTableView reloadData];
     [self updateAllTabsTitles];
+    
+    
+    NSDate *methodFinish = [NSDate date];
+    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:start];
+    
+    NSLog(@"Execution Time: %f", executionTime);
 }
 
 - (NSInteger) numberOfRowsInTableView:(NSTableView *)tableView {

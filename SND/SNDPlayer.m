@@ -44,12 +44,13 @@
     NSLog(@"Volume found: %@", [NSNumber numberWithDouble:[userDefaults doubleForKey:@"SNDVolume"]]);
     [self setVolume:[NSNumber numberWithDouble:[userDefaults doubleForKey:@"SNDVolume"]]];
     [volumeSlider setIntegerValue:self.volume.doubleValue];
-    
+
+}
+
+- (void) initOGRMEngine {
     self.player = [[ORGMEngine alloc] init];
     self.player.delegate = self;
-    
-    [_player setVolume:_volume.doubleValue];
-    
+    [self.player setVolume:self.volume.doubleValue];
 }
 
 // overriding synthesized setVolume method
@@ -84,11 +85,14 @@
 
 - (void) playTrack:(SNDTrack *)track {
     if(track){
+        if(!self.player)
+            [self initOGRMEngine];
+            
         if(self.player.currentState == ORGMEngineStatePlaying){
-            //NSLog(@"A");
+            NSLog(@"A");
             [self.player setNextUrl:track.url withDataFlush:YES];
         } else {
-            //NSLog(@"B");
+            NSLog(@"B");
             [self.player playUrl:track.url];            
         }
     }
@@ -117,6 +121,7 @@
             [self.timer invalidate];            
             NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
             [nc postNotificationName:@"SND.Notification.PlayerStoppedPlaying" object:self];
+            self.player = nil;
             break;
         }
         case ORGMEngineStatePaused: {
@@ -142,6 +147,7 @@
         }
         case ORGMEngineStateError:
             NSLog(@">>> ORGMEngineStateError");
+            self.player = nil;
             break;
     }
 }

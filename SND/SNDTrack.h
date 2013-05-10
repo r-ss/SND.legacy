@@ -25,8 +25,8 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *artist;
 @property (nonatomic, copy) NSString *album;
-@property (nonatomic, copy) NSString *comment;
-@property (nonatomic, copy) NSString *genre;
+//@property (nonatomic, copy) NSString *comment;
+//@property (nonatomic, copy) NSString *genre;
 @property (nonatomic, retain) NSNumber *tracknumber;
 @property (nonatomic, retain) NSNumber *year;
 

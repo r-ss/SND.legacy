@@ -26,8 +26,8 @@
 @synthesize title;
 @synthesize artist;
 @synthesize album;
-@synthesize comment;
-@synthesize genre;
+//@synthesize comment;
+//@synthesize genre;
 @synthesize tracknumber;
 @synthesize year;
 
@@ -70,12 +70,12 @@
                 if (taglib_tag_album(tag) != NULL && strlen(taglib_tag_album(tag)) > 0) {
                     self.album = [NSString stringWithCString:taglib_tag_album(tag) encoding:NSUTF8StringEncoding];
                 }                
-                if (taglib_tag_comment(tag) != NULL && strlen(taglib_tag_comment(tag)) > 0) {
-                    self.comment = [NSString stringWithCString:taglib_tag_comment(tag) encoding:NSUTF8StringEncoding];
-                }                
-                if (taglib_tag_genre(tag) != NULL && strlen(taglib_tag_genre(tag)) > 0) {
-                    self.genre = [NSString stringWithCString:taglib_tag_genre(tag) encoding:NSUTF8StringEncoding];
-                }               
+                //if (taglib_tag_comment(tag) != NULL && strlen(taglib_tag_comment(tag)) > 0) {
+                //    self.comment = [NSString stringWithCString:taglib_tag_comment(tag) encoding:NSUTF8StringEncoding];
+                //}
+                //if (taglib_tag_genre(tag) != NULL && strlen(taglib_tag_genre(tag)) > 0) {
+                //    self.genre = [NSString stringWithCString:taglib_tag_genre(tag) encoding:NSUTF8StringEncoding];
+                //}
                 // Year and track are uints
                 if (taglib_tag_year(tag) > 0) {
                     self.year = [NSNumber numberWithUnsignedInt:taglib_tag_year(tag)];
@@ -101,7 +101,9 @@
             // Free up our used memory so far
             taglib_tag_free_strings();
             taglib_file_free(file);
-        };        
+            file = nil;
+            tag = nil;
+        };
         
         //self.formattedDuration = [self.duration hhmmssFromSeconds:self.duration];
         self.formattedDuration = [self.duration hhmmssFromSeconds:self.duration];
@@ -122,12 +124,12 @@
 
 // Overriding isAccessible getter
 // lowercase 'bool' here because c++
-- (bool) isAccessible {    
+- (bool) isAccessible {
     if([[NSFileManager defaultManager] fileExistsAtPath:self.path]) {
         return YES;
-    } else {        
+    } else {
         return NO;
-    }    
+    }
 }
 
 - (void) dealloc
