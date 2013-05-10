@@ -8,6 +8,7 @@
 
 #import "SNDPlaylist.h"
 #import "SNDTrack.h"
+#import "NSNumber+hhmmssFromSeconds.h"
 
 @implementation SNDPlaylist
 
@@ -91,6 +92,18 @@
     [self setCurrentTrackByIndex:self.currentTrackIndex];
     return self.currentTrack;
 }
+
+- (NSString *) totalPlaylistPlayingTime {
+    NSInteger i;
+    NSInteger duration = 0;
+    for (i = 0; i < [self.tracks count]; i++){
+        SNDTrack *track = [self.tracks objectAtIndex:i];
+        duration += track.duration.integerValue;
+    }
+    NSNumber *num = [NSNumber numberWithInteger:duration];
+    return [num hhmmssFromSeconds:num];
+}
+
 
 - (NSString*)description
 {

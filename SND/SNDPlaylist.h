@@ -29,4 +29,6 @@
 
 - (id) initWithIndex:(NSNumber *)i;
 
+- (NSString *) totalPlaylistPlayingTime;
+
 @end

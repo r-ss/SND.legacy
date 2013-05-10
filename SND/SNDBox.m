@@ -60,7 +60,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:index];
         [self.playlists addObject:playlist];
         [self.tabs setSegmentCount:[self.playlists count]];
-        [self setupMenuForTab:i];
+        //[self setupMenuForTab:i];
     }    
     self.currentSelectedPlaylist = [self.playlists objectAtIndex:0];
     [playlistTableView reloadData];
@@ -75,7 +75,9 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self save];
 }
 
-- (void) setupMenuForTab:(NSInteger)tab {    
+- (void) setupMenuForTab:(NSInteger)tab {
+    NSLog(@"> setup menu for tab");
+    
     NSMenu *newMenu = [[NSMenu alloc] init];
     
     NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:nil keyEquivalent:@""];
@@ -91,6 +93,18 @@ NSString *const PBType = @"playlistRowDragDropType";
     [menuItem setRepresentedObject:[NSNumber numberWithInteger:tab]]; // pass playlist index
     [menuItem setAction:@selector(playlistDeleteMenuItemPressed:)];
 	[newMenu insertItem:menuItem atIndex:1];
+    
+    SNDPlaylist *playlistForTab = [self.playlists objectAtIndex:tab];
+    
+    NSString *totalTimeRowText = [NSString stringWithFormat:@"playing time: %@ // %@", playlistForTab.totalPlaylistPlayingTime, playlistForTab.title];
+    
+    menuItem = [[NSMenuItem alloc] initWithTitle:totalTimeRowText action:nil keyEquivalent:@""];
+    [menuItem setEnabled:NO];
+    //[menuItem setTarget:self];
+    //[menuItem setRepresentedObject:[NSNumber numberWithInteger:tab]]; // pass playlist index
+    //[menuItem setAction:@selector(playlistDeleteMenuItemPressed:)];
+	[newMenu insertItem:menuItem atIndex:2];
+    
     [self.tabs setMenu:newMenu forSegment:tab];
 }
 
@@ -148,6 +162,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     NSInteger i;
     for (i = 0; i < [self.playlists count]; i++){
         [self updateTabTitle:i];
+        [self setupMenuForTab:i];
     }
 }
 
@@ -241,9 +256,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) load {
-    NSDate *start = [NSDate date];
-    
-    
+    //NSDate *start = [NSDate date];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
     // loading playlists
@@ -285,12 +298,12 @@ NSString *const PBType = @"playlistRowDragDropType";
         for (i = 0; i < [sortedPlaylists count]; i++) {
             [self.playlists addObject:[sortedPlaylists objectAtIndex:i]];
             [self.tabs setSegmentCount:[self.playlists count]];
-            [self setupMenuForTab:i];
+            //[self setupMenuForTab:i];
         }
         
         self.currentSelectedPlaylist = [self.playlists objectAtIndex:0];
-        [playlistTableView reloadData];
-        [self updateAllTabsTitles];
+        //[playlistTableView reloadData];
+        //[self updateAllTabsTitles];
     } else {
         // if saved playlists not found setup default playlists
         [self setupDefaultEmptyPlaylists];
@@ -359,10 +372,9 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self updateAllTabsTitles];
     
     
-    NSDate *methodFinish = [NSDate date];
-    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:start];
-    
-    NSLog(@"Execution Time: %f", executionTime);
+    //NSDate *methodFinish = [NSDate date];
+    //NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:start];    
+    //NSLog(@"Execution Time: %f", executionTime);
 }
 
 - (NSInteger) numberOfRowsInTableView:(NSTableView *)tableView {
