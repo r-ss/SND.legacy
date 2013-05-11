@@ -70,6 +70,8 @@
 - (IBAction)positionSlider:(NSSlider *)sender {
     if(self.isPlaying){
         [self.player seekToTime:[sender doubleValue]];
+    } else {
+        [positionSlider setDoubleValue:self.position.doubleValue];
     }
 }
 

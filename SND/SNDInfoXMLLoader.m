@@ -41,46 +41,33 @@
 }
 
 - (BOOL) updateIsAvailable {
-    
-    //return NO;
-    //NSLog(@">> SELF LATEST: %@", self.latestVersion);
     if(self.latestVersion == nil)
-        return NO;
-        
+        return NO;        
     SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;    
-    //if ([self.latestVersion compare:appDelegate.currentAppVersion options:NSNumericSearch] != NSOrderedAscending) {
-    //NSString *aa = @"0.8.0";
-    //NSString *bb = @"0.9.0";
-    //if ([aa compare:bb options:NSNumericSearch] != NSOrderedAscending) {
     if ([self.latestVersion compare:appDelegate.currentAppVersion options:NSNumericSearch] != NSOrderedAscending) {
-        
-        //NSLog(@">> NOOO UPDATE, a: %@, b: %@", self.latestVersion, appDelegate.currentAppVersion);
         return NO;
     } else {
-        //NSLog(@">> UPDATE, a: %@, b: %@", self.latestVersion, appDelegate.currentAppVersion);
         return YES;
-        
+    }
+}
+
+- (NSString *) updateIsAvailableText {
+    if(self.latestVersion == nil)
+        return @"";
+    if ([self updateIsAvailable]) {
+        return @"Update is available";
+    } else {
+        return @"You are using the latest version";
     }
 }
 
 -(void)parseXML{
-    
-    //NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    //NSString *fullName = [NSString stringWithFormat:@"xmlfile.xml"];
-    
-    //NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@",docDir,fullName];
-    //NSData *myData = [NSData dataWithContentsOfFile:fullFilePath];
     NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:self.xmlData];
-    
-    [xmlParser setDelegate:self];
-    
-    //Start parsing the XML file.
     BOOL success = [xmlParser parse];
-    
     if(success)
-        NSLog(@"No Errors");
+        NSLog(@"XML loaded and parsed");
     else
-        NSLog(@"Error Error Error!!!");
+        NSLog(@"XML parsing error");
 }
 
 
@@ -99,65 +86,35 @@
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    
-    
-    
-    //NSLog(@"parser foundCharacters");
     if([self.currentElement isEqualToString:@"latestversion"]){
-        //NSLog(@"found: %@", string);
         [_latestVersion appendString:string];
     }
     else if([self.currentElement isEqualToString:@"lateststatus"]){
-        //NSLog(@"found status: %@", string);
         [_latestStatus appendString:string];
     }
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
-    //NSLog(@"parser didEndElement");
-    
-    //NSLog(@"latest version: %@", self.latestVersion);
-}
-
-
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    NSLog(@"> didReceiveResponse");
-    // create
-    //[[NSFileManager defaultManager] createFileAtPath:strFilePath contents:nil attributes:nil];
-    //file = [[NSFileHandle fileHandleForUpdatingAtPath:strFilePath] retain];// read more about file handle
-    //if (file)   {
-    //    [file seekToEndOfFile];
-    //}
+    //NSLog(@"> didReceiveResponse");
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    NSLog(@"> didReceiveData");
+    //NSLog(@"> didReceiveData");
     if (self.xmlData)
         [self.xmlData appendData:data];
     else
         self.xmlData = [[NSMutableData alloc] initWithData:data];
-    //write each data received
-    //if( receivedata != nil){
-    //    if (file)  {
-    //        [file seekToEndOfFile];
-    //    }
-    //    [file writeData:receivedata];
-    //}
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection*)theConnection {
-    NSLog(@"> connectionDidFinishLoading");
+    //NSLog(@"> connectionDidFinishLoading");
     [self parseXML];
-    //NSLog(@"data: %@", self.xmlData);
-    //close file after finish getting data;
-    //[file closeFile];
 }
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"> didFailWithError");
-    //do something when downloading failed
+    NSLog(@"> connection:didFailWithError:");
 }
 
 

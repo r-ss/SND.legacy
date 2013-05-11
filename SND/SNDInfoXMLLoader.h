@@ -18,6 +18,7 @@
 - (id) initAndLoad;
 
 - (BOOL) updateIsAvailable;
+- (NSString *) updateIsAvailableText;
 
 
 @end

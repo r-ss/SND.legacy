@@ -31,11 +31,9 @@
 }
 
 
-- (void) show {
-    
+- (void) show {    
     if(!self.preferencesWindow)
-        [NSBundle loadNibNamed:@"Preferences" owner:self];
-    
+        [NSBundle loadNibNamed:@"Preferences" owner:self];    
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL quit = [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];
@@ -44,13 +42,8 @@
     [self.totalPlaybackTimeField setStringValue:[self.appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
     self.playbackCounterTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
     
-    if ([self.appDelegate.infoXMLLoader updateIsAvailable]){
-        [self.appUpdateField setStringValue:@"Update is available"];
-    } else {
-        [self.appUpdateField setStringValue:@"You are using the latest version"];
-    }
-    
-    
+    [self.appUpdateField setStringValue:[self.appDelegate.infoXMLLoader updateIsAvailableText]];
+
     [NSApp beginSheet:self.preferencesWindow modalForWindow:self.appDelegate.window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:(__bridge void *)(self)];
 }
 
@@ -66,8 +59,6 @@
 	[sheet orderOut:self];
     if (returnCode == NSOKButton) {
         [self.playbackCounterTimer invalidate];
-        //SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
-        //[appDelegate.sndBox renamePlaylist:self.sessionForTab.integerValue withName:self.nameField.stringValue];
     }
 }
 
