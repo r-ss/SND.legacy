@@ -76,7 +76,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) setupMenuForTab:(NSInteger)tab {
-    NSLog(@"> setup menu for tab");
+    //NSLog(@"> setup menu for tab");
     
     NSMenu *newMenu = [[NSMenu alloc] init];
     
@@ -95,14 +95,9 @@ NSString *const PBType = @"playlistRowDragDropType";
 	[newMenu insertItem:menuItem atIndex:1];
     
     SNDPlaylist *playlistForTab = [self.playlists objectAtIndex:tab];
-    
     NSString *totalTimeRowText = [NSString stringWithFormat:@"playing time: %@ // %@", playlistForTab.totalPlaylistPlayingTime, playlistForTab.title];
-    
     menuItem = [[NSMenuItem alloc] initWithTitle:totalTimeRowText action:nil keyEquivalent:@""];
     [menuItem setEnabled:NO];
-    //[menuItem setTarget:self];
-    //[menuItem setRepresentedObject:[NSNumber numberWithInteger:tab]]; // pass playlist index
-    //[menuItem setAction:@selector(playlistDeleteMenuItemPressed:)];
 	[newMenu insertItem:menuItem atIndex:2];
     
     [self.tabs setMenu:newMenu forSegment:tab];
@@ -220,24 +215,20 @@ NSString *const PBType = @"playlistRowDragDropType";
     }
     
     // saving playlists
-    NSInteger i;
-    for (i = 0; i < [self.playlists count]; i++) {
-        SNDPlaylist *playlist = [self.playlists objectAtIndex:i];
+    for (SNDPlaylist *playlist in self.playlists) {
         playlistMO = [NSEntityDescription insertNewObjectForEntityForName:@"Playlist" inManagedObjectContext:self.appDelegate.managedObjectContext];
-        [playlistMO setValue:[NSNumber numberWithInteger:i] forKey:@"index"];
+        [playlistMO setValue:[NSNumber numberWithInteger:playlist.index.integerValue] forKey:@"index"];
         [playlistMO setValue:playlist.manualEnteredName forKey:@"manualName"];
     }
     
     // saving tracks    
-    for (i = 0; i < [self.playlists count]; i++) {
+    for (SNDPlaylist *playlist in self.playlists) {
         NSInteger k;
-        SNDPlaylist *playlist = [self.playlists objectAtIndex:i];
-        
         for (k = 0; k < [playlist.tracks count]; k++) {
             SNDTrack *t = [playlist.tracks objectAtIndex:k];
             trackMO = [NSEntityDescription insertNewObjectForEntityForName:@"Track" inManagedObjectContext:self.appDelegate.managedObjectContext];
             [trackMO setValue:[NSNumber numberWithInteger:k] forKey:@"row"];
-            [trackMO setValue:[NSNumber numberWithInteger:i] forKey:@"memberOfPlaylist"];
+            [trackMO setValue:[NSNumber numberWithInteger:playlist.index.integerValue] forKey:@"memberOfPlaylist"];
             [trackMO setValue:t.path forKey:@"path"];            
             [trackMO setValue:t.artist forKey:@"tag_artist"];
             [trackMO setValue:t.album forKey:@"tag_album"];

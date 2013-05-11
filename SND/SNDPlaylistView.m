@@ -53,7 +53,7 @@
     }    
     if (theEvent.keyCode == 45) {
         NSLog(@"key new");
-        
+    
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc postNotificationName:@"SND.Notification.PlaylistNewPressed" object:self];
     }    

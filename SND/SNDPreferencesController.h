@@ -14,11 +14,15 @@
 @property (nonatomic, retain) IBOutlet NSButton *quitOnWindowCloseButton;
 @property (nonatomic, retain) IBOutlet NSTextField *totalPlaybackTimeField;
 
+@property (nonatomic, retain) IBOutlet NSTextField *appUpdateField;
+
+
 @property (nonatomic) SNDAppDelegate *appDelegate;
 @property (nonatomic, strong) NSTimer *playbackCounterTimer;
 
 - (IBAction) quitOnWindowCloseAction:(id)sender;
 
+- (void) setupFieldsDefaults;
 - (void) setup;
 
 - (BOOL) quitOnWindowClose;

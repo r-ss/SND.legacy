@@ -8,7 +8,7 @@
 
 #import "SNDPreferencesController.h"
 #import "SNDTotalPlaybackTimeCounter.h"
-
+#import "SNDInfoXMLLoader.h"
 
 @interface SNDPreferencesController ()
 
@@ -30,7 +30,18 @@
     [self.quitOnWindowCloseButton setState:quit];
     
     [self.totalPlaybackTimeField setStringValue:[self.appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
-    self.playbackCounterTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];    
+    self.playbackCounterTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
+    
+    
+    if([self.appDelegate.infoXMLLoader updateIsAvailable]){
+        [self.appUpdateField setStringValue:@"UPDATE!!!"];
+    } else {
+        [self.appUpdateField setStringValue:@""];
+    }
+}
+
+- (void) setupFieldsDefaults {
+    [self.appUpdateField setStringValue:@""];
 }
 
 - (void) timerTick: (NSTimer *)timer {
@@ -46,6 +57,7 @@
 
 - (void) windowDidLoad {
     [super windowDidLoad];
+    NSLog(@">> windowDidLoad");
 }
 
 - (IBAction) quitOnWindowCloseAction:(id)sender {

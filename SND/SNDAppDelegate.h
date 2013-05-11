@@ -15,6 +15,7 @@
 @class SNDPlaylist;
 @class SNDPreferencesController;
 @class SNDTotalPlaybackTimeCounter;
+@class SNDInfoXMLLoader;
 
 
 @protocol DockDropDelegate <NSObject>
@@ -35,6 +36,10 @@
 @property (strong) SNDPreferencesController *preferencesController;
 
 @property (strong) SNDTotalPlaybackTimeCounter *totalPlaybackTimeCounter;
+
+@property (strong) SNDInfoXMLLoader *infoXMLLoader;
+
+@property (nonatomic, readonly) NSString *currentAppVersion;
 
 - (IBAction) showPreferencesPanel:(id)sender;
 

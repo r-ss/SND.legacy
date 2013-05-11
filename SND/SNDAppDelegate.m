@@ -11,48 +11,47 @@
 #import "SNDPreferencesController.h"
 #import "SNDTotalPlaybackTimeCounter.h"
 
+#import "SNDInfoXMLLoader.h"
+
 @implementation SNDAppDelegate
 
 @synthesize sndBox = _sndBox;
 @synthesize preferencesController = _preferencesController;
 @synthesize totalPlaybackTimeCounter = _totalPlaybackTimeCounter;
+@synthesize infoXMLLoader = _infoXMLLoader;
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+@synthesize currentAppVersion = _currentAppVersion;
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     //self.sndBox = [[SNDBox alloc] init];
-    
-    
     //self.sndBox.managedObjectContext = self.managedObjectContext;
-    [self.sndBox load];
-    
+    _currentAppVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+
     self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
-    
-    
+    [self.preferencesController setupFieldsDefaults];
     self.totalPlaybackTimeCounter = [[SNDTotalPlaybackTimeCounter alloc] init];
     
+    
+    [self.sndBox load];
+    self.infoXMLLoader = [[SNDInfoXMLLoader alloc] initAndLoad];
+    
+    
+    
+    
     NSLog(@"total playback time: %@", [self.totalPlaybackTimeCounter getTotalPlaybackTime]);
-    
-
-    
-    //NSString *currentFullName = (NSString *)CSIdentityGetFullName((CSIdentityRef)[_identities objectAtIndex:[_identityTableView selectedRow]]);
-	
-    
-    
-    //self.preferencesController = [[SNDPreferencesController alloc] init];
-    //[self.preferencesController showWindow:self];
 }
-
 
 - (IBAction) showPreferencesPanel:(id)sender {
     //if(!self.preferencesController){
        //self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
     //}
+    
     [self.preferencesController showWindow:self];
     [self.preferencesController setup];
 }

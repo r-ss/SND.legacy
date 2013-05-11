@@ -23,6 +23,7 @@
 		D031DA1E17244A76000DD09A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00AD3F5171E974600068DF1 /* CoreData.framework */; };
 		D0363F021738093100EDA811 /* SNDTotalPlaybackTimeCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = D0363F011738093100EDA811 /* SNDTotalPlaybackTimeCounter.m */; };
 		D05B2F8D172FA6250043A774 /* SNDBox.m in Sources */ = {isa = PBXBuildFile; fileRef = D05B2F8C172FA6250043A774 /* SNDBox.m */; };
+		D07883DF173E0B1900813FDB /* SNDInfoXMLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D07883DE173E0B1900813FDB /* SNDInfoXMLLoader.m */; };
 		D09EFBB917265B950039EF03 /* pic_next.png in Resources */ = {isa = PBXBuildFile; fileRef = D09EFBAB17265B950039EF03 /* pic_next.png */; };
 		D09EFBBA17265B950039EF03 /* pic_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D09EFBAC17265B950039EF03 /* pic_next@2x.png */; };
 		D09EFBBB17265B950039EF03 /* pic_play.png in Resources */ = {isa = PBXBuildFile; fileRef = D09EFBAD17265B950039EF03 /* pic_play.png */; };
@@ -98,6 +99,8 @@
 		D0363F011738093100EDA811 /* SNDTotalPlaybackTimeCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDTotalPlaybackTimeCounter.m; path = SND/SNDTotalPlaybackTimeCounter.m; sourceTree = "<group>"; };
 		D05B2F8B172FA6250043A774 /* SNDBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNDBox.h; sourceTree = "<group>"; };
 		D05B2F8C172FA6250043A774 /* SNDBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNDBox.m; sourceTree = "<group>"; };
+		D07883DD173E0B1900813FDB /* SNDInfoXMLLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDInfoXMLLoader.h; path = SND/SNDInfoXMLLoader.h; sourceTree = "<group>"; };
+		D07883DE173E0B1900813FDB /* SNDInfoXMLLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDInfoXMLLoader.m; path = SND/SNDInfoXMLLoader.m; sourceTree = "<group>"; };
 		D09EFBAB17265B950039EF03 /* pic_next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_next.png; sourceTree = "<group>"; };
 		D09EFBAC17265B950039EF03 /* pic_next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pic_next@2x.png"; sourceTree = "<group>"; };
 		D09EFBAD17265B950039EF03 /* pic_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_play.png; sourceTree = "<group>"; };
@@ -273,6 +276,8 @@
 		D0E71BA717269AC8009E17DD /* misc */ = {
 			isa = PBXGroup;
 			children = (
+				D07883DD173E0B1900813FDB /* SNDInfoXMLLoader.h */,
+				D07883DE173E0B1900813FDB /* SNDInfoXMLLoader.m */,
 				D0363F001738093100EDA811 /* SNDTotalPlaybackTimeCounter.h */,
 				D0363F011738093100EDA811 /* SNDTotalPlaybackTimeCounter.m */,
 				D0D13D0C1737AACE004AF1EB /* NSNumber+hhmmssFromSeconds.h */,
@@ -385,6 +390,7 @@
 				D0D13D0B1737AAAA004AF1EB /* SNDPreferencesController.m in Sources */,
 				D0363F021738093100EDA811 /* SNDTotalPlaybackTimeCounter.m in Sources */,
 				D0E716B6173A6FDC0062E609 /* SNDPlaylistRenameController.m in Sources */,
+				D07883DF173E0B1900813FDB /* SNDInfoXMLLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,9 +37,7 @@
         SNDTrack *firstTrack = [self.tracks objectAtIndex:0];
         NSString *firstTrackArtist = firstTrack.artist;
         if([self.tracks count] > 1){
-            NSInteger i;
-            for (i = 1; i < [self.tracks count]; i++){
-                SNDTrack *track = [self.tracks objectAtIndex:i];
+            for (SNDTrack *track in self.tracks){
                 if(![track.artist isEqualToString:firstTrackArtist]){
                     return [NSString stringWithFormat:@"%.2li", (long)self.index.integerValue + 1];
                 }
@@ -94,12 +92,11 @@
 }
 
 - (NSString *) totalPlaylistPlayingTime {
-    NSInteger i;
-    NSInteger duration = 0;
-    for (i = 0; i < [self.tracks count]; i++){
-        SNDTrack *track = [self.tracks objectAtIndex:i];
+    //NSInteger i;
+    NSInteger duration = 0;   
+    for (SNDTrack *track in self.tracks){
         duration += track.duration.integerValue;
-    }
+    }    
     NSNumber *num = [NSNumber numberWithInteger:duration];
     return [num hhmmssFromSeconds:num];
 }
