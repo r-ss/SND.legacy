@@ -16,14 +16,26 @@
 
 @implementation SNDPreferencesController
 
+@synthesize preferencesWindow = _preferencesWindow;
+
 @synthesize quitOnWindowCloseButton = _quitOnWindowCloseButton;
 @synthesize totalPlaybackTimeField = _totalPlaybackTimeField;
 @synthesize playbackCounterTimer = _playbackCounterTimer;
 
-- (void) setup {
-    NSLog(@">> preferences setup");
-    self.appDelegate = NSApplication.sharedApplication.delegate;
-    self.window.delegate = self;
+- (id) init {
+    self = [super init];
+    if (self) {
+        self.appDelegate = NSApplication.sharedApplication.delegate;
+    }
+    return self;
+}
+
+
+- (void) show {
+    
+    if(!self.preferencesWindow)
+        [NSBundle loadNibNamed:@"Preferences" owner:self];
+    
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL quit = [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];
@@ -32,32 +44,37 @@
     [self.totalPlaybackTimeField setStringValue:[self.appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
     self.playbackCounterTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
     
-    
-    if([self.appDelegate.infoXMLLoader updateIsAvailable]){
-        [self.appUpdateField setStringValue:@"UPDATE!!!"];
+    if ([self.appDelegate.infoXMLLoader updateIsAvailable]){
+        [self.appUpdateField setStringValue:@"Update is available"];
     } else {
-        [self.appUpdateField setStringValue:@""];
+        [self.appUpdateField setStringValue:@"You are using the latest version"];
     }
+    
+    
+    [NSApp beginSheet:self.preferencesWindow modalForWindow:self.appDelegate.window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:(__bridge void *)(self)];
 }
 
-- (void) setupFieldsDefaults {
-    [self.appUpdateField setStringValue:@""];
+- (IBAction) closeButton:(id)sender {
+    [NSApp endSheet:self.preferencesWindow returnCode:NSOKButton];
+}
+
+- (IBAction) visitWebsite:(id)sender {
+    [self.appDelegate openWebsite];
+}
+
+- (void) sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+	[sheet orderOut:self];
+    if (returnCode == NSOKButton) {
+        [self.playbackCounterTimer invalidate];
+        //SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
+        //[appDelegate.sndBox renamePlaylist:self.sessionForTab.integerValue withName:self.nameField.stringValue];
+    }
 }
 
 - (void) timerTick: (NSTimer *)timer {
     //NSLog(@">> tick");
     //self.appDelegate = NSApplication.sharedApplication.delegate;
     [self.totalPlaybackTimeField setStringValue:[self.appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
-}
-
-- (void)windowWillClose:(NSNotification *)notification {
-    NSLog(@">> windowWillClose");
-    [self.playbackCounterTimer invalidate];
-}
-
-- (void) windowDidLoad {
-    [super windowDidLoad];
-    NSLog(@">> windowDidLoad");
 }
 
 - (IBAction) quitOnWindowCloseAction:(id)sender {

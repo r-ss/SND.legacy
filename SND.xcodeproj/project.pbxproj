@@ -122,8 +122,8 @@
 		D0B5B58A171ED7FD0024A6B8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = /System/Library/Frameworks/AVFoundation.framework; sourceTree = "<absolute>"; };
 		D0C489121726A053009FF7C7 /* SNDPlaybackSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDPlaybackSegmentedControl.h; path = SND/SNDPlaybackSegmentedControl.h; sourceTree = "<group>"; };
 		D0C489131726A053009FF7C7 /* SNDPlaybackSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDPlaybackSegmentedControl.m; path = SND/SNDPlaybackSegmentedControl.m; sourceTree = "<group>"; };
-		D0D13D091737AAAA004AF1EB /* SNDPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNDPreferencesController.h; sourceTree = "<group>"; };
-		D0D13D0A1737AAAA004AF1EB /* SNDPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNDPreferencesController.m; sourceTree = "<group>"; };
+		D0D13D091737AAAA004AF1EB /* SNDPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDPreferencesController.h; path = SND/SNDPreferencesController.h; sourceTree = "<group>"; };
+		D0D13D0A1737AAAA004AF1EB /* SNDPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDPreferencesController.m; path = SND/SNDPreferencesController.m; sourceTree = "<group>"; };
 		D0D13D0C1737AACE004AF1EB /* NSNumber+hhmmssFromSeconds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSNumber+hhmmssFromSeconds.h"; path = "SND/NSNumber+hhmmssFromSeconds.h"; sourceTree = "<group>"; };
 		D0D13D0D1737AACE004AF1EB /* NSNumber+hhmmssFromSeconds.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+hhmmssFromSeconds.m"; path = "SND/NSNumber+hhmmssFromSeconds.m"; sourceTree = "<group>"; };
 		D0D13D0E1737AB0A004AF1EB /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
@@ -209,8 +209,6 @@
 				D0D5DB72172E74430079AFA6 /* SNDTrack.mm */,
 				D00AD411171E985A00068DF1 /* SNDWindow.h */,
 				D00AD412171E985A00068DF1 /* SNDWindow.m */,
-				D0D13D091737AAAA004AF1EB /* SNDPreferencesController.h */,
-				D0D13D0A1737AAAA004AF1EB /* SNDPreferencesController.m */,
 				D0E71BA717269AC8009E17DD /* misc */,
 				D09EFBA8172655200039EF03 /* XIB */,
 				D09EFBA917265B950039EF03 /* resources */,
@@ -284,6 +282,8 @@
 				D0D13D0D1737AACE004AF1EB /* NSNumber+hhmmssFromSeconds.m */,
 				D0C489121726A053009FF7C7 /* SNDPlaybackSegmentedControl.h */,
 				D0C489131726A053009FF7C7 /* SNDPlaybackSegmentedControl.m */,
+				D0D13D091737AAAA004AF1EB /* SNDPreferencesController.h */,
+				D0D13D0A1737AAAA004AF1EB /* SNDPreferencesController.m */,
 				D0E716B4173A6FDC0062E609 /* SNDPlaylistRenameController.h */,
 				D0E716B5173A6FDC0062E609 /* SNDPlaylistRenameController.m */,
 			);

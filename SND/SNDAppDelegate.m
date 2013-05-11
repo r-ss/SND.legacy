@@ -33,27 +33,25 @@
     //self.sndBox.managedObjectContext = self.managedObjectContext;
     _currentAppVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 
-    self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
-    [self.preferencesController setupFieldsDefaults];
+    self.preferencesController = [[SNDPreferencesController alloc] init];
     self.totalPlaybackTimeCounter = [[SNDTotalPlaybackTimeCounter alloc] init];
-    
     
     [self.sndBox load];
     self.infoXMLLoader = [[SNDInfoXMLLoader alloc] initAndLoad];
-    
-    
-    
-    
+
     NSLog(@"total playback time: %@", [self.totalPlaybackTimeCounter getTotalPlaybackTime]);
 }
 
-- (IBAction) showPreferencesPanel:(id)sender {
-    //if(!self.preferencesController){
-       //self.preferencesController = [[SNDPreferencesController alloc] initWithWindowNibName:@"Preferences"];
-    //}
-    
-    [self.preferencesController showWindow:self];
-    [self.preferencesController setup];
+- (IBAction) showPreferences:(id)sender {
+    [self.preferencesController show];
+}
+
+- (IBAction) openWebsite:(id)sender {
+    [self openWebsite];
+}
+- (void) openWebsite {
+    NSLog(@"Opening snd-app.com");
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://snd-app.com/"]];
 }
 
 // CoreData gogogo

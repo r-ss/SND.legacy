@@ -41,6 +41,9 @@
 
 @property (nonatomic, readonly) NSString *currentAppVersion;
 
-- (IBAction) showPreferencesPanel:(id)sender;
+- (IBAction) showPreferences:(id)sender;
+
+- (IBAction) openWebsite:(id)sender;
+- (void) openWebsite;
 
 @end

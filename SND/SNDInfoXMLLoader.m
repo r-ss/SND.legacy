@@ -27,7 +27,7 @@
 - (id) initAndLoad {
     self = [super init];
     if(self){
-        self.xmlURL = [[NSURL alloc] initWithString:@"http://snd-app.com/app.xml"];
+        self.xmlURL = [[NSURL alloc] initWithString:@"http://snd-app.com/latestversion.xml"];
         
         _latestVersion = [[NSMutableString alloc] initWithCapacity:50];
         _latestStatus = [[NSMutableString alloc] initWithCapacity:50];
@@ -41,18 +41,25 @@
 }
 
 - (BOOL) updateIsAvailable {
-    NSLog(@">> SELF LATEST: %@", self.latestVersion);
+    
+    //return NO;
+    //NSLog(@">> SELF LATEST: %@", self.latestVersion);
     if(self.latestVersion == nil)
         return NO;
         
-    SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
-    if ([self.latestVersion compare:appDelegate.currentAppVersion options:NSNumericSearch] == NSOrderedDescending) {
-        NSLog(@">> UPDATE");
-        return YES;
-    } else {
+    SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;    
+    //if ([self.latestVersion compare:appDelegate.currentAppVersion options:NSNumericSearch] != NSOrderedAscending) {
+    //NSString *aa = @"0.8.0";
+    //NSString *bb = @"0.9.0";
+    //if ([aa compare:bb options:NSNumericSearch] != NSOrderedAscending) {
+    if ([self.latestVersion compare:appDelegate.currentAppVersion options:NSNumericSearch] != NSOrderedAscending) {
         
-        NSLog(@">> NOOO UPDATE, a: %@, b: %@", self.latestVersion, appDelegate.currentAppVersion);
+        //NSLog(@">> NOOO UPDATE, a: %@, b: %@", self.latestVersion, appDelegate.currentAppVersion);
         return NO;
+    } else {
+        //NSLog(@">> UPDATE, a: %@, b: %@", self.latestVersion, appDelegate.currentAppVersion);
+        return YES;
+        
     }
 }
 
