@@ -10,15 +10,16 @@
 #import "SNDBox.h"
 #import "SNDPreferencesController.h"
 #import "SNDTotalPlaybackTimeCounter.h"
-
-#import "SNDInfoXMLLoader.h"
+#import "SNDUpdateReminderController.h"
+#import "SNDLatestVersionXMLLoader.h"
 
 @implementation SNDAppDelegate
 
 @synthesize sndBox = _sndBox;
 @synthesize preferencesController = _preferencesController;
 @synthesize totalPlaybackTimeCounter = _totalPlaybackTimeCounter;
-@synthesize infoXMLLoader = _infoXMLLoader;
+@synthesize latestVersionXMLLoader = _latestVersionXMLLoader;
+@synthesize updateReminderController = _updateReminderController;
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -36,10 +37,42 @@
     self.preferencesController = [[SNDPreferencesController alloc] init];
     self.totalPlaybackTimeCounter = [[SNDTotalPlaybackTimeCounter alloc] init];
     
-    [self.sndBox load];
-    self.infoXMLLoader = [[SNDInfoXMLLoader alloc] initAndLoad];
+    // registering in notification center
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(latestVersionXMLLoaded:) name:@"SND.Notification.LatestVersionXMLLoaded" object:nil];
+    
+    
+    self.latestVersionXMLLoader = [[SNDLatestVersionXMLLoader alloc] initAndLoad];
 
     NSLog(@"total playback time: %@", [self.totalPlaybackTimeCounter getTotalPlaybackTime]);
+    
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDate *latestStartTime = (NSDate *)[userDefaults objectForKey:@"SNDLatestStartTime"];
+    // if latestStartTime = nil, than application is started first time
+    if(latestStartTime == nil)
+        [self firstStartRoutine];
+    
+    //NSDate *latestStartTime = [NSDate date];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"SNDLatestStartTime"];
+
+    NSLog(@"Latest app start time: %@", latestStartTime);
+    
+    [self.sndBox load];
+}
+
+- (void) latestVersionXMLLoaded:(NSNotification *)notification {
+    if([self.latestVersionXMLLoader updateIsAvailable] && [self.preferencesController remindAboutUpdates]){
+        self.updateReminderController = [[SNDUpdateReminderController alloc] init];
+        [self.updateReminderController show];
+    }
+}
+
+- (void) firstStartRoutine {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:YES forKey:@"SNDPreferencesRemindAboutUpdates"];
+    [userDefaults setDouble:100.0 forKey:@"SNDVolume"];
+    [userDefaults synchronize];
 }
 
 - (IBAction) showPreferences:(id)sender {

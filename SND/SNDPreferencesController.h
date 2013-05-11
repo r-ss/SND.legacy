@@ -11,24 +11,24 @@
 
 @interface SNDPreferencesController : NSWindowController <NSWindowDelegate>
 
-
 @property (assign) IBOutlet NSWindow *preferencesWindow;
 
-
 @property (nonatomic, retain) IBOutlet NSButton *quitOnWindowCloseButton;
+- (IBAction) quitOnWindowCloseAction:(id)sender;
+
+@property (nonatomic, retain) IBOutlet NSButton *remindAboutUpdatesCheck;
+- (IBAction) remindAboutUpdatesAction:(id)sender;
+
 @property (nonatomic, retain) IBOutlet NSTextField *totalPlaybackTimeField;
-@property (nonatomic, retain) IBOutlet NSTextField *appUpdateField;
 
 @property (nonatomic) SNDAppDelegate *appDelegate;
 @property (nonatomic, strong) NSTimer *playbackCounterTimer;
 
-- (IBAction) quitOnWindowCloseAction:(id)sender;
-
 - (IBAction) visitWebsite:(id)sender;
 - (IBAction) closeButton:(id)sender;
 
-
 - (void) show;
 - (BOOL) quitOnWindowClose;
+- (BOOL) remindAboutUpdates;
 
 @end

@@ -8,7 +8,7 @@
 
 #import "SNDPreferencesController.h"
 #import "SNDTotalPlaybackTimeCounter.h"
-#import "SNDInfoXMLLoader.h"
+#import "SNDLatestVersionXMLLoader.h"
 
 @interface SNDPreferencesController ()
 
@@ -33,16 +33,17 @@
 
 - (void) show {    
     if(!self.preferencesWindow)
-        [NSBundle loadNibNamed:@"Preferences" owner:self];    
+        [NSBundle loadNibNamed:@"Preferences" owner:self];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL quit = [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];
     [self.quitOnWindowCloseButton setState:quit];
     
+    BOOL remind = [userDefaults boolForKey:@"SNDPreferencesRemindAboutUpdates"];
+    [self.remindAboutUpdatesCheck setState:remind];
+    
     [self.totalPlaybackTimeField setStringValue:[self.appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
     self.playbackCounterTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
-    
-    [self.appUpdateField setStringValue:[self.appDelegate.infoXMLLoader updateIsAvailableText]];
 
     [NSApp beginSheet:self.preferencesWindow modalForWindow:self.appDelegate.window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:(__bridge void *)(self)];
 }
@@ -63,8 +64,6 @@
 }
 
 - (void) timerTick: (NSTimer *)timer {
-    //NSLog(@">> tick");
-    //self.appDelegate = NSApplication.sharedApplication.delegate;
     [self.totalPlaybackTimeField setStringValue:[self.appDelegate.totalPlaybackTimeCounter getTotalPlaybackTime]];
 }
 
@@ -74,9 +73,22 @@
     [userDefaults synchronize];
 }
 
+- (IBAction) remindAboutUpdatesAction:(id)sender {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:[self.remindAboutUpdatesCheck state] forKey:@"SNDPreferencesRemindAboutUpdates"];
+    [userDefaults synchronize];
+}
+
 - (BOOL) quitOnWindowClose {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     return [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];
 }
+
+- (BOOL) remindAboutUpdates {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    return [userDefaults boolForKey:@"SNDPreferencesRemindAboutUpdates"];
+}
+
+
 
 @end

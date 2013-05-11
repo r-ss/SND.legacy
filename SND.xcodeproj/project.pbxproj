@@ -23,7 +23,8 @@
 		D031DA1E17244A76000DD09A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00AD3F5171E974600068DF1 /* CoreData.framework */; };
 		D0363F021738093100EDA811 /* SNDTotalPlaybackTimeCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = D0363F011738093100EDA811 /* SNDTotalPlaybackTimeCounter.m */; };
 		D05B2F8D172FA6250043A774 /* SNDBox.m in Sources */ = {isa = PBXBuildFile; fileRef = D05B2F8C172FA6250043A774 /* SNDBox.m */; };
-		D07883DF173E0B1900813FDB /* SNDInfoXMLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D07883DE173E0B1900813FDB /* SNDInfoXMLLoader.m */; };
+		D0976E78173EAC7B004172C0 /* UpdateReminder.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0976E77173EAC7B004172C0 /* UpdateReminder.xib */; };
+		D0976E7B173EAD59004172C0 /* SNDLatestVersionXMLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D0976E7A173EACC5004172C0 /* SNDLatestVersionXMLLoader.m */; };
 		D09EFBB917265B950039EF03 /* pic_next.png in Resources */ = {isa = PBXBuildFile; fileRef = D09EFBAB17265B950039EF03 /* pic_next.png */; };
 		D09EFBBA17265B950039EF03 /* pic_next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D09EFBAC17265B950039EF03 /* pic_next@2x.png */; };
 		D09EFBBB17265B950039EF03 /* pic_play.png in Resources */ = {isa = PBXBuildFile; fileRef = D09EFBAD17265B950039EF03 /* pic_play.png */; };
@@ -44,6 +45,7 @@
 		D0A7A3A6172A4CF800B86669 /* OrigamiEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7A3A4172A4CF800B86669 /* OrigamiEngine.framework */; };
 		D0A7A3AB172A516B00B86669 /* FLAC.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D0A7A3A3172A4CF800B86669 /* FLAC.framework */; };
 		D0A7A3AC172A516D00B86669 /* OrigamiEngine.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D0A7A3A4172A4CF800B86669 /* OrigamiEngine.framework */; };
+		D0B4385F173EA64300CEC846 /* SNDUpdateReminderController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B4385E173EA64300CEC846 /* SNDUpdateReminderController.m */; };
 		D0B5B58B171ED7FD0024A6B8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B5B58A171ED7FD0024A6B8 /* AVFoundation.framework */; };
 		D0C489141726A053009FF7C7 /* SNDPlaybackSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C489131726A053009FF7C7 /* SNDPlaybackSegmentedControl.m */; };
 		D0D13D0B1737AAAA004AF1EB /* SNDPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D13D0A1737AAAA004AF1EB /* SNDPreferencesController.m */; };
@@ -99,8 +101,9 @@
 		D0363F011738093100EDA811 /* SNDTotalPlaybackTimeCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDTotalPlaybackTimeCounter.m; path = SND/SNDTotalPlaybackTimeCounter.m; sourceTree = "<group>"; };
 		D05B2F8B172FA6250043A774 /* SNDBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNDBox.h; sourceTree = "<group>"; };
 		D05B2F8C172FA6250043A774 /* SNDBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNDBox.m; sourceTree = "<group>"; };
-		D07883DD173E0B1900813FDB /* SNDInfoXMLLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDInfoXMLLoader.h; path = SND/SNDInfoXMLLoader.h; sourceTree = "<group>"; };
-		D07883DE173E0B1900813FDB /* SNDInfoXMLLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDInfoXMLLoader.m; path = SND/SNDInfoXMLLoader.m; sourceTree = "<group>"; };
+		D0976E77173EAC7B004172C0 /* UpdateReminder.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateReminder.xib; sourceTree = "<group>"; };
+		D0976E79173EACC5004172C0 /* SNDLatestVersionXMLLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SNDLatestVersionXMLLoader.h; path = SND/SNDLatestVersionXMLLoader.h; sourceTree = "<group>"; };
+		D0976E7A173EACC5004172C0 /* SNDLatestVersionXMLLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SNDLatestVersionXMLLoader.m; path = SND/SNDLatestVersionXMLLoader.m; sourceTree = "<group>"; };
 		D09EFBAB17265B950039EF03 /* pic_next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_next.png; sourceTree = "<group>"; };
 		D09EFBAC17265B950039EF03 /* pic_next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pic_next@2x.png"; sourceTree = "<group>"; };
 		D09EFBAD17265B950039EF03 /* pic_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_play.png; sourceTree = "<group>"; };
@@ -119,6 +122,8 @@
 		D09EFBC817265E2C0039EF03 /* pic_pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pic_pause@2x.png"; sourceTree = "<group>"; };
 		D0A7A3A3172A4CF800B86669 /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = SND/Frameworks/FLAC.framework; sourceTree = "<group>"; };
 		D0A7A3A4172A4CF800B86669 /* OrigamiEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OrigamiEngine.framework; path = SND/Frameworks/OrigamiEngine.framework; sourceTree = "<group>"; };
+		D0B4385D173EA64300CEC846 /* SNDUpdateReminderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDUpdateReminderController.h; path = SND/SNDUpdateReminderController.h; sourceTree = "<group>"; };
+		D0B4385E173EA64300CEC846 /* SNDUpdateReminderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDUpdateReminderController.m; path = SND/SNDUpdateReminderController.m; sourceTree = "<group>"; };
 		D0B5B58A171ED7FD0024A6B8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = /System/Library/Frameworks/AVFoundation.framework; sourceTree = "<absolute>"; };
 		D0C489121726A053009FF7C7 /* SNDPlaybackSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDPlaybackSegmentedControl.h; path = SND/SNDPlaybackSegmentedControl.h; sourceTree = "<group>"; };
 		D0C489131726A053009FF7C7 /* SNDPlaybackSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDPlaybackSegmentedControl.m; path = SND/SNDPlaybackSegmentedControl.m; sourceTree = "<group>"; };
@@ -233,6 +238,7 @@
 		D09EFBA8172655200039EF03 /* XIB */ = {
 			isa = PBXGroup;
 			children = (
+				D0976E77173EAC7B004172C0 /* UpdateReminder.xib */,
 				D0E716B9173A83B60062E609 /* PlaylistRename.xib */,
 				D0D13D101737AB2F004AF1EB /* MainMenu.xib */,
 				D0D13D0E1737AB0A004AF1EB /* Preferences.xib */,
@@ -274,8 +280,6 @@
 		D0E71BA717269AC8009E17DD /* misc */ = {
 			isa = PBXGroup;
 			children = (
-				D07883DD173E0B1900813FDB /* SNDInfoXMLLoader.h */,
-				D07883DE173E0B1900813FDB /* SNDInfoXMLLoader.m */,
 				D0363F001738093100EDA811 /* SNDTotalPlaybackTimeCounter.h */,
 				D0363F011738093100EDA811 /* SNDTotalPlaybackTimeCounter.m */,
 				D0D13D0C1737AACE004AF1EB /* NSNumber+hhmmssFromSeconds.h */,
@@ -286,6 +290,10 @@
 				D0D13D0A1737AAAA004AF1EB /* SNDPreferencesController.m */,
 				D0E716B4173A6FDC0062E609 /* SNDPlaylistRenameController.h */,
 				D0E716B5173A6FDC0062E609 /* SNDPlaylistRenameController.m */,
+				D0976E79173EACC5004172C0 /* SNDLatestVersionXMLLoader.h */,
+				D0976E7A173EACC5004172C0 /* SNDLatestVersionXMLLoader.m */,
+				D0B4385D173EA64300CEC846 /* SNDUpdateReminderController.h */,
+				D0B4385E173EA64300CEC846 /* SNDUpdateReminderController.m */,
 			);
 			name = misc;
 			path = ..;
@@ -366,6 +374,7 @@
 				D0D13D0F1737AB0B004AF1EB /* Preferences.xib in Resources */,
 				D0D13D111737AB2F004AF1EB /* MainMenu.xib in Resources */,
 				D0E716BA173A83B60062E609 /* PlaylistRename.xib in Resources */,
+				D0976E78173EAC7B004172C0 /* UpdateReminder.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,8 +398,9 @@
 				D0D13D121737ADD5004AF1EB /* NSNumber+hhmmssFromSeconds.m in Sources */,
 				D0D13D0B1737AAAA004AF1EB /* SNDPreferencesController.m in Sources */,
 				D0363F021738093100EDA811 /* SNDTotalPlaybackTimeCounter.m in Sources */,
+				D0976E7B173EAD59004172C0 /* SNDLatestVersionXMLLoader.m in Sources */,
 				D0E716B6173A6FDC0062E609 /* SNDPlaylistRenameController.m in Sources */,
-				D07883DF173E0B1900813FDB /* SNDInfoXMLLoader.m in Sources */,
+				D0B4385F173EA64300CEC846 /* SNDUpdateReminderController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

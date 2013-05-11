@@ -91,10 +91,10 @@
             [self initOGRMEngine];
             
         if(self.player.currentState == ORGMEngineStatePlaying){
-            NSLog(@"A");
+            //NSLog(@"A");
             [self.player setNextUrl:track.url withDataFlush:YES];
         } else {
-            NSLog(@"B");
+            //NSLog(@"B");
             [self.player playUrl:track.url];            
         }
     }

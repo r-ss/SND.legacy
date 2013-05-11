@@ -15,7 +15,8 @@
 @class SNDPlaylist;
 @class SNDPreferencesController;
 @class SNDTotalPlaybackTimeCounter;
-@class SNDInfoXMLLoader;
+@class SNDLatestVersionXMLLoader;
+@class SNDUpdateReminderController;
 
 
 @protocol DockDropDelegate <NSObject>
@@ -34,10 +35,11 @@
 
 @property (nonatomic, weak) id <DockDropDelegate> dockDropDelegate;
 @property (strong) SNDPreferencesController *preferencesController;
+@property (strong) SNDUpdateReminderController *updateReminderController;
 
 @property (strong) SNDTotalPlaybackTimeCounter *totalPlaybackTimeCounter;
 
-@property (strong) SNDInfoXMLLoader *infoXMLLoader;
+@property (strong) SNDLatestVersionXMLLoader *latestVersionXMLLoader;
 
 @property (nonatomic, readonly) NSString *currentAppVersion;
 

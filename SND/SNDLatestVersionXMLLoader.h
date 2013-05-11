@@ -8,17 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SNDInfoXMLLoader : NSObject <NSXMLParserDelegate>
+@interface SNDLatestVersionXMLLoader : NSObject <NSXMLParserDelegate>
 
 @property (nonatomic) NSURL *xmlURL;
 
 @property (nonatomic, strong, readonly) NSMutableString *latestVersion;
 @property (nonatomic, strong, readonly) NSMutableString *latestStatus;
+@property (nonatomic, strong, readonly) NSMutableString *latestURL;
 
 - (id) initAndLoad;
 
 - (BOOL) updateIsAvailable;
-- (NSString *) updateIsAvailableText;
+
+- (NSURL *) latestVersionDownloadURL;
 
 
 @end
