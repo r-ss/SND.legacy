@@ -8,6 +8,7 @@
 
 #import "SNDLatestVersionXMLLoader.h"
 #import "SNDAppDelegate.h"
+#import "NSString+versionsCompare.h"
 
 // private part
 @interface SNDLatestVersionXMLLoader ()
@@ -64,25 +65,6 @@
     return [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
 }
 
-- (BOOL) isVersion:(NSString *)thisVersionString higherThan:(NSString *)thatVersionString {
-    
-    // LOWERr
-    if ([thisVersionString compare:thatVersionString options:NSNumericSearch] == NSOrderedAscending) {
-        //NSLog(@"%@ < %@", thisVersionString, thatVersionString);
-        return NO;
-    }
-    
-    // EQUAL
-    if ([thisVersionString compare:thatVersionString options:NSNumericSearch] == NSOrderedSame) {
-        //NSLog(@"%@ == %@", thisVersionString, thatVersionString);
-        return NO;
-    }
-    
-    //NSLog(@"%@ > %@", thisVersionString, thatVersionString);
-    // HIGHER
-    return YES;
-}
-
 - (BOOL) updateIsAvailable {
     if(self.latestVersion == nil)
         return NO;
@@ -92,7 +74,7 @@
     NSString *a = self.latestVersion;
     NSString *b = appDelegate.currentAppVersion;
     
-    if([self isVersion:a higherThan:b]){
+    if([a isVersion:a higherThan:b]){
         //NSLog(@"YES");
         return YES;
     } else {

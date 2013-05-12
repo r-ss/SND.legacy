@@ -18,6 +18,7 @@
 		D00AD422171EAECC00068DF1 /* SNDPlaylistView.m in Sources */ = {isa = PBXBuildFile; fileRef = D00AD421171EAECC00068DF1 /* SNDPlaylistView.m */; };
 		D01C8D5F172E6CFE007FB252 /* TagLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01C8D5E172E6CFE007FB252 /* TagLib.framework */; };
 		D01C8D60172E6D21007FB252 /* TagLib.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D01C8D5E172E6CFE007FB252 /* TagLib.framework */; };
+		D01D488A173F6C5C0036DE6D /* NSString+versionsCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = D01D4889173F6C5C0036DE6D /* NSString+versionsCompare.m */; };
 		D031DA1A1724463B000DD09A /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D031DA191724463B000DD09A /* icon.icns */; };
 		D031DA1D1724493E000DD09A /* SNDModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D031DA1B1724493E000DD09A /* SNDModel.xcdatamodeld */; };
 		D031DA1E17244A76000DD09A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00AD3F5171E974600068DF1 /* CoreData.framework */; };
@@ -95,6 +96,8 @@
 		D00AD420171EAECC00068DF1 /* SNDPlaylistView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNDPlaylistView.h; sourceTree = "<group>"; };
 		D00AD421171EAECC00068DF1 /* SNDPlaylistView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNDPlaylistView.m; sourceTree = "<group>"; };
 		D01C8D5E172E6CFE007FB252 /* TagLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TagLib.framework; path = SND/Frameworks/TagLib.framework; sourceTree = "<group>"; };
+		D01D4888173F6C5B0036DE6D /* NSString+versionsCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+versionsCompare.h"; path = "SND/NSString+versionsCompare.h"; sourceTree = "<group>"; };
+		D01D4889173F6C5C0036DE6D /* NSString+versionsCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+versionsCompare.m"; path = "SND/NSString+versionsCompare.m"; sourceTree = "<group>"; };
 		D031DA191724463B000DD09A /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		D031DA1C1724493E000DD09A /* SNDModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SNDModel.xcdatamodel; sourceTree = "<group>"; };
 		D0363F001738093100EDA811 /* SNDTotalPlaybackTimeCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDTotalPlaybackTimeCounter.h; path = SND/SNDTotalPlaybackTimeCounter.h; sourceTree = "<group>"; };
@@ -284,6 +287,8 @@
 				D0363F011738093100EDA811 /* SNDTotalPlaybackTimeCounter.m */,
 				D0D13D0C1737AACE004AF1EB /* NSNumber+hhmmssFromSeconds.h */,
 				D0D13D0D1737AACE004AF1EB /* NSNumber+hhmmssFromSeconds.m */,
+				D01D4888173F6C5B0036DE6D /* NSString+versionsCompare.h */,
+				D01D4889173F6C5C0036DE6D /* NSString+versionsCompare.m */,
 				D0C489121726A053009FF7C7 /* SNDPlaybackSegmentedControl.h */,
 				D0C489131726A053009FF7C7 /* SNDPlaybackSegmentedControl.m */,
 				D0D13D091737AAAA004AF1EB /* SNDPreferencesController.h */,
@@ -401,6 +406,7 @@
 				D0976E7B173EAD59004172C0 /* SNDLatestVersionXMLLoader.m in Sources */,
 				D0E716B6173A6FDC0062E609 /* SNDPlaylistRenameController.m in Sources */,
 				D0B4385F173EA64300CEC846 /* SNDUpdateReminderController.m in Sources */,
+				D01D488A173F6C5C0036DE6D /* NSString+versionsCompare.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,7 +37,7 @@
     //self.sndBox.managedObjectContext = self.managedObjectContext;
     _currentAppVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     
-    _currentAppVersion = @"0.6.6";
+    //_currentAppVersion = @"0.6.6";
 
     self.preferencesController = [[SNDPreferencesController alloc] init];
     self.totalPlaybackTimeCounter = [[SNDTotalPlaybackTimeCounter alloc] init];
@@ -68,13 +68,13 @@
         [self firstStartRoutine];
     
     NSString *latestStartedVersion = (NSString *)[userDefaults objectForKey:@"SNDLatestStartedVersion"];
-    NSLog(@">>>> versions compare: latest started:%@, current:%@", latestStartedVersion, self.currentAppVersion);
+    //NSLog(@">>>> versions compare: latest started:%@, current:%@", latestStartedVersion, self.currentAppVersion);
     if((latestStartedVersion != nil) && (![latestStartedVersion isEqualToString: self.currentAppVersion])){
         [self updateRoutine];
     }
     
     [userDefaults setObject:[NSDate date] forKey:@"SNDLatestStartTime"];
-    //[userDefaults setObject:self.currentAppVersion forKey:@"SNDLatestStartedVersion"];
+    [userDefaults setObject:self.currentAppVersion forKey:@"SNDLatestStartedVersion"];
     [userDefaults synchronize];
 
     NSLog(@"Latest app start time: %@", latestStartTime);
