@@ -18,7 +18,6 @@
 @class SNDLatestVersionXMLLoader;
 @class SNDUpdateReminderController;
 
-
 @protocol DockDropDelegate <NSObject>
 - (void) filesDroppedIntoDock:(NSArray *)filesURL;
 @end
@@ -26,7 +25,6 @@
 @interface SNDAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-
 @property (assign) IBOutlet SNDBox *sndBox;
 
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
@@ -36,12 +34,14 @@
 @property (nonatomic, weak) id <DockDropDelegate> dockDropDelegate;
 @property (strong) SNDPreferencesController *preferencesController;
 @property (strong) SNDUpdateReminderController *updateReminderController;
-
 @property (strong) SNDTotalPlaybackTimeCounter *totalPlaybackTimeCounter;
-
 @property (strong) SNDLatestVersionXMLLoader *latestVersionXMLLoader;
 
+
 @property (nonatomic, readonly) NSString *currentAppVersion;
+@property (nonatomic, readonly) NSURL *databaseStoreURL;
+@property (nonatomic, readonly) NSURL *websiteURL;
+
 
 - (IBAction) showPreferences:(id)sender;
 

@@ -26,6 +26,9 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 @synthesize currentAppVersion = _currentAppVersion;
+@synthesize databaseStoreURL = _databaseStoreURL;
+@synthesize websiteURL = _websiteURL;
+
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -33,9 +36,20 @@
     //self.sndBox = [[SNDBox alloc] init];
     //self.sndBox.managedObjectContext = self.managedObjectContext;
     _currentAppVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    
+    _currentAppVersion = @"0.6.6";
 
     self.preferencesController = [[SNDPreferencesController alloc] init];
     self.totalPlaybackTimeCounter = [[SNDTotalPlaybackTimeCounter alloc] init];
+    
+    // setting database path
+    NSString *homeDir = NSHomeDirectory();
+    //NSString *path = [homeDir stringByAppendingString:@"/Music/snd.sqlite"];
+    NSString *path = [homeDir stringByAppendingString:@"/Desktop/snd.sqlite"];
+    _databaseStoreURL = [NSURL fileURLWithPath:path];
+    
+    _websiteURL = [NSURL URLWithString:@"http://snd-app.com/"];
+    
     
     // registering in notification center
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -53,8 +67,15 @@
     if(latestStartTime == nil)
         [self firstStartRoutine];
     
-    //NSDate *latestStartTime = [NSDate date];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"SNDLatestStartTime"];
+    NSString *latestStartedVersion = (NSString *)[userDefaults objectForKey:@"SNDLatestStartedVersion"];
+    NSLog(@">>>> versions compare: latest started:%@, current:%@", latestStartedVersion, self.currentAppVersion);
+    if((latestStartedVersion != nil) && (![latestStartedVersion isEqualToString: self.currentAppVersion])){
+        [self updateRoutine];
+    }
+    
+    [userDefaults setObject:[NSDate date] forKey:@"SNDLatestStartTime"];
+    //[userDefaults setObject:self.currentAppVersion forKey:@"SNDLatestStartedVersion"];
+    [userDefaults synchronize];
 
     NSLog(@"Latest app start time: %@", latestStartTime);
     
@@ -71,8 +92,22 @@
 - (void) firstStartRoutine {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:YES forKey:@"SNDPreferencesRemindAboutUpdates"];
+    [userDefaults setBool:NO forKey:@"SNDPreferencesQuitOnWindowClose"];    
     [userDefaults setDouble:100.0 forKey:@"SNDVolume"];
     [userDefaults synchronize];
+}
+
+- (void) updateRoutine {
+    NSLog(@"> updateRoutine");
+    
+    // removing database sqlite file for prevent CoreData entities conflicts
+    NSError *error = nil;
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if ([fm fileExistsAtPath:self.databaseStoreURL.path]) {
+        [fm removeItemAtPath:self.databaseStoreURL.path error:&error];
+        if(error)
+            NSLog(@"Can't remove database file: %@",error);
+    }
 }
 
 - (IBAction) showPreferences:(id)sender {
@@ -84,7 +119,7 @@
 }
 - (void) openWebsite {
     NSLog(@"Opening snd-app.com");
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://snd-app.com/"]];
+    [[NSWorkspace sharedWorkspace] openURL:self.websiteURL];
 }
 
 // CoreData gogogo
@@ -100,13 +135,9 @@
     if(_persistentStoreCoordinator != nil){
         return _persistentStoreCoordinator;
     }
-    NSString *homeDir = NSHomeDirectory();
-    //NSString *path = [homeDir stringByAppendingString:@"/Music/snd.sqlite"];
-    NSString *path = [homeDir stringByAppendingString:@"/Desktop/snd.sqlite"];
-    NSURL *storeURL = [NSURL fileURLWithPath:path];
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
-    if(![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if(![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.databaseStoreURL options:nil error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }

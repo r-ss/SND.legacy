@@ -48,6 +48,22 @@
     return [[_latestVersion componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
 }
 
+// Overriding latestStatus getter
+- (NSString *) latestStatus {
+    return [self filterXMLString:_latestStatus];
+}
+
+// Overriding latestURL getter
+- (NSString *) latestURL {
+    return [self filterXMLString:_latestURL];
+}
+
+
+- (NSString *) filterXMLString:(NSString *)unfilteredString {
+    NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,.<>-_:;/&$#@!^*(){}[]'+"] invertedSet];
+    return [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
+}
+
 - (BOOL) isVersion:(NSString *)thisVersionString higherThan:(NSString *)thatVersionString {
     
     // LOWERr
@@ -67,26 +83,14 @@
     return YES;
 }
 
-
-
-- (NSString *) filterVersionString:(NSString *)unfilteredString {
-    NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789.,."] invertedSet];
-    return [[unfilteredString componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
-}
-
 - (BOOL) updateIsAvailable {
     if(self.latestVersion == nil)
-        return NO;        
+        return NO;
     SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
     NSLog(@"versions compare: latest:%@, current:%@", self.latestVersion, appDelegate.currentAppVersion);
     
     NSString *a = self.latestVersion;
     NSString *b = appDelegate.currentAppVersion;
-    
-    
-    
-    //NSString *a = @"0.7.0";
-    //NSString *b = @"0.7.0";
     
     if([self isVersion:a higherThan:b]){
         //NSLog(@"YES");
@@ -99,9 +103,7 @@
 
 - (NSURL *) latestVersionDownloadURL {
     if(self.latestURL){
-        NSCharacterSet *notAllowedChars = [NSCharacterSet characterSetWithCharactersInString:@"\n"];
-        NSString *string = [[self.latestURL componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""];
-        return [NSURL URLWithString:string];
+        return [NSURL URLWithString:self.latestURL];
     } else {
         return nil;
     }
