@@ -29,7 +29,7 @@
 - (id) initAndLoad {
     self = [super init];
     if(self){
-        self.xmlURL = [[NSURL alloc] initWithString:@"http://snd-app.com/latestversion_copy.xml"];
+        self.xmlURL = [[NSURL alloc] initWithString:@"http://snd-app.com/latestversion.xml"];
         
         _latestVersion = [[NSMutableString alloc] initWithCapacity:50];
         _latestStatus = [[NSMutableString alloc] initWithCapacity:50];

@@ -53,6 +53,27 @@ NSString *const PBType = @"playlistRowDragDropType";
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
+- (IBAction) playlistSelectAll:(id)sender {
+    NSLog(@"select all");
+    [playlistTableView selectAll:sender];
+}
+
+
+- (IBAction) playlistAdd:(id)sender {
+    [self addPlaylist:nil];
+}
+
+- (IBAction) playlistDelete:(id)sender {
+    NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
+    [self deletePlaylist:index];
+}
+
+- (IBAction) playlistRename:(id)sender {
+    NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
+    SNDPlaylist *playlist = [self.playlists objectAtIndex:index];
+    [self.playlistRenameController showWithInitialName:playlist.title forTab:index];
+}
+
 - (void) setupDefaultEmptyPlaylists {
     NSInteger i;
     for(i = 0; i < 5; i++){

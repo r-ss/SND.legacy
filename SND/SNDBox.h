@@ -48,5 +48,12 @@
 
 - (void) renamePlaylist:(NSInteger)index withName:(NSString *)name;
 
+- (IBAction) playlistSelectAll:(id)sender;
+- (IBAction) playlistAdd:(id)sender;
+- (IBAction) playlistDelete:(id)sender;
+- (IBAction) playlistRename:(id)sender;
+
+
+
 
 @end
