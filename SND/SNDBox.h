@@ -15,7 +15,7 @@
 
 @class SNDPlaylistRenameController;
 
-@interface SNDBox : NSObject <WindowDropDelegate, DockDropDelegate, NSTableViewDataSource> {
+@interface SNDBox : NSObject <WindowDropDelegate, DockDropDelegate, NSTableViewDataSource, NSTableViewDelegate, NSMenuDelegate> {
     IBOutlet NSTableView *playlistTableView;
 }
 
@@ -54,7 +54,5 @@
 - (IBAction) playlistRename:(id)sender;
 
 @property (nonatomic, assign) IBOutlet NSMenu *playlistContextMenu;
-- (IBAction) playlistMenuShowInFinderSelected:(id)sender;
-- (IBAction) playlistMenuDeleteSelected:(id)sender;
 
 @end

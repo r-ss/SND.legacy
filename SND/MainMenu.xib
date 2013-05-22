@@ -833,6 +833,7 @@
 							<string key="NSFrame">{{691, 271}, {30, 21}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:22</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="481279915">
@@ -884,15 +885,7 @@
 				<array class="NSMutableArray" key="NSMenuItems">
 					<object class="NSMenuItem" id="132831429">
 						<reference key="NSMenu" ref="894858053"/>
-						<string key="NSTitle">Show In Finder</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="35465992"/>
-						<reference key="NSMixedImage" ref="502551668"/>
-					</object>
-					<object class="NSMenuItem" id="139086494">
-						<reference key="NSMenu" ref="894858053"/>
-						<string key="NSTitle">Delete</string>
+						<string key="NSTitle">Playlist Context Menu</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="35465992"/>
@@ -1033,6 +1026,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="653615633"/>
+						<reference key="destination" ref="787609694"/>
+					</object>
+					<int key="connectionID">1777</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">durationOutlet</string>
 						<reference key="source" ref="256344463"/>
 						<reference key="destination" ref="834976639"/>
@@ -1168,28 +1169,20 @@
 					<int key="connectionID">1753</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">playlistMenuDeleteSelected:</string>
-						<reference key="source" ref="787609694"/>
-						<reference key="destination" ref="139086494"/>
-					</object>
-					<int key="connectionID">1774</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">playlistMenuShowInFinderSelected:</string>
-						<reference key="source" ref="787609694"/>
-						<reference key="destination" ref="132831429"/>
-					</object>
-					<int key="connectionID">1775</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">playlistContextMenu</string>
 						<reference key="source" ref="787609694"/>
 						<reference key="destination" ref="894858053"/>
 					</object>
 					<int key="connectionID">1776</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="894858053"/>
+						<reference key="destination" ref="787609694"/>
+					</object>
+					<int key="connectionID">1778</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2182,18 +2175,12 @@
 						<reference key="object" ref="894858053"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="132831429"/>
-							<reference ref="139086494"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1755</int>
 						<reference key="object" ref="132831429"/>
-						<reference key="parent" ref="894858053"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1756</int>
-						<reference key="object" ref="139086494"/>
 						<reference key="parent" ref="894858053"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -2307,7 +2294,6 @@
 				<string key="1750.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1754.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1755.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1756.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1759.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1764.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1765.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2391,7 +2377,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1776</int>
+			<int key="maxID">1778</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

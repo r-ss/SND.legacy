@@ -50,14 +50,42 @@ NSString *const PBType = @"playlistRowDragDropType";
     [playlistTableView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
     [playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PBType, NSFilenamesPboardType, @"public.utf8-plain-text", nil]];
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+}
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    NSLog(@"tableViewSelectionDidChange");
+}
+
+- (void)menuWillOpen:(NSMenu *)menu {
+    NSLog(@"menuWillOpen");
+}
+
+- (void)menuNeedsUpdate:(NSMenu *)menu {
+    NSLog(@"menuNeedsUpdate");
+    [self.playlistContextMenu removeAllItems];
+    NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
+    if ([selectedIndexes count] == 1){
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Show In Finder" action:@selector(playlistMenuShowInFinderSelected:) keyEquivalent:@""];
+        [menuItem setEnabled:YES];
+        [menuItem setTarget:self];
+        [self.playlistContextMenu addItem:menuItem];
+        
+        SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:[selectedIndexes lastIndex]];
+        if(![track.artist isEqualToString:@"n/a"]){
+            NSString *itemTitle = [NSString stringWithFormat:@"Search \"%@\" in Google", track.artist];
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:itemTitle action:@selector(playlistMenuSearchItemInGoogle:) keyEquivalent:@""];
+            [menuItem setEnabled:YES];
+            [menuItem setTarget:self];
+            [self.playlistContextMenu addItem:menuItem];
+        }
+    }
     
-    
-    NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"ololo" action:nil keyEquivalent:@""];
-    [menuItem setEnabled:YES];
-    [menuItem setTarget:self];
-    [menuItem setRepresentedObject:[NSNumber numberWithInteger:0]]; // pass playlist index
-    [menuItem setAction:@selector(playlistDeleteMenuItemPressed:)];
-	[self.playlistContextMenu insertItem:menuItem atIndex:1];
+    if ([selectedIndexes count] >= 1){
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete" action:@selector(playlistMenuDeleteSelected:) keyEquivalent:@""];
+        [menuItem setEnabled:YES];
+        [menuItem setTarget:self];
+        [self.playlistContextMenu addItem:menuItem];
+    }
 }
 
 
@@ -70,7 +98,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     return selectedIndexes;
 }
 
-- (IBAction) playlistMenuShowInFinderSelected:(id)sender {
+- (void) playlistMenuShowInFinderSelected:(id)sender {
     NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
     [selectedIndexes enumerateIndexesUsingBlock:^(NSUInteger row, BOOL *stop) {
         SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
@@ -78,7 +106,22 @@ NSString *const PBType = @"playlistRowDragDropType";
     }];
 }
 
-- (IBAction) playlistMenuDeleteSelected:(id)sender {
+- (void) playlistMenuSearchItemInGoogle:(id)sender {
+    NSLog(@"SearchItemInGoogle");
+    NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
+    [selectedIndexes enumerateIndexesUsingBlock:^(NSUInteger row, BOOL *stop) {
+        SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
+        NSString *urlString = [NSString stringWithFormat:@"https://google.com/search?q=%@", CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                                                                                    (CFStringRef)track.artist,
+                                                                                                                                    NULL,
+                                                                                                                                    CFSTR("!$&'()*+,-./:;=?@_~"),
+                                                                                                                                    kCFStringEncodingUTF8)];
+        NSURL *url =[NSURL URLWithString:urlString];
+        [[NSWorkspace sharedWorkspace] openURL:url];
+    }];
+}
+
+- (void) playlistMenuDeleteSelected:(id)sender {
     NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
     NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
     SNDPlaylist *playlist = [self.playlists objectAtIndex:index];
