@@ -45,7 +45,7 @@
     // setting database path
     NSString *homeDir = NSHomeDirectory();
     //NSString *path = [homeDir stringByAppendingString:@"/Music/snd.sqlite"];
-    NSString *path = [homeDir stringByAppendingString:@"/Desktop/snd.sqlite"];
+    NSString *path = [homeDir stringByAppendingString:@"/Music/snd_dev.sqlite"];
     _databaseStoreURL = [NSURL fileURLWithPath:path];
     
     _websiteURL = [NSURL URLWithString:@"http://snd-app.com/"];
