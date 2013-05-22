@@ -30,6 +30,8 @@
 
 @property (nonatomic) SNDTrack *currentTrack;
 
+@property (nonatomic) NSMutableArray *copiedTracksPasteboard;
+
 @property (nonatomic, strong) SNDPlaylistRenameController *playlistRenameController;
 
 

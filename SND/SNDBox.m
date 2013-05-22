@@ -23,6 +23,7 @@
 @synthesize currentPlayingPlaylist = _currentPlayingPlaylist;
 @synthesize tabs = _tabs;
 @synthesize playlistRenameController = _playlistRenameController;
+@synthesize copiedTracksPasteboard = _copiedTracksPasteboard;
 
 NSString *const PBType = @"playlistRowDragDropType";
 
@@ -32,7 +33,8 @@ NSString *const PBType = @"playlistRowDragDropType";
     self.appDelegate.dockDropDelegate = self;    
     self.sndWindow.windowDropDelegate = self;
     
-    self.playlists = [[NSMutableArray alloc] init];   
+    self.playlists = [[NSMutableArray alloc] init];
+    self.copiedTracksPasteboard = [[NSMutableArray alloc] init];
     self.playlistRenameController = [[SNDPlaylistRenameController alloc] init];
     
     // registering in notification center
@@ -74,6 +76,21 @@ NSString *const PBType = @"playlistRowDragDropType";
 - (void)menuNeedsUpdate:(NSMenu *)menu {
     NSLog(@"menuNeedsUpdate");
     [self.playlistContextMenu removeAllItems];
+    
+    if(self.copiedTracksPasteboard.count > 0){
+        NSString *pasteMenyItemTitle = @"";
+        if (self.copiedTracksPasteboard.count > 1) {
+            pasteMenyItemTitle = @"Paste Tracks";
+        } else {
+            pasteMenyItemTitle = @"Paste Track";
+        }
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:pasteMenyItemTitle action:@selector(playlistMenuPasteSelected:) keyEquivalent:@""];
+        [menuItem setEnabled:YES];
+        [menuItem setTarget:self];
+        [self.playlistContextMenu addItem:menuItem];
+    }
+    
+    
     NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
     if ([selectedIndexes count] == 1){
         NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Show In Finder" action:@selector(playlistMenuShowInFinderSelected:) keyEquivalent:@""];
@@ -92,7 +109,18 @@ NSString *const PBType = @"playlistRowDragDropType";
     }
     
     if ([selectedIndexes count] >= 1){
-        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete" action:@selector(playlistMenuDeleteSelected:) keyEquivalent:@""];
+        NSString *copyMenyItemTitle = @"";
+        if ([selectedIndexes count] > 1) {
+            copyMenyItemTitle = @"Copy Tracks";
+        } else {
+            copyMenyItemTitle = @"Copy Track";
+        }
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:copyMenyItemTitle action:@selector(playlistMenuCopySelected:) keyEquivalent:@""];
+        [menuItem setEnabled:YES];
+        [menuItem setTarget:self];
+        [self.playlistContextMenu addItem:menuItem];
+        
+        menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete" action:@selector(playlistMenuDeleteSelected:) keyEquivalent:@""];
         [menuItem setEnabled:YES];
         [menuItem setTarget:self];
         [self.playlistContextMenu addItem:menuItem];
@@ -115,6 +143,31 @@ NSString *const PBType = @"playlistRowDragDropType";
         SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
         [[NSWorkspace sharedWorkspace] selectFile:track.path inFileViewerRootedAtPath:nil];
     }];
+}
+
+- (void) playlistMenuCopySelected:(id)sender {
+    NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
+    [self.copiedTracksPasteboard removeAllObjects];    
+    [selectedIndexes enumerateIndexesUsingBlock:^(NSUInteger row, BOOL *stop) {
+        SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
+        [self.copiedTracksPasteboard addObject:track];
+    }];
+}
+
+- (void) playlistMenuPasteSelected:(id)sender {
+    //NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
+    NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
+    SNDPlaylist *playlist = [self.playlists objectAtIndex:index];
+    for (SNDTrack *copiedTrack in self.copiedTracksPasteboard){
+        SNDTrack *pastedTrack = [[SNDTrack alloc] initWithURL:copiedTrack.url];
+        [playlist.tracks addObject:pastedTrack];
+    }
+    
+    
+    
+    [playlistTableView reloadData];
+    [self updateAllTabsTitles];
+    [self save];
 }
 
 - (void) playlistMenuSearchItemInGoogle:(id)sender {
