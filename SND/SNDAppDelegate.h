@@ -43,6 +43,8 @@
 @property (nonatomic, readonly) NSURL *websiteURL;
 
 
+@property (nonatomic, assign) IBOutlet NSMenu *mainMenu;
+
 - (IBAction) showPreferences:(id)sender;
 
 - (IBAction) openWebsite:(id)sender;

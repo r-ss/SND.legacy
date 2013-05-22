@@ -29,6 +29,7 @@
 @synthesize databaseStoreURL = _databaseStoreURL;
 @synthesize websiteURL = _websiteURL;
 
+@synthesize mainMenu = _mainMenu;
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification

@@ -15,7 +15,7 @@
 
 @class SNDPlaylistRenameController;
 
-@interface SNDBox : NSObject <WindowDropDelegate, DockDropDelegate, NSTableViewDataSource, NSMenuDelegate> {
+@interface SNDBox : NSObject <WindowDropDelegate, DockDropDelegate, NSTableViewDataSource, NSTableViewDelegate, NSMenuDelegate> {
     IBOutlet NSTableView *playlistTableView;
 }
 
@@ -34,6 +34,7 @@
 
 @property (nonatomic, strong) SNDPlaylistRenameController *playlistRenameController;
 
+@property (nonatomic) NSIndexSet *selectedRowsIndexesInSelectedPlaylist;
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender;
 @property (nonatomic, assign) IBOutlet NSSegmentedControl *tabs;
@@ -52,11 +53,12 @@
 
 - (IBAction)addFilesDialog:(id)sender;
 
-- (IBAction) playlistSelectAll:(id)sender;
-- (IBAction) playlistAdd:(id)sender;
-- (IBAction) playlistDelete:(id)sender;
-- (IBAction) playlistRename:(id)sender;
+//- (IBAction) playlistSelectAll:(id)sender; ////
+//- (IBAction) playlistAdd:(id)sender; ////
+//- (IBAction) playlistDelete:(id)sender; ////
+//- (IBAction) playlistRename:(id)sender; /////
 
-@property (nonatomic, assign) IBOutlet NSMenu *playlistContextMenu;
+
+@property (nonatomic, assign) IBOutlet NSMenu *playlistTableViewContextMenu;
 
 @end

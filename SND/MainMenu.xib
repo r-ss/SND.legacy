@@ -211,6 +211,28 @@
 							</array>
 						</object>
 					</object>
+					<object class="NSMenuItem" id="601068384">
+						<reference key="NSMenu" ref="649796088"/>
+						<string key="NSTitle">Playlist</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+						<string key="NSAction">submenuAction:</string>
+						<object class="NSMenu" key="NSSubmenu" id="1042076808">
+							<string key="NSTitle">Playlist</string>
+							<array class="NSMutableArray" key="NSMenuItems">
+								<object class="NSMenuItem" id="862891341">
+									<reference key="NSMenu" ref="1042076808"/>
+									<string key="NSTitle">item</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+							</array>
+						</object>
+					</object>
 					<object class="NSMenuItem" id="713487014">
 						<reference key="NSMenu" ref="649796088"/>
 						<string key="NSTitle">Window</string>
@@ -243,66 +265,6 @@
 								</object>
 							</array>
 							<string key="NSName">_NSWindowsMenu</string>
-						</object>
-					</object>
-					<object class="NSMenuItem" id="601068384">
-						<reference key="NSMenu" ref="649796088"/>
-						<string key="NSTitle">Playlist</string>
-						<string key="NSKeyEquiv"/>
-						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="35465992"/>
-						<reference key="NSMixedImage" ref="502551668"/>
-						<string key="NSAction">submenuAction:</string>
-						<object class="NSMenu" key="NSSubmenu" id="1042076808">
-							<string key="NSTitle">Playlist</string>
-							<array class="NSMutableArray" key="NSMenuItems">
-								<object class="NSMenuItem" id="862891341">
-									<reference key="NSMenu" ref="1042076808"/>
-									<string key="NSTitle">Add</string>
-									<string key="NSKeyEquiv">n</string>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="35465992"/>
-									<reference key="NSMixedImage" ref="502551668"/>
-								</object>
-								<object class="NSMenuItem" id="537968580">
-									<reference key="NSMenu" ref="1042076808"/>
-									<string key="NSTitle">Rename</string>
-									<string key="NSKeyEquiv">r</string>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="35465992"/>
-									<reference key="NSMixedImage" ref="502551668"/>
-								</object>
-								<object class="NSMenuItem" id="500536135">
-									<reference key="NSMenu" ref="1042076808"/>
-									<string key="NSTitle">Delete Playlist</string>
-									<string type="base64-UTF8" key="NSKeyEquiv">CA</string>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="35465992"/>
-									<reference key="NSMixedImage" ref="502551668"/>
-								</object>
-								<object class="NSMenuItem" id="1026191034">
-									<reference key="NSMenu" ref="1042076808"/>
-									<bool key="NSIsDisabled">YES</bool>
-									<bool key="NSIsSeparator">YES</bool>
-									<string key="NSTitle"/>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="35465992"/>
-									<reference key="NSMixedImage" ref="502551668"/>
-								</object>
-								<object class="NSMenuItem" id="407186704">
-									<reference key="NSMenu" ref="1042076808"/>
-									<string key="NSTitle">Select All</string>
-									<string key="NSKeyEquiv">a</string>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="35465992"/>
-									<reference key="NSMixedImage" ref="502551668"/>
-								</object>
-							</array>
 						</object>
 					</object>
 				</array>
@@ -1002,6 +964,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">mainMenu</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="649796088"/>
+					</object>
+					<int key="connectionID">1787</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="653615633"/>
 						<reference key="destination" ref="787609694"/>
@@ -1130,51 +1100,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">playlistSelectAll:</string>
-						<reference key="source" ref="787609694"/>
-						<reference key="destination" ref="407186704"/>
-					</object>
-					<int key="connectionID">1746</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">playlistAdd:</string>
-						<reference key="source" ref="787609694"/>
-						<reference key="destination" ref="862891341"/>
-					</object>
-					<int key="connectionID">1751</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">playlistDelete:</string>
-						<reference key="source" ref="787609694"/>
-						<reference key="destination" ref="500536135"/>
-					</object>
-					<int key="connectionID">1752</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">playlistRename:</string>
-						<reference key="source" ref="787609694"/>
-						<reference key="destination" ref="537968580"/>
-					</object>
-					<int key="connectionID">1753</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">playlistContextMenu</string>
-						<reference key="source" ref="787609694"/>
-						<reference key="destination" ref="894858053"/>
-					</object>
-					<int key="connectionID">1776</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">addFilesDialog:</string>
 						<reference key="source" ref="787609694"/>
 						<reference key="destination" ref="722745758"/>
 					</object>
 					<int key="connectionID">1779</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">playlistTableViewContextMenu</string>
+						<reference key="source" ref="787609694"/>
+						<reference key="destination" ref="894858053"/>
+					</object>
+					<int key="connectionID">1785</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2134,43 +2072,6 @@
 						<reference key="parent" ref="649796088"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1711</int>
-						<reference key="object" ref="1042076808"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="862891341"/>
-							<reference ref="407186704"/>
-							<reference ref="537968580"/>
-							<reference ref="500536135"/>
-							<reference ref="1026191034"/>
-						</array>
-						<reference key="parent" ref="601068384"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1714</int>
-						<reference key="object" ref="407186704"/>
-						<reference key="parent" ref="1042076808"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1747</int>
-						<reference key="object" ref="862891341"/>
-						<reference key="parent" ref="1042076808"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1748</int>
-						<reference key="object" ref="500536135"/>
-						<reference key="parent" ref="1042076808"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1749</int>
-						<reference key="object" ref="537968580"/>
-						<reference key="parent" ref="1042076808"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1750</int>
-						<reference key="object" ref="1026191034"/>
-						<reference key="parent" ref="1042076808"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1754</int>
 						<reference key="object" ref="894858053"/>
 						<array class="NSMutableArray" key="children">
@@ -2212,6 +2113,19 @@
 						<int key="objectID">1623</int>
 						<reference key="object" ref="66080222"/>
 						<reference key="parent" ref="439893737"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1711</int>
+						<reference key="object" ref="1042076808"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="862891341"/>
+						</array>
+						<reference key="parent" ref="601068384"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1747</int>
+						<reference key="object" ref="862891341"/>
+						<reference key="parent" ref="1042076808"/>
 					</object>
 				</array>
 			</object>
@@ -2287,11 +2201,7 @@
 				<string key="1708.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1710.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1711.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1714.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1747.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1748.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1749.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1750.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1754.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1755.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1759.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2377,7 +2287,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1779</int>
+			<int key="maxID">1787</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2407,10 +2317,15 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="mainMenu">NSMenu</string>
 						<string key="sndBox">SNDBox</string>
 						<string key="window">NSWindow</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="mainMenu">
+							<string key="name">mainMenu</string>
+							<string key="candidateClassName">NSMenu</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="sndBox">
 							<string key="name">sndBox</string>
 							<string key="candidateClassName">SNDBox</string>
@@ -2432,11 +2347,6 @@
 						<string key="addFilesDialog:">id</string>
 						<string key="addPlaylist:">NSButton</string>
 						<string key="controlAction:">NSSegmentedControl</string>
-						<string key="doubleClick:">id</string>
-						<string key="playlistAdd:">id</string>
-						<string key="playlistDelete:">id</string>
-						<string key="playlistRename:">id</string>
-						<string key="playlistSelectAll:">id</string>
 						<string key="tabAction:">NSSegmentedControl</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -2452,46 +2362,26 @@
 							<string key="name">controlAction:</string>
 							<string key="candidateClassName">NSSegmentedControl</string>
 						</object>
-						<object class="IBActionInfo" key="doubleClick:">
-							<string key="name">doubleClick:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="playlistAdd:">
-							<string key="name">playlistAdd:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="playlistDelete:">
-							<string key="name">playlistDelete:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="playlistRename:">
-							<string key="name">playlistRename:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="playlistSelectAll:">
-							<string key="name">playlistSelectAll:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="tabAction:">
 							<string key="name">tabAction:</string>
 							<string key="candidateClassName">NSSegmentedControl</string>
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="playlistContextMenu">NSMenu</string>
 						<string key="playlistTableView">NSTableView</string>
+						<string key="playlistTableViewContextMenu">NSMenu</string>
 						<string key="sndPlayer">SNDPlayer</string>
 						<string key="sndWindow">SNDWindow</string>
 						<string key="tabs">NSSegmentedControl</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="playlistContextMenu">
-							<string key="name">playlistContextMenu</string>
-							<string key="candidateClassName">NSMenu</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="playlistTableView">
 							<string key="name">playlistTableView</string>
 							<string key="candidateClassName">NSTableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="playlistTableViewContextMenu">
+							<string key="name">playlistTableViewContextMenu</string>
+							<string key="candidateClassName">NSMenu</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="sndPlayer">
 							<string key="name">sndPlayer</string>

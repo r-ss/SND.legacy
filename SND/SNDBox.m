@@ -24,6 +24,7 @@
 @synthesize tabs = _tabs;
 @synthesize playlistRenameController = _playlistRenameController;
 @synthesize copiedTracksPasteboard = _copiedTracksPasteboard;
+@synthesize selectedRowsIndexesInSelectedPlaylist = _selectedRowsIndexesInSelectedPlaylist;
 
 NSString *const PBType = @"playlistRowDragDropType";
 
@@ -36,6 +37,8 @@ NSString *const PBType = @"playlistRowDragDropType";
     self.playlists = [[NSMutableArray alloc] init];
     self.copiedTracksPasteboard = [[NSMutableArray alloc] init];
     self.playlistRenameController = [[SNDPlaylistRenameController alloc] init];
+    
+    self.selectedRowsIndexesInSelectedPlaylist = [[NSIndexSet alloc] init];
     
     // registering in notification center
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -52,6 +55,79 @@ NSString *const PBType = @"playlistRowDragDropType";
     [playlistTableView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
     [playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PBType, NSFilenamesPboardType, @"public.utf8-plain-text", nil]];
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+
+    [self constructPlaylistMenu];
+}
+
+- (void) constructPlaylistMenu {   
+    NSMenu *playlistMainMenu = [[self.appDelegate.mainMenu itemAtIndex:2] submenu];    
+    NSMenu *playlistMenu = [[NSMenu alloc] initWithTitle:@"Playlist"];
+    [playlistMenu setAutoenablesItems:NO];
+    
+    NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:@selector(playlistRenameMenuItemSelected:) keyEquivalent:@"r"];
+    [menuItem setEnabled:YES];
+    [menuItem setTarget:self];
+    [playlistMenu addItem:menuItem];
+    
+    menuItem = [[NSMenuItem alloc] initWithTitle:@"Add Playlist" action:@selector(playlistAddMenuItemSelected:) keyEquivalent:@"n"];
+    [menuItem setEnabled:YES];
+    [menuItem setTarget:self];
+    [playlistMenu addItem:menuItem];
+    
+    menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete Playlist" action:@selector(playlistDeleteMenuItemSelected:) keyEquivalent:[NSString stringWithFormat:@"%c", 0x08]];
+    [menuItem setEnabled:YES];
+    [menuItem setTarget:self];
+    [playlistMenu addItem:menuItem];
+    
+    menuItem = [[NSMenuItem alloc] initWithTitle:@"Select All" action:@selector(playlistSelectAllMenuItemSelected:) keyEquivalent:@"a"];
+    [menuItem setEnabled:YES];
+    [menuItem setTarget:self];
+    [playlistMenu addItem:menuItem];
+    
+    [playlistMenu addItem:[NSMenuItem separatorItem]];
+    
+    NSString *copyMenuItemTitle = @"";
+    if (self.selectedRowsIndexesInSelectedPlaylist.count > 1) {
+        copyMenuItemTitle = @"Copy Tracks";
+    } else {
+        copyMenuItemTitle = @"Copy Track";
+    }    
+    menuItem = [[NSMenuItem alloc] initWithTitle:copyMenuItemTitle action:@selector(playlistMenuCopySelected:) keyEquivalent:@"c"];
+    (self.selectedRowsIndexesInSelectedPlaylist.count > 0) ? [menuItem setEnabled:YES] : [menuItem setEnabled:NO];
+    [menuItem setTarget:self];
+    [playlistMenu addItem:menuItem];
+    
+    NSString *pasteMenuItemTitle = @"";
+    if (self.copiedTracksPasteboard.count > 1) {
+        pasteMenuItemTitle = @"Paste Tracks";
+    } else {
+        pasteMenuItemTitle = @"Paste Track";
+    }
+    menuItem = [[NSMenuItem alloc] initWithTitle:pasteMenuItemTitle action:@selector(playlistMenuPasteSelected:) keyEquivalent:@"v"];
+    (self.copiedTracksPasteboard.count > 0) ? [menuItem setEnabled:YES] : [menuItem setEnabled:NO];
+    [menuItem setTarget:self];
+    [playlistMenu addItem:menuItem];
+    
+    [playlistMenu addItem:[NSMenuItem separatorItem]];
+    
+    menuItem = [[NSMenuItem alloc] initWithTitle:@"Show In Finder" action:@selector(playlistMenuShowInFinderSelected:) keyEquivalent:@"f"];
+    (self.selectedRowsIndexesInSelectedPlaylist.count == 1) ? [menuItem setEnabled:YES] : [menuItem setEnabled:NO];
+    [menuItem setTarget:self];
+    [playlistMenu addItem:menuItem];
+    
+    NSString *searchInGoogleMenuItemTitle = @"Search in Google";
+    if(self.selectedRowsIndexesInSelectedPlaylist.count == 1){
+        SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:[self.selectedRowsIndexesInSelectedPlaylist lastIndex]];
+        if(![track.artist isEqualToString:@"n/a"]){
+            searchInGoogleMenuItemTitle = [NSString stringWithFormat:@"Search \"%@\" in Google", track.artist];
+        }
+    } 
+    menuItem = [[NSMenuItem alloc] initWithTitle:searchInGoogleMenuItemTitle action:@selector(playlistMenuSearchItemInGoogle:) keyEquivalent:@"g"];
+    (self.selectedRowsIndexesInSelectedPlaylist.count == 1) ? [menuItem setEnabled:YES] : [menuItem setEnabled:NO];
+    [menuItem setTarget:self];
+    [playlistMenu addItem:menuItem];
+    
+    [playlistMainMenu setSubmenu:playlistMenu forItem:[self.appDelegate.mainMenu itemAtIndex:2]];
 }
 
 - (IBAction)addFilesDialog:(id)sender {
@@ -73,9 +149,15 @@ NSString *const PBType = @"playlistRowDragDropType";
     }];
 }
 
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    NSLog(@"> tableViewSelectionDidChange:");    
+    self.selectedRowsIndexesInSelectedPlaylist = [self _indexesToProcessForContextMenu];
+    [self constructPlaylistMenu];
+}
+
 - (void)menuNeedsUpdate:(NSMenu *)menu {
     NSLog(@"menuNeedsUpdate");
-    [self.playlistContextMenu removeAllItems];
+    [self.playlistTableViewContextMenu removeAllItems];
     
     if(self.copiedTracksPasteboard.count > 0){
         NSString *pasteMenyItemTitle = @"";
@@ -84,27 +166,26 @@ NSString *const PBType = @"playlistRowDragDropType";
         } else {
             pasteMenyItemTitle = @"Paste Track";
         }
-        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:pasteMenyItemTitle action:@selector(playlistMenuPasteSelected:) keyEquivalent:@""];
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:pasteMenyItemTitle action:@selector(playlistMenuPasteSelected:) keyEquivalent:@"v"];
         [menuItem setEnabled:YES];
         [menuItem setTarget:self];
-        [self.playlistContextMenu addItem:menuItem];
-    }
-    
+        [self.playlistTableViewContextMenu addItem:menuItem];
+    }    
     
     NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
     if ([selectedIndexes count] == 1){
-        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Show In Finder" action:@selector(playlistMenuShowInFinderSelected:) keyEquivalent:@""];
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Show In Finder" action:@selector(playlistMenuShowInFinderSelected:) keyEquivalent:@"f"];
         [menuItem setEnabled:YES];
         [menuItem setTarget:self];
-        [self.playlistContextMenu addItem:menuItem];
-        
+        [self.playlistTableViewContextMenu addItem:menuItem];
+
         SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:[selectedIndexes lastIndex]];
         if(![track.artist isEqualToString:@"n/a"]){
             NSString *itemTitle = [NSString stringWithFormat:@"Search \"%@\" in Google", track.artist];
-            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:itemTitle action:@selector(playlistMenuSearchItemInGoogle:) keyEquivalent:@""];
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:itemTitle action:@selector(playlistMenuSearchItemInGoogle:) keyEquivalent:@"g"];
             [menuItem setEnabled:YES];
             [menuItem setTarget:self];
-            [self.playlistContextMenu addItem:menuItem];
+            [self.playlistTableViewContextMenu addItem:menuItem];
         }
     }
     
@@ -115,18 +196,17 @@ NSString *const PBType = @"playlistRowDragDropType";
         } else {
             copyMenyItemTitle = @"Copy Track";
         }
-        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:copyMenyItemTitle action:@selector(playlistMenuCopySelected:) keyEquivalent:@""];
+        NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:copyMenyItemTitle action:@selector(playlistMenuCopySelected:) keyEquivalent:@"c"];
         [menuItem setEnabled:YES];
         [menuItem setTarget:self];
-        [self.playlistContextMenu addItem:menuItem];
+        [self.playlistTableViewContextMenu addItem:menuItem];
         
         menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete" action:@selector(playlistMenuDeleteSelected:) keyEquivalent:@""];
         [menuItem setEnabled:YES];
         [menuItem setTarget:self];
-        [self.playlistContextMenu addItem:menuItem];
+        [self.playlistTableViewContextMenu addItem:menuItem];
     }
 }
-
 
 - (NSIndexSet *) _indexesToProcessForContextMenu {
     NSIndexSet *selectedIndexes = [playlistTableView selectedRowIndexes];
@@ -155,7 +235,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) playlistMenuPasteSelected:(id)sender {
-    //NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
     NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
     SNDPlaylist *playlist = [self.playlists objectAtIndex:index];
     for (SNDTrack *copiedTrack in self.copiedTracksPasteboard){
@@ -163,23 +242,16 @@ NSString *const PBType = @"playlistRowDragDropType";
         [playlist.tracks addObject:pastedTrack];
     }
     
-    
-    
     [playlistTableView reloadData];
     [self updateAllTabsTitles];
     [self save];
 }
 
 - (void) playlistMenuSearchItemInGoogle:(id)sender {
-    NSLog(@"SearchItemInGoogle");
     NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
     [selectedIndexes enumerateIndexesUsingBlock:^(NSUInteger row, BOOL *stop) {
         SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
-        NSString *urlString = [NSString stringWithFormat:@"https://google.com/search?q=%@", CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                                                                                    (CFStringRef)track.artist,
-                                                                                                                                    NULL,
-                                                                                                                                    CFSTR("!$&'()*+,-./:;=?@_~"),
-                                                                                                                                    kCFStringEncodingUTF8)];
+        NSString *urlString = [NSString stringWithFormat:@"https://google.com/search?q=%@", CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)track.artist, NULL, CFSTR("!$&'()*+,-./:;=?@_~"), kCFStringEncodingUTF8)];
         NSURL *url =[NSURL URLWithString:urlString];
         [[NSWorkspace sharedWorkspace] openURL:url];
     }];
@@ -195,23 +267,21 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self save];
 }
 
-
-- (IBAction) playlistSelectAll:(id)sender {
+- (void) playlistSelectAllMenuItemSelected:(id)sender {
     NSLog(@"select all");
     [playlistTableView selectAll:sender];
 }
 
-
-- (IBAction) playlistAdd:(id)sender {
+- (void) playlistAddMenuItemSelected:(id)sender {
     [self addPlaylist:nil];
 }
 
-- (IBAction) playlistDelete:(id)sender {
+- (void) playlistDeleteMenuItemSelected:(id)sender {
     NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
     [self deletePlaylist:index];
 }
 
-- (IBAction) playlistRename:(id)sender {
+- (void) playlistRenameMenuItemSelected:(id)sender {
     NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
     SNDPlaylist *playlist = [self.playlists objectAtIndex:index];
     [self.playlistRenameController showWithInitialName:playlist.title forTab:index];
