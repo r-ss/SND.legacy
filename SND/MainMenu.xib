@@ -969,14 +969,6 @@
 					<int key="connectionID">370</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">openDocument:</string>
-						<reference key="source" ref="1014"/>
-						<reference key="destination" ref="722745758"/>
-					</object>
-					<int key="connectionID">374</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">window</string>
 						<reference key="source" ref="976324537"/>
@@ -1175,6 +1167,14 @@
 						<reference key="destination" ref="894858053"/>
 					</object>
 					<int key="connectionID">1776</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addFilesDialog:</string>
+						<reference key="source" ref="787609694"/>
+						<reference key="destination" ref="722745758"/>
+					</object>
+					<int key="connectionID">1779</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2377,7 +2377,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1778</int>
+			<int key="maxID">1779</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2429,18 +2429,21 @@
 					<string key="className">SNDBox</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="addFilesDialog:">id</string>
 						<string key="addPlaylist:">NSButton</string>
 						<string key="controlAction:">NSSegmentedControl</string>
 						<string key="doubleClick:">id</string>
 						<string key="playlistAdd:">id</string>
 						<string key="playlistDelete:">id</string>
-						<string key="playlistMenuDeleteSelected:">id</string>
-						<string key="playlistMenuShowInFinderSelected:">id</string>
 						<string key="playlistRename:">id</string>
 						<string key="playlistSelectAll:">id</string>
 						<string key="tabAction:">NSSegmentedControl</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="addFilesDialog:">
+							<string key="name">addFilesDialog:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="addPlaylist:">
 							<string key="name">addPlaylist:</string>
 							<string key="candidateClassName">NSButton</string>
@@ -2459,14 +2462,6 @@
 						</object>
 						<object class="IBActionInfo" key="playlistDelete:">
 							<string key="name">playlistDelete:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="playlistMenuDeleteSelected:">
-							<string key="name">playlistMenuDeleteSelected:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="playlistMenuShowInFinderSelected:">
-							<string key="name">playlistMenuShowInFinderSelected:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="playlistRename:">

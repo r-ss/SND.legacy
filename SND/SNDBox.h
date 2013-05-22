@@ -15,7 +15,7 @@
 
 @class SNDPlaylistRenameController;
 
-@interface SNDBox : NSObject <WindowDropDelegate, DockDropDelegate, NSTableViewDataSource, NSTableViewDelegate, NSMenuDelegate> {
+@interface SNDBox : NSObject <WindowDropDelegate, DockDropDelegate, NSTableViewDataSource, NSMenuDelegate> {
     IBOutlet NSTableView *playlistTableView;
 }
 
@@ -47,6 +47,8 @@
 - (void) load;
 
 - (void) renamePlaylist:(NSInteger)index withName:(NSString *)name;
+
+- (IBAction)addFilesDialog:(id)sender;
 
 - (IBAction) playlistSelectAll:(id)sender;
 - (IBAction) playlistAdd:(id)sender;

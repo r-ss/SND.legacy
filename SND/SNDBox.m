@@ -52,8 +52,23 @@ NSString *const PBType = @"playlistRowDragDropType";
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
-- (void)tableViewSelectionDidChange:(NSNotification *)notification {
-    NSLog(@"tableViewSelectionDidChange");
+- (IBAction)addFilesDialog:(id)sender {
+    NSOpenPanel* panel;
+    panel = [NSOpenPanel openPanel];
+    [panel setAllowsMultipleSelection:YES];
+    [panel setCanChooseDirectories:YES];
+    [panel setCanChooseFiles:YES];
+    
+    [panel beginSheetModalForWindow:self.appDelegate.window
+    completionHandler:^(NSInteger returnCode) {
+        if (returnCode == NSOKButton) {
+            NSMutableArray *filesPaths = [[NSMutableArray alloc] init];
+            for (NSURL *url in panel.URLs) {
+                [filesPaths addObject:url.path];
+            }
+            [self addFiles:filesPaths atRow:-1];
+        }
+    }];
 }
 
 - (void)menuNeedsUpdate:(NSMenu *)menu {
