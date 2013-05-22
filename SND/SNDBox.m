@@ -47,10 +47,17 @@ NSString *const PBType = @"playlistRowDragDropType";
     
     [playlistTableView setTarget:self];
     [playlistTableView setDoubleAction:@selector(doubleClick:)];
-    //[playlistTableView registerForDraggedTypes:[NSArray arrayWithObject:PBType]];
     [playlistTableView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
     [playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PBType, NSFilenamesPboardType, @"public.utf8-plain-text", nil]];
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+    
+    
+    NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"ololo" action:nil keyEquivalent:@""];
+    [menuItem setEnabled:YES];
+    [menuItem setTarget:self];
+    [menuItem setRepresentedObject:[NSNumber numberWithInteger:0]]; // pass playlist index
+    [menuItem setAction:@selector(playlistDeleteMenuItemPressed:)];
+	[self.playlistContextMenu insertItem:menuItem atIndex:1];
 }
 
 
@@ -66,8 +73,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 - (IBAction) playlistMenuShowInFinderSelected:(id)sender {
     NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
     [selectedIndexes enumerateIndexesUsingBlock:^(NSUInteger row, BOOL *stop) {
-        //NSLog(@"emm %ld", (unsigned long)row);
-        //ATDesktopEntity *entity = [self _entityForRow:row];
         SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
         [[NSWorkspace sharedWorkspace] selectFile:track.path inFileViewerRootedAtPath:nil];
     }];
@@ -75,20 +80,9 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (IBAction) playlistMenuDeleteSelected:(id)sender {
     NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
-    
-    //NSLog(@"delete from table %ld", (unsigned long)row);
-        
     NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
     SNDPlaylist *playlist = [self.playlists objectAtIndex:index];
-    //[playlist.tracks removeObjectAtIndex:row];
-        
-    [playlist.tracks removeObjectsAtIndexes:selectedIndexes];
-        
-        
-    //ATDesktopEntity *entity = [self _entityForRow:row];
-    //SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
-    //[[NSWorkspace sharedWorkspace] selectFile:track.path inFileViewerRootedAtPath:nil];
-   
+    [playlist.tracks removeObjectsAtIndexes:selectedIndexes];   
     [playlistTableView reloadData];
     [self updateAllTabsTitles];
     [self save];

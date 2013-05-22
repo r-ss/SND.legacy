@@ -1183,6 +1183,14 @@
 					</object>
 					<int key="connectionID">1775</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">playlistContextMenu</string>
+						<reference key="source" ref="787609694"/>
+						<reference key="destination" ref="894858053"/>
+					</object>
+					<int key="connectionID">1776</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -2383,7 +2391,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1775</int>
+			<int key="maxID">1776</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2489,12 +2497,17 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="playlistContextMenu">NSMenu</string>
 						<string key="playlistTableView">NSTableView</string>
 						<string key="sndPlayer">SNDPlayer</string>
 						<string key="sndWindow">SNDWindow</string>
 						<string key="tabs">NSSegmentedControl</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="playlistContextMenu">
+							<string key="name">playlistContextMenu</string>
+							<string key="candidateClassName">NSMenu</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="playlistTableView">
 							<string key="name">playlistTableView</string>
 							<string key="candidateClassName">NSTableView</string>

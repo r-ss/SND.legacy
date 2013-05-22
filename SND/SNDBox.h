@@ -53,6 +53,7 @@
 - (IBAction) playlistDelete:(id)sender;
 - (IBAction) playlistRename:(id)sender;
 
+@property (nonatomic, assign) IBOutlet NSMenu *playlistContextMenu;
 - (IBAction) playlistMenuShowInFinderSelected:(id)sender;
 - (IBAction) playlistMenuDeleteSelected:(id)sender;
 
