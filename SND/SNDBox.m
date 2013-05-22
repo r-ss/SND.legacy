@@ -56,10 +56,6 @@ NSString *const PBType = @"playlistRowDragDropType";
     NSLog(@"tableViewSelectionDidChange");
 }
 
-- (void)menuWillOpen:(NSMenu *)menu {
-    NSLog(@"menuWillOpen");
-}
-
 - (void)menuNeedsUpdate:(NSMenu *)menu {
     NSLog(@"menuNeedsUpdate");
     [self.playlistContextMenu removeAllItems];
@@ -669,9 +665,11 @@ NSString *const PBType = @"playlistRowDragDropType";
     [self addFiles:filesURL atRow:-1];
 }
 
-// DockDropDelegate metods
+// DockDropDelegate methods
 - (void) filesDroppedIntoDock:(NSArray *)filesURL {
+    NSInteger lastTrackIndex = [self.currentSelectedPlaylist.tracks count];
     [self addFiles:filesURL atRow:-1];
+    [self playTrack:[self.currentSelectedPlaylist selectItemAtRow:lastTrackIndex]];
 }
 
 - (NSArray *) sortSNDTracksByTrackNumber:(NSArray *)tracks {
