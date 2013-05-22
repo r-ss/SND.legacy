@@ -53,6 +53,48 @@ NSString *const PBType = @"playlistRowDragDropType";
 	[playlistTableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
 
+
+- (NSIndexSet *) _indexesToProcessForContextMenu {
+    NSIndexSet *selectedIndexes = [playlistTableView selectedRowIndexes];
+    // If the clicked row was in the selectedIndexes, then we process all selectedIndexes. Otherwise, we process just the clickedRow
+    if ([playlistTableView clickedRow] != -1 && ![selectedIndexes containsIndex:[playlistTableView clickedRow]]) {
+        selectedIndexes = [NSIndexSet indexSetWithIndex:[playlistTableView clickedRow]];
+    }
+    return selectedIndexes;
+}
+
+- (IBAction) playlistMenuShowInFinderSelected:(id)sender {
+    NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
+    [selectedIndexes enumerateIndexesUsingBlock:^(NSUInteger row, BOOL *stop) {
+        //NSLog(@"emm %ld", (unsigned long)row);
+        //ATDesktopEntity *entity = [self _entityForRow:row];
+        SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
+        [[NSWorkspace sharedWorkspace] selectFile:track.path inFileViewerRootedAtPath:nil];
+    }];
+}
+
+- (IBAction) playlistMenuDeleteSelected:(id)sender {
+    NSIndexSet *selectedIndexes = [self _indexesToProcessForContextMenu];
+    
+    //NSLog(@"delete from table %ld", (unsigned long)row);
+        
+    NSInteger index = [self.playlists indexOfObject:self.currentSelectedPlaylist];
+    SNDPlaylist *playlist = [self.playlists objectAtIndex:index];
+    //[playlist.tracks removeObjectAtIndex:row];
+        
+    [playlist.tracks removeObjectsAtIndexes:selectedIndexes];
+        
+        
+    //ATDesktopEntity *entity = [self _entityForRow:row];
+    //SNDTrack *track = [self.currentSelectedPlaylist.tracks objectAtIndex:row];
+    //[[NSWorkspace sharedWorkspace] selectFile:track.path inFileViewerRootedAtPath:nil];
+   
+    [playlistTableView reloadData];
+    [self updateAllTabsTitles];
+    [self save];
+}
+
+
 - (IBAction) playlistSelectAll:(id)sender {
     NSLog(@"select all");
     [playlistTableView selectAll:sender];
@@ -116,7 +158,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 	[newMenu insertItem:menuItem atIndex:1];
     
     SNDPlaylist *playlistForTab = [self.playlists objectAtIndex:tab];
-    NSString *totalTimeRowText = [NSString stringWithFormat:@"playing time: %@ // %@", playlistForTab.totalPlaylistPlayingTime, playlistForTab.title];
+    NSString *totalTimeRowText = [NSString stringWithFormat:@"playing time: %@", playlistForTab.totalPlaylistPlayingTime];
     menuItem = [[NSMenuItem alloc] initWithTitle:totalTimeRowText action:nil keyEquivalent:@""];
     [menuItem setEnabled:NO];
 	[newMenu insertItem:menuItem atIndex:2];

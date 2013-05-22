@@ -53,7 +53,7 @@
 - (IBAction) playlistDelete:(id)sender;
 - (IBAction) playlistRename:(id)sender;
 
-
-
+- (IBAction) playlistMenuShowInFinderSelected:(id)sender;
+- (IBAction) playlistMenuDeleteSelected:(id)sender;
 
 @end
