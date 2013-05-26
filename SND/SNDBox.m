@@ -150,13 +150,13 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-    NSLog(@"> tableViewSelectionDidChange:");    
+    //NSLog(@"> tableViewSelectionDidChange:");
     self.selectedRowsIndexesInSelectedPlaylist = [self _indexesToProcessForContextMenu];
     [self constructPlaylistMenu];
 }
 
 - (void)menuNeedsUpdate:(NSMenu *)menu {
-    NSLog(@"menuNeedsUpdate");
+    //NSLog(@"menuNeedsUpdate");
     [self.playlistTableViewContextMenu removeAllItems];
     
     if(self.copiedTracksPasteboard.count > 0){
@@ -240,8 +240,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     for (SNDTrack *copiedTrack in self.copiedTracksPasteboard){
         SNDTrack *pastedTrack = [[SNDTrack alloc] initWithURL:copiedTrack.url];
         [playlist.tracks addObject:pastedTrack];
-    }
-    
+    }    
     [playlistTableView reloadData];
     [self updateAllTabsTitles];
     [self save];
@@ -294,7 +293,6 @@ NSString *const PBType = @"playlistRowDragDropType";
         SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:index];
         [self.playlists addObject:playlist];
         [self.tabs setSegmentCount:[self.playlists count]];
-        //[self setupMenuForTab:i];
     }    
     self.currentSelectedPlaylist = [self.playlists objectAtIndex:0];
     [playlistTableView reloadData];
@@ -310,8 +308,6 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) setupMenuForTab:(NSInteger)tab {
-    //NSLog(@"> setup menu for tab");
-    
     NSMenu *newMenu = [[NSMenu alloc] init];
     
     NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Rename" action:nil keyEquivalent:@""];
@@ -403,16 +399,13 @@ NSString *const PBType = @"playlistRowDragDropType";
 - (IBAction) tabAction:(NSSegmentedControl *)sender {
     //NSLog(@"tab click: %ld", sender.selectedSegment);
     if([self.playlists indexOfObject:self.currentSelectedPlaylist] != sender.selectedSegment){
-        //[self.currentPlaylist deactivate];
         self.currentSelectedPlaylist = [self.playlists objectAtIndex:sender.selectedSegment];
         [playlistTableView reloadData];
-        //[self updateAllTabsTitles];
         [playlistTableView deselectAll:self];
         
         SNDPlaylist *playlist = [self.playlists objectAtIndex:sender.selectedSegment];
         [self.tabs setLabel:playlist.title forSegment:sender.selectedSegment];
     }
-    //NSLog(@"%@", self.currentPlaylist.tracks);
 }
 
 - (void) save {
@@ -594,8 +587,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         
     
     [playlistTableView reloadData];
-    [self updateAllTabsTitles];
-    
+    [self updateAllTabsTitles];    
     
     //NSDate *methodFinish = [NSDate date];
     //NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:start];    

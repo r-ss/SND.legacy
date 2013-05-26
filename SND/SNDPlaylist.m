@@ -92,7 +92,6 @@
 }
 
 - (NSString *) totalPlaylistPlayingTime {
-    //NSInteger i;
     NSInteger duration = 0;   
     for (SNDTrack *track in self.tracks){
         duration += track.duration.integerValue;

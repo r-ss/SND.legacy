@@ -36,8 +36,6 @@
     NSString *txt = [NSString stringWithFormat:@"Update is available.\nYour version is %@\nNew version is %@", appDelegate.currentAppVersion, appDelegate.latestVersionXMLLoader.latestVersion];
     [self.updateInfoField setStringValue:txt];
     
-    
-    
     //self.nameField.stringValue = initialText;
     [NSApp beginSheet:self.updateReminderWindow modalForWindow:appDelegate.window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:(__bridge void *)(self)];
 }
