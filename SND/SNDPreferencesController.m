@@ -30,10 +30,21 @@
     return self;
 }
 
+/*
+I'm trying to replace the deprecated
+
+[NSBundle loadNibNamed:@"Subscriptions" owner:self];
+ 
+with this instead (only thing I can find that's equivalent)
+                   
+[[NSBundle mainBundle] loadNibNamed:@"Subscriptions" owner:self topLevelObjects:nil]
+*/
+
 
 - (void) show {    
     if(!self.preferencesWindow)
-        [NSBundle loadNibNamed:@"Preferences" owner:self];
+        // [NSBundle loadNibNamed:@"Preferences" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL quit = [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];
