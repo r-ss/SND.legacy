@@ -27,7 +27,8 @@
 - (void) show {
     SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
     if(!self.updateReminderWindow)
-        [NSBundle loadNibNamed:@"UpdateReminder" owner:self];
+        //[NSBundle loadNibNamed:@"UpdateReminder" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"UpdateReminder" owner:self topLevelObjects:nil];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL remind = [userDefaults boolForKey:@"SNDPreferencesRemindAboutUpdates"];

@@ -86,7 +86,8 @@
 }
 
 - (SNDTrack *) selectItemAtRow:(NSInteger)rowIndex{
-    self.currentTrackIndex = [NSNumber numberWithInt:rowIndex];
+    //self.currentTrackIndex = [NSNumber numberWithInt:rowIndex];
+    self.currentTrackIndex = [NSNumber numberWithInteger:rowIndex];
     [self setCurrentTrackByIndex:self.currentTrackIndex];
     return self.currentTrack;
 }

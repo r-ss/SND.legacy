@@ -30,7 +30,7 @@
     self = [super init];
     if(self){
         self.xmlURL = [[NSURL alloc] initWithString:@"http://snd-app.com/latestversion.xml"];
-        
+        /*
         _latestVersion = [[NSMutableString alloc] initWithCapacity:50];
         _latestStatus = [[NSMutableString alloc] initWithCapacity:50];
         _latestURL = [[NSMutableString alloc] initWithCapacity:100];
@@ -39,6 +39,7 @@
         [request setURL:self.xmlURL];
         NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
         [connection start];
+         */
     }
     return self;
 }
