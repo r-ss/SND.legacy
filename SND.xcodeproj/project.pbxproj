@@ -16,13 +16,16 @@
 		D00AD413171E985A00068DF1 /* SNDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = D00AD412171E985A00068DF1 /* SNDWindow.m */; };
 		D00AD41C171EA03F00068DF1 /* SNDPlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = D00AD41B171EA03F00068DF1 /* SNDPlaylist.m */; };
 		D00AD422171EAECC00068DF1 /* SNDPlaylistView.m in Sources */ = {isa = PBXBuildFile; fileRef = D00AD421171EAECC00068DF1 /* SNDPlaylistView.m */; };
-		D01C8D5F172E6CFE007FB252 /* TagLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01C8D5E172E6CFE007FB252 /* TagLib.framework */; };
-		D01C8D60172E6D21007FB252 /* TagLib.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D01C8D5E172E6CFE007FB252 /* TagLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D00BA6C31AAB36EA0085935E /* TagLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01C8D5E172E6CFE007FB252 /* TagLib.framework */; };
+		D01C8D60172E6D21007FB252 /* TagLib.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D01C8D5E172E6CFE007FB252 /* TagLib.framework */; };
 		D01D488A173F6C5C0036DE6D /* NSString+versionsCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = D01D4889173F6C5C0036DE6D /* NSString+versionsCompare.m */; };
 		D031DA1A1724463B000DD09A /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D031DA191724463B000DD09A /* icon.icns */; };
 		D031DA1D1724493E000DD09A /* SNDModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D031DA1B1724493E000DD09A /* SNDModel.xcdatamodeld */; };
-		D031DA1E17244A76000DD09A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00AD3F5171E974600068DF1 /* CoreData.framework */; };
 		D0363F021738093100EDA811 /* SNDTotalPlaybackTimeCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = D0363F011738093100EDA811 /* SNDTotalPlaybackTimeCounter.m */; };
+		D04EE3AA1AAB3AE800BFD7F2 /* libbass.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D00BA6BB1AAB2FD00085935E /* libbass.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D04EE3AB1AAB3AEA00BFD7F2 /* libbassflac.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D00BA6C01AAB31FA0085935E /* libbassflac.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D04EE3AD1AAB3AFB00BFD7F2 /* libbass.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D00BA6BB1AAB2FD00085935E /* libbass.dylib */; };
+		D04EE3AE1AAB3AFD00BFD7F2 /* libbassflac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D00BA6C01AAB31FA0085935E /* libbassflac.dylib */; };
 		D05B2F8D172FA6250043A774 /* SNDBox.m in Sources */ = {isa = PBXBuildFile; fileRef = D05B2F8C172FA6250043A774 /* SNDBox.m */; };
 		D0976E78173EAC7B004172C0 /* UpdateReminder.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0976E77173EAC7B004172C0 /* UpdateReminder.xib */; };
 		D0976E7B173EAD59004172C0 /* SNDLatestVersionXMLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D0976E7A173EACC5004172C0 /* SNDLatestVersionXMLLoader.m */; };
@@ -42,12 +45,7 @@
 		D09EFBC617265B950039EF03 /* pic_shuffle_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D09EFBB817265B950039EF03 /* pic_shuffle_on@2x.png */; };
 		D09EFBC917265E2C0039EF03 /* pic_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = D09EFBC717265E2C0039EF03 /* pic_pause.png */; };
 		D09EFBCA17265E2C0039EF03 /* pic_pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D09EFBC817265E2C0039EF03 /* pic_pause@2x.png */; };
-		D0A7A3A5172A4CF800B86669 /* FLAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7A3A3172A4CF800B86669 /* FLAC.framework */; };
-		D0A7A3A6172A4CF800B86669 /* OrigamiEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A7A3A4172A4CF800B86669 /* OrigamiEngine.framework */; };
-		D0A7A3AB172A516B00B86669 /* FLAC.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D0A7A3A3172A4CF800B86669 /* FLAC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D0A7A3AC172A516D00B86669 /* OrigamiEngine.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D0A7A3A4172A4CF800B86669 /* OrigamiEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D0B4385F173EA64300CEC846 /* SNDUpdateReminderController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B4385E173EA64300CEC846 /* SNDUpdateReminderController.m */; };
-		D0B5B58B171ED7FD0024A6B8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B5B58A171ED7FD0024A6B8 /* AVFoundation.framework */; };
 		D0C489141726A053009FF7C7 /* SNDPlaybackSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C489131726A053009FF7C7 /* SNDPlaybackSegmentedControl.m */; };
 		D0D13D0B1737AAAA004AF1EB /* SNDPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D13D0A1737AAAA004AF1EB /* SNDPreferencesController.m */; };
 		D0D13D0F1737AB0B004AF1EB /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0D13D0E1737AB0A004AF1EB /* Preferences.xib */; };
@@ -59,14 +57,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		D04EE3A91AAB3AE400BFD7F2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				D04EE3AA1AAB3AE800BFD7F2 /* libbass.dylib in CopyFiles */,
+				D04EE3AB1AAB3AEA00BFD7F2 /* libbassflac.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0A7A3AA172A516500B86669 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D0A7A3AB172A516B00B86669 /* FLAC.framework in CopyFiles */,
-				D0A7A3AC172A516D00B86669 /* OrigamiEngine.framework in CopyFiles */,
 				D01C8D60172E6D21007FB252 /* TagLib.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,9 +85,6 @@
 		D00518A817228E4100D7303E /* SNDPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNDPlayer.m; sourceTree = "<group>"; };
 		D00AD3EE171E974600068DF1 /* SND.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SND.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D00AD3F1171E974600068DF1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		D00AD3F4171E974600068DF1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		D00AD3F5171E974600068DF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		D00AD3F6171E974600068DF1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D00AD3F9171E974600068DF1 /* SND-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SND-Info.plist"; sourceTree = "<group>"; };
 		D00AD3FB171E974600068DF1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D00AD3FD171E974600068DF1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -95,6 +99,9 @@
 		D00AD41D171EA4C600068DF1 /* SNDTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNDTrack.h; sourceTree = "<group>"; };
 		D00AD420171EAECC00068DF1 /* SNDPlaylistView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNDPlaylistView.h; sourceTree = "<group>"; };
 		D00AD421171EAECC00068DF1 /* SNDPlaylistView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNDPlaylistView.m; sourceTree = "<group>"; };
+		D00BA6BA1AAB2D3D0085935E /* bass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bass.h; sourceTree = "<group>"; };
+		D00BA6BB1AAB2FD00085935E /* libbass.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbass.dylib; path = SND/Frameworks/libbass.dylib; sourceTree = "<group>"; };
+		D00BA6C01AAB31FA0085935E /* libbassflac.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbassflac.dylib; path = SND/Frameworks/libbassflac.dylib; sourceTree = "<group>"; };
 		D01C8D5E172E6CFE007FB252 /* TagLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TagLib.framework; path = SND/Frameworks/TagLib.framework; sourceTree = "<group>"; };
 		D01D4888173F6C5B0036DE6D /* NSString+versionsCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+versionsCompare.h"; path = "SND/NSString+versionsCompare.h"; sourceTree = "<group>"; };
 		D01D4889173F6C5C0036DE6D /* NSString+versionsCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+versionsCompare.m"; path = "SND/NSString+versionsCompare.m"; sourceTree = "<group>"; };
@@ -123,11 +130,8 @@
 		D09EFBB817265B950039EF03 /* pic_shuffle_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pic_shuffle_on@2x.png"; sourceTree = "<group>"; };
 		D09EFBC717265E2C0039EF03 /* pic_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_pause.png; sourceTree = "<group>"; };
 		D09EFBC817265E2C0039EF03 /* pic_pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pic_pause@2x.png"; sourceTree = "<group>"; };
-		D0A7A3A3172A4CF800B86669 /* FLAC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAC.framework; path = SND/Frameworks/FLAC.framework; sourceTree = "<group>"; };
-		D0A7A3A4172A4CF800B86669 /* OrigamiEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OrigamiEngine.framework; path = SND/Frameworks/OrigamiEngine.framework; sourceTree = "<group>"; };
 		D0B4385D173EA64300CEC846 /* SNDUpdateReminderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDUpdateReminderController.h; path = SND/SNDUpdateReminderController.h; sourceTree = "<group>"; };
 		D0B4385E173EA64300CEC846 /* SNDUpdateReminderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDUpdateReminderController.m; path = SND/SNDUpdateReminderController.m; sourceTree = "<group>"; };
-		D0B5B58A171ED7FD0024A6B8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = /System/Library/Frameworks/AVFoundation.framework; sourceTree = "<absolute>"; };
 		D0C489121726A053009FF7C7 /* SNDPlaybackSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDPlaybackSegmentedControl.h; path = SND/SNDPlaybackSegmentedControl.h; sourceTree = "<group>"; };
 		D0C489131726A053009FF7C7 /* SNDPlaybackSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDPlaybackSegmentedControl.m; path = SND/SNDPlaybackSegmentedControl.m; sourceTree = "<group>"; };
 		D0D13D091737AAAA004AF1EB /* SNDPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDPreferencesController.h; path = SND/SNDPreferencesController.h; sourceTree = "<group>"; };
@@ -147,12 +151,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0A7A3A5172A4CF800B86669 /* FLAC.framework in Frameworks */,
-				D0A7A3A6172A4CF800B86669 /* OrigamiEngine.framework in Frameworks */,
-				D031DA1E17244A76000DD09A /* CoreData.framework in Frameworks */,
 				D00AD3F2171E974600068DF1 /* Cocoa.framework in Frameworks */,
-				D0B5B58B171ED7FD0024A6B8 /* AVFoundation.framework in Frameworks */,
-				D01C8D5F172E6CFE007FB252 /* TagLib.framework in Frameworks */,
+				D00BA6C31AAB36EA0085935E /* TagLib.framework in Frameworks */,
+				D04EE3AD1AAB3AFB00BFD7F2 /* libbass.dylib in Frameworks */,
+				D04EE3AE1AAB3AFD00BFD7F2 /* libbassflac.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,24 +182,12 @@
 		D00AD3F0171E974600068DF1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D00BA6BB1AAB2FD00085935E /* libbass.dylib */,
+				D00BA6C01AAB31FA0085935E /* libbassflac.dylib */,
 				D01C8D5E172E6CFE007FB252 /* TagLib.framework */,
-				D0A7A3A3172A4CF800B86669 /* FLAC.framework */,
-				D0A7A3A4172A4CF800B86669 /* OrigamiEngine.framework */,
-				D0B5B58A171ED7FD0024A6B8 /* AVFoundation.framework */,
 				D00AD3F1171E974600068DF1 /* Cocoa.framework */,
-				D00AD3F3171E974600068DF1 /* Other Frameworks */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D00AD3F3171E974600068DF1 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D00AD3F4171E974600068DF1 /* AppKit.framework */,
-				D00AD3F5171E974600068DF1 /* CoreData.framework */,
-				D00AD3F6171E974600068DF1 /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		D00AD3F7171E974600068DF1 /* SND */ = {
@@ -213,6 +203,7 @@
 				D00AD41B171EA03F00068DF1 /* SNDPlaylist.m */,
 				D00518A717228E4100D7303E /* SNDPlayer.h */,
 				D00518A817228E4100D7303E /* SNDPlayer.m */,
+				D00BA6BA1AAB2D3D0085935E /* bass.h */,
 				D00AD41D171EA4C600068DF1 /* SNDTrack.h */,
 				D0D5DB72172E74430079AFA6 /* SNDTrack.mm */,
 				D00AD411171E985A00068DF1 /* SNDWindow.h */,
@@ -315,6 +306,7 @@
 				D00AD3EB171E974600068DF1 /* Frameworks */,
 				D00AD3EC171E974600068DF1 /* Resources */,
 				D0A7A3AA172A516500B86669 /* CopyFiles */,
+				D04EE3A91AAB3AE400BFD7F2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -445,6 +437,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "@executable_path/../Frameworks";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
@@ -459,6 +452,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -479,6 +474,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "@executable_path/../Frameworks";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -486,6 +482,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
@@ -494,21 +492,18 @@
 		D00AD40C171E974700068DF1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/SND/Frameworks\"",
-				);
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/SND/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SND/SND-Prefix.pch";
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "SND/SND-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/SND/Frameworks\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/SND/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -518,21 +513,18 @@
 		D00AD40D171E974700068DF1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/SND/Frameworks\"",
-				);
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/SND/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SND/SND-Prefix.pch";
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "SND/SND-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/SND/Frameworks\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/SND/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
