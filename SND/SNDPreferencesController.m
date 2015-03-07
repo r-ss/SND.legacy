@@ -42,9 +42,10 @@ with this instead (only thing I can find that's equivalent)
 
 
 - (void) show {    
-    if(!self.preferencesWindow)
+    //if(!self.preferencesWindow)
         // [NSBundle loadNibNamed:@"Preferences" owner:self];
-        [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
+    //    [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
+    [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL quit = [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];
