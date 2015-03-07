@@ -10,6 +10,8 @@
 	<string>SND</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>35B5C9A93714EC9BEB56BAE809C5551E5C66E52D</key>
+		<string>https://github.com/CocoaLumberjack/CocoaLumberjack.git</string>
 		<key>DBDE3B71A7F25CDFC0EB279F480E57677F32660F</key>
 		<string>https://github.com/r-ss/SND.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>SND.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>35B5C9A93714EC9BEB56BAE809C5551E5C66E52D</key>
+		<string>../../ExternalResourcesSources.no_git/CocoaLumberjack</string>
 		<key>DBDE3B71A7F25CDFC0EB279F480E57677F32660F</key>
 		<string>../..</string>
 	</dict>
@@ -28,6 +32,14 @@
 	<string>DBDE3B71A7F25CDFC0EB279F480E57677F32660F</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>35B5C9A93714EC9BEB56BAE809C5551E5C66E52D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CocoaLumberjack</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

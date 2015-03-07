@@ -13,6 +13,13 @@
 #import "SNDUpdateReminderController.h"
 #import "SNDLatestVersionXMLLoader.h"
 
+
+// CocoaLumberjack Logger - https://github.com/CocoaLumberjack/CocoaLumberjack
+#import <CocoaLumberjack/CocoaLumberjack.h>
+// Debug levels: off, error, warn, info, verbose
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+
+
 @implementation SNDAppDelegate
 
 @synthesize sndBox = _sndBox;
@@ -36,6 +43,21 @@
 {
     //self.sndBox = [[SNDBox alloc] init];
     //self.sndBox.managedObjectContext = self.managedObjectContext;
+    
+   
+    //[DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+    
+    
+    
+
+//    DDLogError(@"This is an error.");
+//    DDLogWarn(@"This is a warning.");
+//    DDLogInfo(@"This is just a message.");
+//    DDLogVerbose(@"This is a verbose message.");
+    
+    
     _currentAppVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     
     //_currentAppVersion = @"0.6.6";
@@ -59,7 +81,7 @@
     
     self.latestVersionXMLLoader = [[SNDLatestVersionXMLLoader alloc] initAndLoad];
 
-    NSLog(@"total playback time: %@", [self.totalPlaybackTimeCounter getTotalPlaybackTime]);
+    DDLogInfo(@"total playback time: %@", [self.totalPlaybackTimeCounter getTotalPlaybackTime]);
     
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -69,7 +91,7 @@
         [self firstStartRoutine];
     
     NSString *latestStartedVersion = (NSString *)[userDefaults objectForKey:@"SNDLatestStartedVersion"];
-    //NSLog(@">>>> versions compare: latest started:%@, current:%@", latestStartedVersion, self.currentAppVersion);
+    //DDLogInfo(@">>>> versions compare: latest started:%@, current:%@", latestStartedVersion, self.currentAppVersion);
     if((latestStartedVersion != nil) && (![latestStartedVersion isEqualToString: self.currentAppVersion])){
         [self updateRoutine];
     }
@@ -78,7 +100,7 @@
     [userDefaults setObject:self.currentAppVersion forKey:@"SNDLatestStartedVersion"];
     [userDefaults synchronize];
 
-    NSLog(@"Latest app start time: %@", latestStartTime);
+    DDLogInfo(@"Latest app start time: %@", latestStartTime);
     
     [self.sndBox load];
 }
@@ -99,7 +121,7 @@
 }
 
 - (void) updateRoutine {
-    NSLog(@"> updateRoutine");
+    DDLogInfo(@"> updateRoutine");
     
     // removing database sqlite file for prevent CoreData entities conflicts
     NSError *error = nil;
@@ -107,7 +129,7 @@
     if ([fm fileExistsAtPath:self.databaseStoreURL.path]) {
         [fm removeItemAtPath:self.databaseStoreURL.path error:&error];
         if(error)
-            NSLog(@"Can't remove database file: %@",error);
+            DDLogInfo(@"Can't remove database file: %@",error);
     }
 }
 
@@ -119,7 +141,7 @@
     [self openWebsite];
 }
 - (void) openWebsite {
-    NSLog(@"Opening snd-app.com");
+    DDLogInfo(@"Opening snd-app.com");
     [[NSWorkspace sharedWorkspace] openURL:self.websiteURL];
 }
 
@@ -139,7 +161,7 @@
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
     if(![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.databaseStoreURL options:nil error:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        DDLogInfo(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     return _persistentStoreCoordinator;
@@ -172,7 +194,7 @@
 }
 
 - (void) application:(NSApplication *)sender openFiles:(NSArray *)files {
-    //NSLog(@"BB %@", filenames);
+    //DDLogInfo(@"BB %@", filenames);
     [self.dockDropDelegate filesDroppedIntoDock:files];
 }
 

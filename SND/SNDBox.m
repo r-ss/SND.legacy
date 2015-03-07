@@ -15,6 +15,11 @@
 
 #import "SNDPlaylistRenameController.h"
 
+// CocoaLumberjack Logger - https://github.com/CocoaLumberjack/CocoaLumberjack
+#import <CocoaLumberjack/CocoaLumberjack.h>
+// Debug levels: off, error, warn, info, verbose
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+
 @implementation SNDBox
 
 @synthesize playlists = _playlists;
@@ -150,13 +155,13 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-    //NSLog(@"> tableViewSelectionDidChange:");
+    //DDLogInfo(@"> tableViewSelectionDidChange:");
     self.selectedRowsIndexesInSelectedPlaylist = [self _indexesToProcessForContextMenu];
     [self constructPlaylistMenu];
 }
 
 - (void)menuNeedsUpdate:(NSMenu *)menu {
-    //NSLog(@"menuNeedsUpdate");
+    //DDLogInfo(@"menuNeedsUpdate");
     [self.playlistTableViewContextMenu removeAllItems];
     
     if(self.copiedTracksPasteboard.count > 0){
@@ -267,7 +272,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) playlistSelectAllMenuItemSelected:(id)sender {
-    NSLog(@"select all");
+    DDLogInfo(@"select all");
     [playlistTableView selectAll:sender];
 }
 
@@ -287,7 +292,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) setupDefaultEmptyPlaylists {
-    NSLog(@">setupDefaultEmptyPlaylists");
+    DDLogInfo(@">setupDefaultEmptyPlaylists");
     NSInteger i;
     for(i = 0; i < 3; i++){
         NSNumber *index = [NSNumber numberWithInteger:i];
@@ -301,7 +306,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) renamePlaylist:(NSInteger)index withName:(NSString *)name {
-    NSLog(@"rename to: %@", name);
+    DDLogInfo(@"rename to: %@", name);
     SNDPlaylist *playlist = [self.playlists objectAtIndex:index];
     playlist.manualEnteredName = name;
     [self updateAllTabsTitles];
@@ -335,7 +340,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (IBAction) addPlaylist:(NSButton *)sender {
-    NSLog(@"> addPlaylist");
+    DDLogInfo(@"> addPlaylist");
     NSNumber *newPlaylistIndex = [NSNumber numberWithInteger:[self.playlists count]];
     SNDPlaylist *playlist = [[SNDPlaylist alloc] initWithIndex:newPlaylistIndex];
     [self.playlists addObject:playlist];    
@@ -347,15 +352,15 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) playlistRenameMenuItemPressed:(id)sender {
-    NSLog(@"> playlistRenameMenuItemPressed %@", [sender representedObject]);
+    DDLogInfo(@"> playlistRenameMenuItemPressed %@", [sender representedObject]);
     NSNumber *tab = [sender representedObject];
-    NSLog(@"> tab id %ld", (long)tab.integerValue);
+    DDLogInfo(@"> tab id %ld", (long)tab.integerValue);
     SNDPlaylist *playlist = [self.playlists objectAtIndex:tab.integerValue];
     [self.playlistRenameController showWithInitialName:playlist.title forTab:tab.integerValue];
 }
 
 - (void) playlistDeleteMenuItemPressed:(id)sender {
-    NSLog(@"> playlistDeleteMenuItemPressed %@", [sender representedObject]);
+    DDLogInfo(@"> playlistDeleteMenuItemPressed %@", [sender representedObject]);
     NSNumber *index = [sender representedObject];
     [self deletePlaylist:index.integerValue];
 }
@@ -392,7 +397,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) updateAllTabsTitles {
-    NSLog(@">updateAllTabsTitles");
+    DDLogInfo(@">updateAllTabsTitles");
     NSInteger i;
     for (i = 0; i < [self.playlists count]; i++){
         [self updateTabTitle:i];
@@ -406,7 +411,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (IBAction) tabAction:(NSSegmentedControl *)sender {
-    //NSLog(@"tab click: %ld", sender.selectedSegment);
+    //DDLogInfo(@"tab click: %ld", sender.selectedSegment);
     if([self.playlists indexOfObject:self.currentSelectedPlaylist] != sender.selectedSegment){
         self.currentSelectedPlaylist = [self.playlists objectAtIndex:sender.selectedSegment];
         [playlistTableView reloadData];
@@ -418,7 +423,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 }
 
 - (void) save {
-    NSLog(@"> save");
+    DDLogInfo(@"> save");
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
     // loading playlists
@@ -455,7 +460,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         playlistMO = [NSEntityDescription insertNewObjectForEntityForName:@"Playlist" inManagedObjectContext:self.appDelegate.managedObjectContext];
         [playlistMO setValue:[NSNumber numberWithInteger:playlist.index.integerValue] forKey:@"index"];
         [playlistMO setValue:playlist.manualEnteredName forKey:@"manualName"];
-        NSLog(@"Savind playlist %@", [NSNumber numberWithInteger:playlist.index.integerValue]);
+        DDLogInfo(@"Savind playlist %@", [NSNumber numberWithInteger:playlist.index.integerValue]);
     }
     
     // saving tracks    
@@ -478,13 +483,16 @@ NSString *const PBType = @"playlistRowDragDropType";
       
     NSError *err = nil;
     if(![self.appDelegate.managedObjectContext save:&err]){
-        NSLog(@"error %@, %@", err, [err userInfo]);
+        DDLogInfo(@"error %@, %@", err, [err userInfo]);
         abort();
     }
 }
 
 - (void) load {
-    NSLog(@"> load");
+    DDLogInfo(@"> load");
+    
+    //DDLogInfo(@"This is just a message.");
+    
     //NSDate *start = [NSDate date];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
@@ -557,7 +565,7 @@ NSString *const PBType = @"playlistRowDragDropType";
             NSDictionary *finalDict = [dict copy];
             dict = nil;
             SNDTrack *t = [[SNDTrack alloc] initWithSavedData:finalDict];
-            NSLog(@"Loaded track: %@", t);
+            //DDLogInfo(@"Loaded track: %@", t);
             
             
             //SNDTrack *t = [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:[trackMO valueForKey:@"path"]]];
@@ -566,8 +574,8 @@ NSString *const PBType = @"playlistRowDragDropType";
             [rawTracks addObject:[[NSArray alloc] initWithObjects:[NSNumber numberWithInt:memberOfPlaylist],[NSNumber numberWithInt:rowIndex],t, nil ]];
         }
         
-        NSLog(@"found %ld raw tracks", [rawTracks count]);
-        NSLog(@"have %ld playlsts", [self.playlists count]);
+        //DDLogInfo(@"found %ld raw tracks", [rawTracks count]);
+        //DDLogInfo(@"have %ld playlsts", [self.playlists count]);
 
         for (i = 0; i < [self.playlists count]; i++) {
             NSMutableArray *unsortedRows = [[NSMutableArray alloc] init];
@@ -575,10 +583,10 @@ NSString *const PBType = @"playlistRowDragDropType";
             for (k = 0; k < [rawTracks count]; k++) {
                 NSArray *rawTrack = [rawTracks objectAtIndex:k];
                 NSNumber *memberOf = [rawTrack objectAtIndex:0];
-                //NSLog(rawTrack);
+                //DDLogInfo(rawTrack);
                 if(memberOf.intValue == i){
-                    NSLog(@"HERE");
-                    NSLog(@"%@", [rawTracks objectAtIndex:k]);
+                    //DDLogInfo(@"HERE");
+                    //DDLogInfo(@"%@", [rawTracks objectAtIndex:k]);
                     [unsortedRows addObject:[rawTracks objectAtIndex:k]];
                 }
             }
@@ -642,7 +650,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     
     //NSDate *methodFinish = [NSDate date];
     //NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:start];    
-    //NSLog(@"Execution Time: %f", executionTime);
+    //DDLogInfo(@"Execution Time: %f", executionTime);
 }
 
 - (NSInteger) numberOfRowsInTableView:(NSTableView *)tableView {
@@ -703,7 +711,7 @@ NSString *const PBType = @"playlistRowDragDropType";
     NSPasteboard* zPBoard = [info draggingPasteboard];
 	NSArray *supportedTypes = [NSArray arrayWithObjects: PBType, NSFilenamesPboardType, @"public.utf8-plain-text", NSPasteboardTypeString, nil];
 	NSString * zStrAvailableType = [zPBoard availableTypeFromArray:supportedTypes];
-	//NSLog(@"> acceptDrop zStrAvailableType=%@",zStrAvailableType);
+	//DDLogInfo(@"> acceptDrop zStrAvailableType=%@",zStrAvailableType);
 	
 	if ([zStrAvailableType compare:PBType] == NSOrderedSame ) {
         
@@ -746,7 +754,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 	}
 	
 	if ([zStrAvailableType compare:@"public.utf8-plain-text"] == NSOrderedSame ) {
-		NSLog(@"public.utf8-plain-text");
+		DDLogInfo(@"public.utf8-plain-text");
 		NSData* zStringData = [zPBoard dataForType:@"public.utf8-plain-text"];
 		NSString * aStr = [[NSString alloc] initWithData:zStringData encoding:NSASCIIStringEncoding];
 		SNDTrack * zDataObj	= [[SNDTrack alloc] initWithURL:[[NSURL alloc] initFileURLWithPath:aStr]];
@@ -760,7 +768,7 @@ NSString *const PBType = @"playlistRowDragDropType";
 	}
 	
 	if ([zStrAvailableType compare:NSFilenamesPboardType] == NSOrderedSame ) {
-		NSLog(@"NSFilenamesPboardType");
+		DDLogInfo(@"NSFilenamesPboardType");
 		
 		NSArray* zPListFilesAry = [zPBoard propertyListForType:NSFilenamesPboardType];
         [self addFiles:zPListFilesAry atRow:pRow];
@@ -875,7 +883,7 @@ NSString *const PBType = @"playlistRowDragDropType";
         
         BOOL isDir;
         if([[NSFileManager defaultManager] fileExistsAtPath: aStrPath isDirectory:&isDir] && isDir){
-            //NSLog(@"is a directory");
+            //DDLogInfo(@"is a directory");
             /*
             search for subdirs
             sort subdirs alphabetical
@@ -975,9 +983,9 @@ NSString *const PBType = @"playlistRowDragDropType";
 
 - (void)commonInformationalAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)info {
 //	if (returnCode == NSAlertFirstButtonReturn) {
-//        NSLog(@"1");
+//        DDLogInfo(@"1");
 //    } else {
-//        NSLog(@"2");
+//        DDLogInfo(@"2");
 //	}
 }
 

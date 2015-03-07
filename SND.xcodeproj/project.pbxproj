@@ -19,6 +19,8 @@
 		D00BA6C31AAB36EA0085935E /* TagLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01C8D5E172E6CFE007FB252 /* TagLib.framework */; };
 		D01C8D60172E6D21007FB252 /* TagLib.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D01C8D5E172E6CFE007FB252 /* TagLib.framework */; };
 		D01D488A173F6C5C0036DE6D /* NSString+versionsCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = D01D4889173F6C5C0036DE6D /* NSString+versionsCompare.m */; };
+		D02BAEF01AAB4E700040919D /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D02BAEEF1AAB4E700040919D /* CocoaLumberjack.framework */; };
+		D02BAEF11AAB4E7C0040919D /* CocoaLumberjack.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D02BAEEF1AAB4E700040919D /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D031DA1A1724463B000DD09A /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D031DA191724463B000DD09A /* icon.icns */; };
 		D031DA1D1724493E000DD09A /* SNDModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D031DA1B1724493E000DD09A /* SNDModel.xcdatamodeld */; };
 		D0363F021738093100EDA811 /* SNDTotalPlaybackTimeCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = D0363F011738093100EDA811 /* SNDTotalPlaybackTimeCounter.m */; };
@@ -75,6 +77,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				D01C8D60172E6D21007FB252 /* TagLib.framework in CopyFiles */,
+				D02BAEF11AAB4E7C0040919D /* CocoaLumberjack.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +108,7 @@
 		D01C8D5E172E6CFE007FB252 /* TagLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TagLib.framework; path = SND/Frameworks/TagLib.framework; sourceTree = "<group>"; };
 		D01D4888173F6C5B0036DE6D /* NSString+versionsCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+versionsCompare.h"; path = "SND/NSString+versionsCompare.h"; sourceTree = "<group>"; };
 		D01D4889173F6C5C0036DE6D /* NSString+versionsCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+versionsCompare.m"; path = "SND/NSString+versionsCompare.m"; sourceTree = "<group>"; };
+		D02BAEEF1AAB4E700040919D /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = SND/Frameworks/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		D031DA191724463B000DD09A /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		D031DA1C1724493E000DD09A /* SNDModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SNDModel.xcdatamodel; sourceTree = "<group>"; };
 		D0363F001738093100EDA811 /* SNDTotalPlaybackTimeCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDTotalPlaybackTimeCounter.h; path = SND/SNDTotalPlaybackTimeCounter.h; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 			files = (
 				D00AD3F2171E974600068DF1 /* Cocoa.framework in Frameworks */,
 				D00BA6C31AAB36EA0085935E /* TagLib.framework in Frameworks */,
+				D02BAEF01AAB4E700040919D /* CocoaLumberjack.framework in Frameworks */,
 				D04EE3AD1AAB3AFB00BFD7F2 /* libbass.dylib in Frameworks */,
 				D04EE3AE1AAB3AFD00BFD7F2 /* libbassflac.dylib in Frameworks */,
 			);
@@ -182,6 +187,7 @@
 		D00AD3F0171E974600068DF1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D02BAEEF1AAB4E700040919D /* CocoaLumberjack.framework */,
 				D00BA6BB1AAB2FD00085935E /* libbass.dylib */,
 				D00BA6C01AAB31FA0085935E /* libbassflac.dylib */,
 				D01C8D5E172E6CFE007FB252 /* TagLib.framework */,
@@ -203,7 +209,6 @@
 				D00AD41B171EA03F00068DF1 /* SNDPlaylist.m */,
 				D00518A717228E4100D7303E /* SNDPlayer.h */,
 				D00518A817228E4100D7303E /* SNDPlayer.m */,
-				D00BA6BA1AAB2D3D0085935E /* bass.h */,
 				D00AD41D171EA4C600068DF1 /* SNDTrack.h */,
 				D0D5DB72172E74430079AFA6 /* SNDTrack.mm */,
 				D00AD411171E985A00068DF1 /* SNDWindow.h */,
@@ -219,6 +224,7 @@
 		D00AD3F8171E974600068DF1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D00BA6BA1AAB2D3D0085935E /* bass.h */,
 				D00AD3F9171E974600068DF1 /* SND-Info.plist */,
 				D00AD3FA171E974600068DF1 /* InfoPlist.strings */,
 				D00AD3FD171E974600068DF1 /* main.m */,
@@ -495,17 +501,21 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/SND/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/SND/Frameworks",
+					"$(PROJECT_DIR)/SND/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SND/SND-Prefix.pch";
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "SND/SND-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/SND/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -516,17 +526,21 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch *.xcode* (*) .DS_Store CVS .svn .git .hg";
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/SND/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/SND/Frameworks",
+					"$(PROJECT_DIR)/SND/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SND/SND-Prefix.pch";
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "SND/SND-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/SND/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -11,7 +11,16 @@
 
 #include "bass.h"
 
-WindowPtr win=NULL;
+WindowPtr win=NULL; // Bass's shit
+HSTREAM stream; // Bass's shit
+
+
+// CocoaLumberjack Logger - https://github.com/CocoaLumberjack/CocoaLumberjack
+#import <CocoaLumberjack/CocoaLumberjack.h>
+// Debug levels: off, error, warn, info, verbose
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+
+
 
 // private part
 //@interface SNDPlayer() <ORGMEngineDelegate>
@@ -25,7 +34,8 @@ WindowPtr win=NULL;
 @synthesize acceptableFileExtensions = _acceptableFileExtensions;
 @synthesize isPlaying = _isPlaying;
 @synthesize volume = _volume;
-@synthesize position, duration;
+@synthesize position = _position;
+@synthesize duration = _duration;
 @synthesize timer = _timer; // private
 //@synthesize player = _player; // private
 
@@ -42,23 +52,39 @@ WindowPtr win=NULL;
     _acceptableFileExtensions = [[NSArray alloc] initWithObjects:@"mp3", @"flac", @"wav", nil];
     
     _volume = [NSNumber numberWithDouble:100];
-    self.isPlaying = NO;
+    _isPlaying = NO;
 
     // Restoring volume from user defaults
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    //NSLog(@"Volume found: %@", [NSNumber numberWithDouble:[userDefaults doubleForKey:@"SNDVolume"]]);
+    //DDLogInfo(@"Volume found: %@", [NSNumber numberWithDouble:[userDefaults doubleForKey:@"SNDVolume"]]);
     [self setVolume:[NSNumber numberWithDouble:[userDefaults doubleForKey:@"SNDVolume"]]];
     [volumeSlider setIntegerValue:self.volume.doubleValue];
     
-    NSLog(@"NUUUUU");
+    
+    if (!BASS_PluginLoad("libbassflac.dylib", 0)) {
+        DDLogError(@"Can't load BASS FLAC Plugin libbassflac.dylib");
+    }
+
+    [self initBASS];
+    
+    //DDLogInfo(@"NUUUUU");
     //[self rawTest];
 
 }
 
-- (void) initOGRMEngine {
+- (void) initBASS {
 //    self.player = [[ORGMEngine alloc] init];
 //    self.player.delegate = self;
 //    [self.player setVolume:self.volume.doubleValue];
+    if (HIWORD(BASS_GetVersion())!=BASSVERSION) {
+        DDLogError(@"An incorrect version of BASS was loaded");
+        //return 0;
+    }
+    if (!BASS_Init(-1,44100,0,win,NULL)) {
+        DDLogError(@"Can't initialize BASS device");
+        //return 0;
+    }
+    
 }
 
 /*
@@ -107,12 +133,11 @@ Error codes list
 
 
 - (void) rawTest {
-    BASS_PluginLoad("libbassflac.dylib", 0);
     
     //BASS_init(-1 ,44100,0,0,NULL ) ;
     
     //Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero);
-    //NSLog(@"%u", system("pwd"));
+    //DDLogInfo(@"%u", system("pwd"));
     //char filename[] = "song.mp3";
     //char filename[] = "/Users/ress/Desktop/song.mp3";
     char filename[] = "/Users/ress/Desktop/flac.flac";
@@ -121,24 +146,17 @@ Error codes list
     
     //char file[256];
     //FSRefMakePath(&fr,(BYTE*)file,sizeof(file));
-    if (HIWORD(BASS_GetVersion())!=BASSVERSION) {
-        NSLog(@"An incorrect version of BASS was loaded");
-        //return 0;
-    }
-    if (!BASS_Init(-1,44100,0,win,NULL)) {
-        NSLog(@"Can't initialize device");
-        //return 0;
-    }
+    
     
     HSTREAM stream;
     stream = BASS_StreamCreateFile(FALSE, filename, 0, 0, 0);
     //stream =BASS_StreamCreateURL(filename, 0, 0, NULL, 0);
     if (!stream) {
-        NSLog(@"no stream");
+        DDLogInfo(@"no stream");
     }
     
     //int BASS_ErrorGetCode();
-    NSLog(@"error %u", BASS_ErrorGetCode());
+    DDLogError(@"error %u", BASS_ErrorGetCode());
     
     BASS_ChannelPlay(stream,TRUE);
 
@@ -149,47 +167,86 @@ Error codes list
 // overriding synthesized setVolume method
 - (void) setVolume:(NSNumber *)volume {
     _volume = volume;
+    
+    float vol = self.volume.floatValue / 100;
+    DDLogInfo(@"Vol: %f", vol);
+    BASS_ChannelSetAttribute(stream, BASS_ATTRIB_VOL, vol);
+
 //    [self.player setVolume:_volume.doubleValue];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setDouble:_volume.doubleValue forKey:@"SNDVolume"];
     [userDefaults synchronize];
 }
 
-
 - (IBAction)volumeSlider:(NSSlider *)sender {
-    [self setVolume:[NSNumber numberWithDouble:[sender doubleValue]]];
+    DDLogInfo(@"> volumeSlider");
+    [self setVolume:[NSNumber numberWithInteger:[sender integerValue]]];
 }
 
 - (IBAction)positionSlider:(NSSlider *)sender {
     if(self.isPlaying){
 //        [self.player seekToTime:[sender doubleValue]];
+        QWORD pos = [sender doubleValue];
+        BASS_ChannelSetPosition(stream, pos, BASS_POS_BYTE);
+        
+        
     } else {
         [positionSlider setDoubleValue:self.position.doubleValue];
     }
 }
 
 - (void) updatePositionViews {
-    [durationOutlet setStringValue:[NSString stringWithString:[[NSNumber alloc] hhmmssFromSeconds:self.position]]];
-    [positionSlider setDoubleValue:self.position.doubleValue];    
+    //[durationOutlet setStringValue:[NSString stringWithString:[[NSNumber alloc] hhmmssFromSeconds:self.position]]];
+    
+    double seconds = BASS_ChannelBytes2Seconds(stream, _position.doubleValue);
+    [durationOutlet setStringValue:[NSString stringWithString:[[NSNumber alloc] hhmmssFromSeconds: [NSNumber numberWithDouble: seconds]]]];
+    
+    [positionSlider setDoubleValue:self.position.doubleValue];
 }
 
 -(void) timerTick: (NSTimer *)timer {
 //    self.position = [NSNumber numberWithDouble:self.player.amountPlayed];
+    QWORD pos = BASS_ChannelGetPosition(stream, BASS_POS_BYTE);
+    _position = [NSNumber numberWithDouble: pos];
     [self updatePositionViews];
 }
 
 - (void) playTrack:(SNDTrack *)track {
     if(track){
-//        if(!self.player)
-//            [self initOGRMEngine];
+        DDLogInfo(@"track path: %@", track.path);
         
-//        if(self.player.currentState == ORGMEngineStatePlaying){
-//            //NSLog(@"A");
-//            [self.player setNextUrl:track.url withDataFlush:YES];
-//        } else {
-//            //NSLog(@"B");
-//            [self.player playUrl:track.url];            
-//        }
+        const char *filename =[track.path UTF8String];
+        
+        
+        DDLogInfo(@"Channel status: %u", BASS_ChannelIsActive(stream));
+        if (BASS_ChannelIsActive(stream) == 1 ) {
+            DDLogInfo(@"Channel is active");
+            BASS_ChannelStop(stream);
+            BASS_StreamFree(stream);
+        }
+        
+        
+        stream = BASS_StreamCreateFile(FALSE, filename, 0, 0, 0);
+        //stream =BASS_StreamCreateURL(filename, 0, 0, NULL, 0);
+        if (!stream) {
+            DDLogError(@"no stream");
+        }
+        
+        int error_code = BASS_ErrorGetCode();
+        if(error_code != 0){
+            DDLogError(@"BASS Error %u", error_code);
+        }
+        
+        BASS_ChannelPlay(stream,TRUE);
+        
+        error_code = BASS_ErrorGetCode();
+        if(error_code != 0){
+            DDLogError(@"BASS Error %u", error_code);
+        }
+        
+        //_isPlaying = YES;
+        [self bassChangedState];
+        
     }
 }
 
@@ -199,19 +256,114 @@ Error codes list
 //    } else if (self.player.currentState == ORGMEngineStatePaused) {
 //        [self.player resume];
 //    }
+    if(self.isPlaying){
+//        DDLogInfo(@"Channel status: %u", BASS_ChannelIsActive(stream));
+        DDLogInfo(@"PAUSING");
+        BASS_ChannelPause(stream);
+        [self bassChangedState];
+    } else {
+        DDLogInfo(@"RESUME");
+        BASS_ChannelPlay(stream, FALSE);
+        [self bassChangedState];
+    }
+    
+}
+
+
+- (void) bassChangedState {
+//    DDLogInfo(@"> checkBASSState");
+    int state = BASS_ChannelIsActive(stream);
+    
+//    0 - BASS_ACTIVE_STOPPED   The channel is not active, or handle is not a valid channel.
+//    1 - BASS_ACTIVE_PLAYING   The channel is playing (or recording).
+//    2 - BASS_ACTIVE_PAUSED    The channel is paused.
+//    3 - BASS_ACTIVE_STALLED   Playback of the stream has been stalled due to a lack of sample data.
+//                              The playback will automatically resume once there is sufficient data to do so.
+
+    switch (state) {
+        case 0: {
+            DDLogInfo(@">>> BASS Stopped");
+            [self.timer invalidate];
+            _isPlaying = NO;
+            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+            [nc postNotificationName:@"SND.Notification.PlayerStoppedPlaying" object:self];
+            break;
+        }
+        case 1: {
+            DDLogInfo(@">>> BASS Playing");
+            //self.duration = [NSNumber numberWithDouble:self.player.trackTime];
+            
+            DDLogWarn(@">>> Channel Length %llu", BASS_ChannelGetLength(stream, BASS_POS_BYTE));
+            
+            //DWORD mode = "BASS_POS_BYTE";
+            QWORD length_bytes = BASS_ChannelGetLength(stream, BASS_POS_BYTE);
+//            int error_code = BASS_ErrorGetCode();
+//            DDLogError(@"BASS Error %u", error_code);
+            float length_seconds = BASS_ChannelBytes2Seconds(stream, length_bytes);
+            DDLogInfo(@"Length %f", length_seconds);
+            
+            
+            _duration = [NSNumber numberWithDouble:length_bytes];
+            
+            /*
+            
+            Getting the elapsed and remaining time:
+            // length in bytes
+            long len = Bass.BASS_ChannelGetLength(channel);
+            // position in bytes
+            long pos = Bass.BASS_ChannelGetPosition(channel);
+            // the total time length
+            double totaltime = Bass.BASS_ChannelBytes2Seconds(channel, len);
+            // the elapsed time length
+            double elapsedtime = Bass.BASS_ChannelBytes2Seconds(channel, pos);
+            double remainingtime = totaltime - elapsedtime;
+             */
+            
+            
+            
+            [positionSlider setMaxValue:self.duration.doubleValue];
+            
+            [self setVolume: self.volume];
+            
+            
+            
+            [self updatePositionViews];
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
+            _isPlaying = YES;
+            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+            [nc postNotificationName:@"SND.Notification.PlayerStartedPlaying" object:self];
+            break;
+        }
+        case 2:case 3 : {
+            DDLogInfo(@">>> BASS Paused (or stalled)");
+            [self.timer invalidate];
+            _isPlaying = NO;
+            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+            [nc postNotificationName:@"SND.Notification.PlayerPausedPlaying" object:self];
+            break;
+        }
+//        case 3: {
+//            DDLogError(@">>> BASS STALLED");
+//            _isPlaying = NO;
+//            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+//            [nc postNotificationName:@"SND.Notification.PlayerPausedPlaying" object:self];
+//            break;
+//        }
+            
+    }
 }
 
 //#pragma mark - ORGMEngineDelegate
 //- (NSURL *) engineExpectsNextUrl:(ORGMEngine *)engine {
 //    SNDTrack *nextTrack = [self.sndBox nextTrack];
-//    NSLog(@"next track is: %@", nextTrack);
+//    DDLogInfo(@"next track is: %@", nextTrack);
 //    return nextTrack.url;
 //}
 //
 //- (void)engine:(ORGMEngine *)engine didChangeState:(ORGMEngineState)state {
 //    switch (state) {
 //        case ORGMEngineStateStopped: {
-//            NSLog(@">>> ORGMEngineStateStopped");
+//            DDLogInfo(@">>> ORGMEngineStateStopped");
 //            self.isPlaying = NO;
 //            [self.timer invalidate];            
 //            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -220,7 +372,7 @@ Error codes list
 //            break;
 //        }
 //        case ORGMEngineStatePaused: {
-//            NSLog(@">>> ORGMEngineStatePaused");           
+//            DDLogInfo(@">>> ORGMEngineStatePaused");           
 //            self.isPlaying = NO;
 //            [self.timer invalidate];
 //            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -228,7 +380,7 @@ Error codes list
 //            break;
 //        }
 //        case ORGMEngineStatePlaying: {
-//            NSLog(@">>> ORGMEngineStatePlaying");
+//            DDLogInfo(@">>> ORGMEngineStatePlaying");
 //            [self.player setVolume:self.volume.doubleValue];
 //            //self.position = [NSNumber numberWithDouble:0];
 //            self.duration = [NSNumber numberWithDouble:self.player.trackTime];
@@ -241,7 +393,7 @@ Error codes list
 //            break;
 //        }
 //        case ORGMEngineStateError:
-//            NSLog(@">>> ORGMEngineStateError");
+//            DDLogInfo(@">>> ORGMEngineStateError");
 //            self.player = nil;
 //            break;
 //    }
