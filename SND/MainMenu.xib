@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -11,7 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu title="AMainMenu" systemMenu="main" id="29">
             <items>
                 <menuItem title="SND" id="56">
@@ -118,49 +118,26 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="318" y="308" width="720" height="330"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" wantsLayer="YES" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="720" height="330"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1594">
                         <rect key="frame" x="0.0" y="271" width="721" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1596">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1208" customClass="SNDPlaybackSegmentedControl">
-                        <rect key="frame" x="9" y="297" width="112" height="24"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <segmentedCell key="cell" alignment="left" style="rounded" trackingMode="momentary" id="1209">
-                            <font key="font" metaFont="system"/>
-                            <segments>
-                                <segment image="pic_previous" width="32">
-                                    <nil key="label"/>
-                                </segment>
-                                <segment image="pic_play" width="40" tag="1">
-                                    <nil key="label"/>
-                                </segment>
-                                <segment image="pic_next" width="32">
-                                    <nil key="label"/>
-                                </segment>
-                            </segments>
-                        </segmentedCell>
-                        <connections>
-                            <action selector="controlAction:" target="1336" id="1341"/>
-                        </connections>
-                    </segmentedControl>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="16" horizontalPageScroll="10" verticalLineScroll="16" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="536" customClass="SNDPlaylistView">
                         <rect key="frame" x="-1" y="-1" width="721" height="274"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" copiesOnScroll="NO" id="HW5-gV-2P4">
                             <rect key="frame" x="1" y="17" width="719" height="256"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" autosaveColumns="NO" typeSelect="NO" rowHeight="14" headerView="539" id="537">
-                                    <rect key="frame" x="0.0" y="0.0" width="719" height="256"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="514" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" red="0.90584890770000004" green="0.9398541091" blue="0.97611667800000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -247,7 +224,6 @@
                                     </tableColumns>
                                     <connections>
                                         <outlet property="dataSource" destination="1336" id="1343"/>
-                                        <outlet property="delegate" destination="1336" id="1777"/>
                                         <outlet property="menu" destination="1754" id="1763"/>
                                     </connections>
                                 </tableView>
@@ -269,7 +245,6 @@
                     </scrollView>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="944">
                         <rect key="frame" x="612" y="303" width="59" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="55" id="1552"/>
                         </constraints>
@@ -281,7 +256,6 @@
                     </textField>
                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="959">
                         <rect key="frame" x="127" y="302" width="479" height="15"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="1414"/>
                         </constraints>
@@ -292,7 +266,6 @@
                     </slider>
                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1383">
                         <rect key="frame" x="666" y="302" width="45" height="15"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="45" id="1392"/>
                         </constraints>
@@ -303,8 +276,7 @@
                     </slider>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1326">
                         <rect key="frame" x="-1" y="271" width="25" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <segmentedCell key="cell" controlSize="small" lineBreakMode="truncatingTail" alignment="left" style="smallSquare" trackingMode="selectOne" id="1327">
+                        <segmentedCell key="cell" controlSize="small" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" style="smallSquare" trackingMode="selectOne" id="1327">
                             <font key="font" metaFont="smallSystem"/>
                             <segments>
                                 <segment label="0" selected="YES"/>
@@ -316,7 +288,6 @@
                     </segmentedControl>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1566">
                         <rect key="frame" x="691" y="271" width="30" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="1575"/>
                         </constraints>
@@ -328,6 +299,26 @@
                             <action selector="addPlaylist:" target="1336" id="1637"/>
                         </connections>
                     </button>
+                    <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1208" customClass="SNDPlaybackSegmentedControl">
+                        <rect key="frame" x="9" y="297" width="112" height="24"/>
+                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="1209">
+                            <font key="font" metaFont="system"/>
+                            <segments>
+                                <segment image="pic_previous" width="32">
+                                    <nil key="label"/>
+                                </segment>
+                                <segment image="pic_play" width="40" tag="1">
+                                    <nil key="label"/>
+                                </segment>
+                                <segment image="pic_next" width="32">
+                                    <nil key="label"/>
+                                </segment>
+                            </segments>
+                        </segmentedCell>
+                        <connections>
+                            <action selector="controlAction:" target="1336" id="1341"/>
+                        </connections>
+                    </segmentedControl>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="536" secondAttribute="bottom" constant="-1" id="831"/>
@@ -392,7 +383,7 @@
         </menu>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="8" height="8"/>
+        <image name="NSAddTemplate" width="11" height="11"/>
         <image name="pic_next" width="9" height="7"/>
         <image name="pic_play" width="8" height="11"/>
         <image name="pic_previous" width="9" height="7"/>

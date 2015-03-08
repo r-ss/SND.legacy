@@ -44,10 +44,11 @@ static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
     //self.sndBox = [[SNDBox alloc] init];
     //self.sndBox.managedObjectContext = self.managedObjectContext;
     
+    //NSLog(@"hey");
    
     //[DDLog addLogger:[DDASLLogger sharedInstance]];
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+    //[DDLog addLogger:[DDTTYLogger sharedInstance]];
+    //[[DDTTYLogger sharedInstance] setColorsEnabled:YES];
     
     
     

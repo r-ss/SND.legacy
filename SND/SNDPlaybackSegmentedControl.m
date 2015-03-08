@@ -29,14 +29,21 @@
 }
 
 - (void)playerStartedPlayingNotification:(NSNotification *)notification {
+//    NSLog(@"-- -- -- -- -- ");
     self.pic = [NSImage imageNamed:@"pic_pause"];
-    [self setImage:self.pic forSegment:1];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setImage:self.pic forSegment:1];
+    });
     //self.timer = [NSTimer scheduledTimerWithTimeInterval:0.025 target:self selector:@selector(changePic:) userInfo:nil repeats:NO];
 }
 
 - (void)playerStoppedPlayingNotification:(NSNotification *)notification {
+//    NSLog(@"+++++++++++++++");
     self.pic = [NSImage imageNamed:@"pic_play"];
-    [self setImage:self.pic forSegment:1];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setImage:self.pic forSegment:1];
+    });
+    
     //self.timer = [NSTimer scheduledTimerWithTimeInterval:0.025 target:self selector:@selector(changePic:) userInfo:nil repeats:NO];
 }
 

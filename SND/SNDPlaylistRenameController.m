@@ -26,9 +26,25 @@
 
 - (void) showWithInitialName:(NSString *)initialText forTab:(NSInteger)tab {
     SNDAppDelegate *appDelegate = NSApplication.sharedApplication.delegate;
-    if(!self.playlistRenameWindow)
-        //[NSBundle loadNibNamed:@"PlaylistRename" owner:self];
-        [[NSBundle mainBundle] loadNibNamed:@"PlaylistRename" owner:self topLevelObjects:nil];
+//    if(!self.playlistRenameWindow){
+//        //[NSBundle loadNibNamed:@"PlaylistRename" owner:self];
+//        [[NSBundle mainBundle] loadNibNamed:@"PlaylistRename" owner:self topLevelObjects:nil];
+//    }
+    
+    if ([[NSBundle mainBundle] respondsToSelector:@selector(loadNibNamed:owner:topLevelObjects:)]) {
+        // We're running on Mountain Lion or higher
+        [[NSBundle mainBundle] loadNibNamed:@"PlaylistRename"
+                                      owner:self
+                            topLevelObjects:nil];
+    }
+//    else {
+//        // We're running on Lion
+//        [NSBundle loadNibNamed:@"NibName"
+//                         owner:self];
+//    }
+    
+    
+    
     self.sessionForTab = [NSNumber numberWithInteger:tab];
     self.nameField.stringValue = initialText;
     [NSApp beginSheet:self.playlistRenameWindow modalForWindow:appDelegate.window modalDelegate:self didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:(__bridge void *)(self)];

@@ -45,7 +45,16 @@ with this instead (only thing I can find that's equivalent)
     //if(!self.preferencesWindow)
         // [NSBundle loadNibNamed:@"Preferences" owner:self];
     //    [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
-    [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
+//    if(!self.preferencesWindow){
+//        [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
+//    }
+    
+    if ([[NSBundle mainBundle] respondsToSelector:@selector(loadNibNamed:owner:topLevelObjects:)]) {
+        // We're running on Mountain Lion or higher
+        [[NSBundle mainBundle] loadNibNamed:@"Preferences"
+                                      owner:self
+                            topLevelObjects:nil];
+    }
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL quit = [userDefaults boolForKey:@"SNDPreferencesQuitOnWindowClose"];

@@ -156,8 +156,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D00AD3F2171E974600068DF1 /* Cocoa.framework in Frameworks */,
-				D00BA6C31AAB36EA0085935E /* TagLib.framework in Frameworks */,
 				D02BAEF01AAB4E700040919D /* CocoaLumberjack.framework in Frameworks */,
+				D00BA6C31AAB36EA0085935E /* TagLib.framework in Frameworks */,
 				D04EE3AD1AAB3AFB00BFD7F2 /* libbass.dylib in Frameworks */,
 				D04EE3AE1AAB3AFD00BFD7F2 /* libbassflac.dylib in Frameworks */,
 			);
